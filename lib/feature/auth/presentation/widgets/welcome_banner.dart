@@ -1,4 +1,3 @@
-import 'package:ai_movie_app/core/utils/app_assets.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
