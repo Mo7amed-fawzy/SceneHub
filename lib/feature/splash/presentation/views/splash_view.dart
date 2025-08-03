@@ -1,4 +1,4 @@
-import 'package:ai_movie_app/core/database/cache/cache_helper.dart';
+import 'package:ai_movie_app/core/database/cache/app_shared_preferences.dart';
 import 'package:ai_movie_app/core/functions/navigation.dart';
 import 'package:ai_movie_app/core/functions/print_statement.dart';
 import 'package:ai_movie_app/core/routes/app_router.dart';
@@ -46,7 +46,7 @@ void checkFirstVisitOrNot(
   String ifFirstContinue,
   String ifNoTToOnBoarding,
 ) {
-  bool isVisited = getIt<CacheHelper>().getData(key: key) ?? false;
+  bool isVisited = sl<AppPreferences>().getData(key) ?? false;
 
   Future.delayed(const Duration(seconds: 2), () async {
     if (!context.mounted) return;
