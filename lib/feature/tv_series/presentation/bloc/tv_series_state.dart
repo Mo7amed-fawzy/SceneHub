@@ -5,17 +5,43 @@ sealed class TvSeriesState {}
 
 final class TvSeriesInitial extends TvSeriesState {}
 
-final class TvSeriesLoading extends TvSeriesState {}
+final class TvSeriesDetailsLoading extends TvSeriesState {}
 
-final class TvSeriesLoaded extends TvSeriesState {
+final class TvSeriesDetailsLoaded extends TvSeriesState {
   final TvSeriesDetailsModel tvSeries;
-  final TvCastModel tvCast;
 
-  TvSeriesLoaded(this.tvSeries, this.tvCast);
+  TvSeriesDetailsLoaded(this.tvSeries);
 }
 
-final class TvSeriesError extends TvSeriesState {
+final class TvSeriesDetailsError extends TvSeriesState {
   final String message;
 
-  TvSeriesError(this.message);
+  TvSeriesDetailsError(this.message);
+}
+
+final class TvSeriesSeasonDetailsLoaded extends TvSeriesState {
+  final TvSeasonModel tvSeason;
+
+  TvSeriesSeasonDetailsLoaded(this.tvSeason);
+}
+
+final class TvSeriesSeasonDetailsLoading extends TvSeriesState {}
+
+final class TvSeriesSeasonDetailsError extends TvSeriesState {
+  final String message;
+
+  TvSeriesSeasonDetailsError(this.message);
+}
+
+final class TvSeriesCastLoaded extends TvSeriesState {
+  final TvCastModel tvCast;
+
+  TvSeriesCastLoaded(this.tvCast);
+}
+
+final class TvSeriesCastLoading extends TvSeriesState {}
+
+final class TvSeriesCastError extends TvSeriesState {
+  final String message;
+  TvSeriesCastError(this.message);
 }

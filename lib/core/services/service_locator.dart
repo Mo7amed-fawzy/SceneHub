@@ -6,6 +6,7 @@ import '../../feature/tv_series/data/repository/tv_series_repo_impl.dart';
 import '../../feature/tv_series/domain/repository/tv_series_repo.dart';
 import '../../feature/tv_series/domain/usecases/get_tv_series_cast_usecase.dart';
 import '../../feature/tv_series/domain/usecases/get_tv_series_details_usecase.dart';
+import '../../feature/tv_series/domain/usecases/get_tv_series_seasons_details_usecase.dart';
 import '../database/cache/app_shared_preferences.dart';
 import '../network/api_consumer.dart';
 import '../network/dio_consumer.dart';
@@ -37,5 +38,8 @@ Future<void> initSl() async {
   );
   sl.registerLazySingleton<GetTvSeriesCastUseCase>(
     () => GetTvSeriesCastUseCase(sl()),
+  );
+  sl.registerLazySingleton<GetTvSeriesSeasonsDetailsUseCase>(
+    () => GetTvSeriesSeasonsDetailsUseCase(sl()),
   );
 }

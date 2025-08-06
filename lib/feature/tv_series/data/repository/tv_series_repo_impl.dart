@@ -1,6 +1,7 @@
 import 'package:ai_movie_app/core/constants/app_data_types.dart';
 import 'package:ai_movie_app/core/errors/failures.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/cast/tv_cast_model.dart';
+import 'package:ai_movie_app/feature/tv_series/data/models/season/tv_season_model.dart';
 
 import 'package:ai_movie_app/feature/tv_series/data/models/tv_series_model.dart';
 import 'package:dartz/dartz.dart';
@@ -34,6 +35,24 @@ class TvSeriesRepoImpl implements TvSeriesRepo {
       return Left(FormatFailure('Invalid data format received'));
     } on Exception catch (_) {
       return Left(ServerFailure('Failed to fetch TV series cast'));
+    }
+  }
+
+  @override
+  AsyncSingleDataResponse<TvSeasonModel> getTvSeriesSeasonsDetails(
+    int id,
+    int seasonNumber,
+  ) async {
+    try {
+      final response = await remoteDatasource.getTvSeriesSeasonsDetails(
+        id,
+        seasonNumber,
+      );
+      return Right(response);
+    } on FormatException catch (_) {
+      return Left(FormatFailure('Invalid data format received'));
+    } on Exception catch (_) {
+      return Left(ServerFailure('Failed to fetch TV series season'));
     }
   }
 }

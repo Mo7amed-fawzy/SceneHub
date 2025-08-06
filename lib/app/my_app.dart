@@ -18,7 +18,7 @@ class SceneHub extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return BlocProvider(
-            create: (context) => TvSeriesBloc(sl(), sl()),
+            create: (context) => TvSeriesBloc(sl(), sl(), sl()),
             child: const TvSeriesDetailsScreen(),
           );
         },
