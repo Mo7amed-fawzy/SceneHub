@@ -5,20 +5,15 @@ part 'network_model.g.dart';
 @JsonSerializable()
 class NetworkModel {
   @JsonKey(name: "id")
-  final int id;
+  final int? id;
   @JsonKey(name: "logo_path")
   final String? logoPath;
   @JsonKey(name: "name")
-  final String name;
+  final String? name;
   @JsonKey(name: "origin_country")
-  final String originCountry;
+  final String? originCountry;
 
-  NetworkModel({
-    required this.id,
-    required this.logoPath,
-    required this.name,
-    required this.originCountry,
-  });
+  NetworkModel({this.id, this.logoPath, this.name, this.originCountry});
 
   NetworkModel copyWith({
     int? id,

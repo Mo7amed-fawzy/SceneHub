@@ -1,13 +1,13 @@
 // ignore_for_file: unnecessary_overrides
 
+import 'package:ai_movie_app/core/utils/api_keys.dart';
 import 'package:dio/dio.dart';
 
 class AppInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // want to send some custom headers or modify the request
-    options.headers['Authorization'] =
-        '	Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYTBkN2JlYWIwYzg2ZTVkYjg5OTJhYzc4NTVlOGZmYyIsIm5iZiI6MTc1NDMwNjMzOC43ODcwMDAyLCJzdWIiOiI2ODkwOTcyMjE4ODFhMGMxMDMxMWUwYTYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.j-wpLS0iJe2Xe3-WOkO7pmlYMBqraE55ZyTBn0GuK3o';
+    options.headers['Authorization'] = EnvConfig.tmdbApiKey;
     super.onRequest(options, handler);
   }
 

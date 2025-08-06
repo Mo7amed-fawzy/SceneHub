@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TvTopBarNav extends StatelessWidget {
-  const TvTopBarNav({super.key});
+  const TvTopBarNav({super.key, required this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class TvTopBarNav extends StatelessWidget {
         SizedBox(
           width: 270.w,
           child: Text(
-            'Riverdale',
+            title,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,

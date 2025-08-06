@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TvDescriptionWidget extends StatelessWidget {
-  const TvDescriptionWidget({super.key});
+  const TvDescriptionWidget({super.key, required this.description});
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +28,7 @@ class TvDescriptionWidget extends StatelessWidget {
           TextSpan(
             children: [
               TextSpan(
-                text:
-                    'Originally a story from Archie Comics which started in 1941, Riverdale centres around a group of high school students who are shocked by the death of classmate, Jason Blossom. Together theyunravel the secrets of Riverdale and who ',
+                text: description,
                 style: TextStyle(
                   color: const Color(0xFFEBEBEF),
                   fontSize: 14.sp,

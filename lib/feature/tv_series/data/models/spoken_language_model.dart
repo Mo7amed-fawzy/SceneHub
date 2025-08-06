@@ -5,17 +5,13 @@ part 'spoken_language_model.g.dart';
 @JsonSerializable()
 class SpokenLanguageModel {
   @JsonKey(name: "english_name")
-  final String englishName;
+  final String? englishName;
   @JsonKey(name: "iso_639_1")
-  final String iso6391;
+  final String? iso6391;
   @JsonKey(name: "name")
-  final String name;
+  final String? name;
 
-  SpokenLanguageModel({
-    required this.englishName,
-    required this.iso6391,
-    required this.name,
-  });
+  SpokenLanguageModel({this.englishName, this.iso6391, this.name});
 
   SpokenLanguageModel copyWith({
     String? englishName,

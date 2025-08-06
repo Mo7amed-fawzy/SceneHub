@@ -4,7 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TvInfoNavWidget extends StatelessWidget {
-  const TvInfoNavWidget({super.key});
+  const TvInfoNavWidget({
+    super.key,
+    required this.year,
+    required this.duration,
+    required this.genre,
+  });
+  final String? year;
+  final String? duration;
+  final String? genre;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +26,7 @@ class TvInfoNavWidget extends StatelessWidget {
           SvgPicture.asset(AppStyle.icons.calendar, width: 16.w, height: 16.h),
           SizedBox(width: 4.w),
           Text(
-            '2021',
+            year ?? 'N/A',
             style: TextStyle(
               color: const Color(0xFF92929D),
               fontSize: 12.sp,
@@ -33,7 +41,7 @@ class TvInfoNavWidget extends StatelessWidget {
           SvgPicture.asset(AppStyle.icons.clock, width: 16.w, height: 16.h),
           SizedBox(width: 4.w),
           Text(
-            '148 Minutes',
+            duration ?? 'N/A',
             style: TextStyle(
               color: const Color(0xFF92929D),
               fontSize: 12.sp,
@@ -48,7 +56,7 @@ class TvInfoNavWidget extends StatelessWidget {
           SvgPicture.asset(AppStyle.icons.film, width: 16.w, height: 16.h),
           SizedBox(width: 4.w),
           Text(
-            'Action',
+            genre ?? 'N/A',
             style: TextStyle(
               color: const Color(0xFF92929D),
               fontSize: 12.sp,

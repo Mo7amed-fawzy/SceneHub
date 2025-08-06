@@ -5,31 +5,31 @@ part 'season_model.g.dart';
 @JsonSerializable()
 class SeasonModel {
   @JsonKey(name: "air_date")
-  final DateTime airDate;
+  final DateTime? airDate;
   @JsonKey(name: "episode_count")
-  final int episodeCount;
+  final int? episodeCount;
   @JsonKey(name: "id")
-  final int id;
+  final int? id;
   @JsonKey(name: "name")
-  final String name;
+  final String? name;
   @JsonKey(name: "overview")
-  final String overview;
+  final String? overview;
   @JsonKey(name: "poster_path")
-  final String posterPath;
+  final String? posterPath;
   @JsonKey(name: "season_number")
-  final int seasonNumber;
+  final int? seasonNumber;
   @JsonKey(name: "vote_average")
-  final double voteAverage;
+  final double? voteAverage;
 
   SeasonModel({
-    required this.airDate,
-    required this.episodeCount,
-    required this.id,
-    required this.name,
-    required this.overview,
-    required this.posterPath,
-    required this.seasonNumber,
-    required this.voteAverage,
+    this.airDate,
+    this.episodeCount,
+    this.id,
+    this.name,
+    this.overview,
+    this.posterPath,
+    this.seasonNumber,
+    this.voteAverage,
   });
 
   SeasonModel copyWith({

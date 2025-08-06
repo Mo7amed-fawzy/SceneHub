@@ -11,4 +11,7 @@ class EnvConfig {
   static final String weatherApiKey = dotenv.env['WEATHER_API_KEY'] ?? '';
 
   static final String localServerUrl = dotenv.env['LOCAL_SERVER_URL'] ?? '';
+
+  // TMDB API Configuration
+  static final String tmdbApiKey = dotenv.env['TMDB_API_KEY'] ?? '';
 }

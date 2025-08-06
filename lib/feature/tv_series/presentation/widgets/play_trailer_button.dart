@@ -1,5 +1,4 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
-import 'package:ai_movie_app/feature/tv_series/data/repository/tv_series_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

@@ -5,11 +5,11 @@ part 'genre_model.g.dart';
 @JsonSerializable()
 class GenreModel {
   @JsonKey(name: "id")
-  final int id;
+  final int? id;
   @JsonKey(name: "name")
-  final String name;
+  final String? name;
 
-  GenreModel({required this.id, required this.name});
+  GenreModel({this.id, this.name});
 
   GenreModel copyWith({int? id, String? name}) =>
       GenreModel(id: id ?? this.id, name: name ?? this.name);

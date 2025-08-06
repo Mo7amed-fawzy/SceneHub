@@ -7,10 +7,10 @@ part of 'network_model.dart';
 // **************************************************************************
 
 NetworkModel _$NetworkModelFromJson(Map<String, dynamic> json) => NetworkModel(
-  id: (json['id'] as num).toInt(),
+  id: (json['id'] as num?)?.toInt(),
   logoPath: json['logo_path'] as String?,
-  name: json['name'] as String,
-  originCountry: json['origin_country'] as String,
+  name: json['name'] as String?,
+  originCountry: json['origin_country'] as String?,
 );
 
 Map<String, dynamic> _$NetworkModelToJson(NetworkModel instance) =>

@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TvRatingWidget extends StatelessWidget {
-  const TvRatingWidget({super.key});
+  const TvRatingWidget({super.key, required this.rating});
+  final double rating;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class TvRatingWidget extends StatelessWidget {
         children: [
           SvgPicture.asset(AppStyle.icons.star, width: 16.w, height: 16.h),
           Text(
-            '4.5',
+            '$rating',
             style: TextStyle(
               color: const Color(0xFFFF8700),
               fontSize: 12.sp,

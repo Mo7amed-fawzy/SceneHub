@@ -5,46 +5,46 @@ part 't_episode_to_air_model.g.dart';
 @JsonSerializable()
 class TEpisodeToAirModel {
   @JsonKey(name: "id")
-  final int id;
+  final int? id;
   @JsonKey(name: "name")
-  final String name;
+  final String? name;
   @JsonKey(name: "overview")
-  final String overview;
+  final String? overview;
   @JsonKey(name: "vote_average")
-  final double voteAverage;
+  final double? voteAverage;
   @JsonKey(name: "vote_count")
-  final int voteCount;
+  final int? voteCount;
   @JsonKey(name: "air_date")
-  final DateTime airDate;
+  final DateTime? airDate;
   @JsonKey(name: "episode_number")
-  final int episodeNumber;
+  final int? episodeNumber;
   @JsonKey(name: "episode_type")
-  final String episodeType;
+  final String? episodeType;
   @JsonKey(name: "production_code")
-  final String productionCode;
+  final String? productionCode;
   @JsonKey(name: "runtime")
   final int? runtime;
   @JsonKey(name: "season_number")
-  final int seasonNumber;
+  final int? seasonNumber;
   @JsonKey(name: "show_id")
-  final int showId;
+  final int? showId;
   @JsonKey(name: "still_path")
   final String? stillPath;
 
   TEpisodeToAirModel({
-    required this.id,
-    required this.name,
-    required this.overview,
-    required this.voteAverage,
-    required this.voteCount,
-    required this.airDate,
-    required this.episodeNumber,
-    required this.episodeType,
-    required this.productionCode,
-    required this.runtime,
-    required this.seasonNumber,
-    required this.showId,
-    required this.stillPath,
+    this.id,
+    this.name,
+    this.overview,
+    this.voteAverage,
+    this.voteCount,
+    this.airDate,
+    this.episodeNumber,
+    this.episodeType,
+    this.productionCode,
+    this.runtime,
+    this.seasonNumber,
+    this.showId,
+    this.stillPath,
   });
 
   TEpisodeToAirModel copyWith({

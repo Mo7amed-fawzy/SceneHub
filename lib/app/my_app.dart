@@ -1,5 +1,8 @@
+import 'package:ai_movie_app/core/services/service_locator.dart';
+import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_series_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SceneHub extends StatelessWidget {
@@ -14,7 +17,10 @@ class SceneHub extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return const TvSeriesDetailsScreen();
+          return BlocProvider(
+            create: (context) => TvSeriesBloc(sl(), sl()),
+            child: const TvSeriesDetailsScreen(),
+          );
         },
       ),
     );

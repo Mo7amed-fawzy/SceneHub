@@ -5,11 +5,11 @@ part 'production_country_model.g.dart';
 @JsonSerializable()
 class ProductionCountryModel {
   @JsonKey(name: "iso_3166_1")
-  final String iso31661;
+  final String? iso31661;
   @JsonKey(name: "name")
-  final String name;
+  final String? name;
 
-  ProductionCountryModel({required this.iso31661, required this.name});
+  ProductionCountryModel({this.iso31661, this.name});
 
   ProductionCountryModel copyWith({String? iso31661, String? name}) =>
       ProductionCountryModel(
