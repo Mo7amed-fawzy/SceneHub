@@ -9,7 +9,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'tv_series_model.g.dart';
 
 @JsonSerializable()
-class TvSeriesModel {
+class TvSeriesDetailsModel {
   @JsonKey(name: "adult")
   final bool adult;
   @JsonKey(name: "backdrop_path")
@@ -75,7 +75,7 @@ class TvSeriesModel {
   @JsonKey(name: "vote_count")
   final int voteCount;
 
-  TvSeriesModel({
+  TvSeriesDetailsModel({
     required this.adult,
     required this.backdropPath,
     required this.createdBy,
@@ -110,7 +110,7 @@ class TvSeriesModel {
     required this.voteCount,
   });
 
-  TvSeriesModel copyWith({
+  TvSeriesDetailsModel copyWith({
     bool? adult,
     String? backdropPath,
     List<dynamic>? createdBy,
@@ -143,7 +143,7 @@ class TvSeriesModel {
     String? type,
     double? voteAverage,
     int? voteCount,
-  }) => TvSeriesModel(
+  }) => TvSeriesDetailsModel(
     adult: adult ?? this.adult,
     backdropPath: backdropPath ?? this.backdropPath,
     createdBy: createdBy ?? this.createdBy,
@@ -178,7 +178,7 @@ class TvSeriesModel {
     voteCount: voteCount ?? this.voteCount,
   );
 
-  factory TvSeriesModel.fromJson(Map<String, dynamic> json) =>
+  factory TvSeriesDetailsModel.fromJson(Map<String, dynamic> json) =>
       _$TvSeriesModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TvSeriesModelToJson(this);

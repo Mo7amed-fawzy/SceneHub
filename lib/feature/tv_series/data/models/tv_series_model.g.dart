@@ -6,8 +6,8 @@ part of 'tv_series_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TvSeriesModel _$TvSeriesModelFromJson(Map<String, dynamic> json) =>
-    TvSeriesModel(
+TvSeriesDetailsModel _$TvSeriesModelFromJson(Map<String, dynamic> json) =>
+    TvSeriesDetailsModel(
       adult: json['adult'] as bool,
       backdropPath: json['backdrop_path'] as String,
       createdBy: json['created_by'] as List<dynamic>,
@@ -66,7 +66,7 @@ TvSeriesModel _$TvSeriesModelFromJson(Map<String, dynamic> json) =>
       voteCount: (json['vote_count'] as num).toInt(),
     );
 
-Map<String, dynamic> _$TvSeriesModelToJson(TvSeriesModel instance) =>
+Map<String, dynamic> _$TvSeriesModelToJson(TvSeriesDetailsModel instance) =>
     <String, dynamic>{
       'adult': instance.adult,
       'backdrop_path': instance.backdropPath,

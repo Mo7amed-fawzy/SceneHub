@@ -51,6 +51,7 @@ dependencies:
   json_serializable: ^6.10.0
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.2.0
+  pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
   flutter_test:
