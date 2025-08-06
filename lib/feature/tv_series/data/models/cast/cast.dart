@@ -1,10 +1,11 @@
 import 'package:ai_movie_app/feature/tv_series/data/models/cast/role.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cast.g.dart';
 
 @JsonSerializable()
-class Cast {
+class Cast extends CastEntity {
   @JsonKey(name: "adult")
   final bool? adult;
   @JsonKey(name: "gender")
@@ -22,11 +23,14 @@ class Cast {
   @JsonKey(name: "profile_path")
   final String? profilePath;
   @JsonKey(name: "roles")
-  final List<Role>? roles;
+  final List<Role>? rolesModel;
   @JsonKey(name: "total_episode_count")
   final int? totalEpisodeCount;
   @JsonKey(name: "order")
   final int? order;
+
+  @override
+  List<RoleEntity>? get roles => rolesModel?.cast<RoleEntity>();
 
   Cast({
     this.adult,
@@ -37,10 +41,14 @@ class Cast {
     this.originalName,
     this.popularity,
     this.profilePath,
-    this.roles,
+    this.rolesModel,
     this.totalEpisodeCount,
     this.order,
-  });
+  }) : super(
+         name: name,
+         profilePath: profilePath,
+         roles: rolesModel?.cast<RoleEntity>(),
+       );
 
   Cast copyWith({
     bool? adult,
@@ -51,7 +59,7 @@ class Cast {
     String? originalName,
     double? popularity,
     String? profilePath,
-    List<Role>? roles,
+    List<Role>? rolesModel,
     int? totalEpisodeCount,
     int? order,
   }) => Cast(
@@ -63,7 +71,7 @@ class Cast {
     originalName: originalName ?? this.originalName,
     popularity: popularity ?? this.popularity,
     profilePath: profilePath ?? this.profilePath,
-    roles: roles ?? this.roles,
+    rolesModel: rolesModel ?? this.rolesModel,
     totalEpisodeCount: totalEpisodeCount ?? this.totalEpisodeCount,
     order: order ?? this.order,
   );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../data/models/season/tv_season_model.dart';
+import '../../domain/entities/season_entities.dart';
 import '../bloc/tv_series_bloc.dart';
 import 'tv_episode_details_widget.dart';
 
@@ -20,7 +20,7 @@ class EpisodesListWidget extends StatefulWidget {
 }
 
 class _EpisodesListWidgetState extends State<EpisodesListWidget> {
-  TvSeasonModel? tvSeason;
+  TvSeasonEntity? tvSeason;
   @override
   void initState() {
     context.read<TvSeriesBloc>().add(
@@ -34,7 +34,7 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<TvSeriesBloc, TvSeriesState, TvSeasonModel?>(
+    return BlocSelector<TvSeriesBloc, TvSeriesState, TvSeasonEntity?>(
       selector: (state) {
         if (state is TvSeriesSeasonDetailsLoaded) {
           tvSeason = state.tvSeason;

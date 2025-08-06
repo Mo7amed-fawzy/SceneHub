@@ -4,12 +4,14 @@ import 'package:ai_movie_app/feature/tv_series/data/models/production_country_mo
 import 'package:ai_movie_app/feature/tv_series/data/models/season_model.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/spoken_language_model.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/t_episode_to_air_model.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/genre_entity.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'tv_series_model.g.dart';
 
 @JsonSerializable()
-class TvSeriesDetailsModel {
+class TvSeriesDetailsModel extends TvSeriesDetailsEntity {
   @JsonKey(name: "adult")
   final bool? adult;
   @JsonKey(name: "backdrop_path")
@@ -21,7 +23,10 @@ class TvSeriesDetailsModel {
   @JsonKey(name: "first_air_date")
   final DateTime? firstAirDate;
   @JsonKey(name: "genres")
-  final List<GenreModel>? genres;
+  final List<GenreModel>? genresModel;
+
+  @override
+  List<GenreEntity>? get genres => genresModel?.cast<GenreEntity>();
   @JsonKey(name: "homepage")
   final String? homepage;
   @JsonKey(name: "id")
@@ -81,7 +86,7 @@ class TvSeriesDetailsModel {
     this.createdBy,
     this.episodeRunTime,
     this.firstAirDate,
-    this.genres,
+    this.genresModel,
     this.homepage,
     this.id,
     this.inProduction,
@@ -108,7 +113,18 @@ class TvSeriesDetailsModel {
     this.type,
     this.voteAverage,
     this.voteCount,
-  });
+  }) : super(
+         backdropPath: backdropPath,
+         episodeRunTime: episodeRunTime,
+         firstAirDate: firstAirDate,
+         genres: genresModel?.cast<GenreEntity>(),
+         name: name,
+         numberOfEpisodes: numberOfEpisodes,
+         numberOfSeasons: numberOfSeasons,
+         overview: overview,
+         posterPath: posterPath,
+         voteAverage: voteAverage,
+       );
 
   TvSeriesDetailsModel copyWith({
     bool? adult,
@@ -116,7 +132,7 @@ class TvSeriesDetailsModel {
     List<dynamic>? createdBy,
     List<int>? episodeRunTime,
     DateTime? firstAirDate,
-    List<GenreModel>? genres,
+    List<GenreModel>? genresModel,
     String? homepage,
     int? id,
     bool? inProduction,
@@ -149,7 +165,7 @@ class TvSeriesDetailsModel {
     createdBy: createdBy ?? this.createdBy,
     episodeRunTime: episodeRunTime ?? this.episodeRunTime,
     firstAirDate: firstAirDate ?? this.firstAirDate,
-    genres: genres ?? this.genres,
+    genresModel: genresModel ?? this.genresModel,
     homepage: homepage ?? this.homepage,
     id: id ?? this.id,
     inProduction: inProduction ?? this.inProduction,

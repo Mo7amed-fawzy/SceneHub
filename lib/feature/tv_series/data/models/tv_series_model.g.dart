@@ -18,7 +18,7 @@ TvSeriesDetailsModel _$TvSeriesDetailsModelFromJson(
   firstAirDate: json['first_air_date'] == null
       ? null
       : DateTime.parse(json['first_air_date'] as String),
-  genres: (json['genres'] as List<dynamic>?)
+  genresModel: (json['genres'] as List<dynamic>?)
       ?.map((e) => GenreModel.fromJson(e as Map<String, dynamic>))
       .toList(),
   homepage: json['homepage'] as String?,
@@ -81,7 +81,7 @@ Map<String, dynamic> _$TvSeriesDetailsModelToJson(
   'created_by': instance.createdBy,
   'episode_run_time': instance.episodeRunTime,
   'first_air_date': instance.firstAirDate?.toIso8601String(),
-  'genres': instance.genres,
+  'genres': instance.genresModel,
   'homepage': instance.homepage,
   'id': instance.id,
   'in_production': instance.inProduction,

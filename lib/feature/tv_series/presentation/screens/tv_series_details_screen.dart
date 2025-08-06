@@ -1,3 +1,4 @@
+import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/select_season_button.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/episodes_list_widget.dart';
@@ -12,8 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../data/models/tv_series_model.dart';
-
 class TvSeriesDetailsScreen extends StatefulWidget {
   const TvSeriesDetailsScreen({super.key});
   final int tvSeriesId = 1396; // Example ID, can be passed dynamically
@@ -23,7 +22,7 @@ class TvSeriesDetailsScreen extends StatefulWidget {
 }
 
 class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
-  TvSeriesDetailsModel? tvSeries;
+  TvSeriesDetailsEntity? tvSeries;
   int seasonNumber = 1; // Default season number, can be changed dynamically
   @override
   void initState() {
@@ -35,7 +34,7 @@ class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1F1D2B),
-      body: BlocSelector<TvSeriesBloc, TvSeriesState, TvSeriesDetailsModel?>(
+      body: BlocSelector<TvSeriesBloc, TvSeriesState, TvSeriesDetailsEntity?>(
         selector: (state) {
           if (state is TvSeriesDetailsLoaded) {
             tvSeries = state.tvSeries;

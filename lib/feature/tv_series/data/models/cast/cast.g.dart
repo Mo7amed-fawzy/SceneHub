@@ -15,7 +15,7 @@ Cast _$CastFromJson(Map<String, dynamic> json) => Cast(
   originalName: json['original_name'] as String?,
   popularity: (json['popularity'] as num?)?.toDouble(),
   profilePath: json['profile_path'] as String?,
-  roles: (json['roles'] as List<dynamic>?)
+  rolesModel: (json['roles'] as List<dynamic>?)
       ?.map((e) => Role.fromJson(e as Map<String, dynamic>))
       .toList(),
   totalEpisodeCount: (json['total_episode_count'] as num?)?.toInt(),
@@ -31,7 +31,7 @@ Map<String, dynamic> _$CastToJson(Cast instance) => <String, dynamic>{
   'original_name': instance.originalName,
   'popularity': instance.popularity,
   'profile_path': instance.profilePath,
-  'roles': instance.roles,
+  'roles': instance.rolesModel,
   'total_episode_count': instance.totalEpisodeCount,
   'order': instance.order,
 };

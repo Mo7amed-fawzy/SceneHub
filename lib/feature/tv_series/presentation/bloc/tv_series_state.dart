@@ -8,7 +8,7 @@ final class TvSeriesInitial extends TvSeriesState {}
 final class TvSeriesDetailsLoading extends TvSeriesState {}
 
 final class TvSeriesDetailsLoaded extends TvSeriesState {
-  final TvSeriesDetailsModel tvSeries;
+  final TvSeriesDetailsEntity tvSeries;
 
   TvSeriesDetailsLoaded(this.tvSeries);
 }
@@ -20,7 +20,7 @@ final class TvSeriesDetailsError extends TvSeriesState {
 }
 
 final class TvSeriesSeasonDetailsLoaded extends TvSeriesState {
-  final TvSeasonModel tvSeason;
+  final TvSeasonEntity tvSeason;
 
   TvSeriesSeasonDetailsLoaded(this.tvSeason);
 }
@@ -34,7 +34,7 @@ final class TvSeriesSeasonDetailsError extends TvSeriesState {
 }
 
 final class TvSeriesCastLoaded extends TvSeriesState {
-  final TvCastModel tvCast;
+  final TvCastEntity tvCast;
 
   TvSeriesCastLoaded(this.tvCast);
 }

@@ -1,5 +1,5 @@
 import '../../../../core/constants/app_data_types.dart';
-import '../../data/models/cast/tv_cast_model.dart';
+import '../entities/cast_entities.dart';
 import '../repository/tv_series_repo.dart';
 
 class GetTvSeriesCastUseCase {
@@ -7,7 +7,7 @@ class GetTvSeriesCastUseCase {
 
   GetTvSeriesCastUseCase(this.tvSeriesRepo);
 
-  AsyncSingleDataResponse<TvCastModel> call(int id) {
+  AsyncSingleDataResponse<TvCastEntity> call(int id) {
     return tvSeriesRepo.getTvSeriesCast(id);
   }
 }

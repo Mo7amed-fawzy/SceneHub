@@ -1,9 +1,8 @@
 import 'package:ai_movie_app/core/constants/app_data_types.dart';
 import 'package:ai_movie_app/core/errors/failures.dart';
-import 'package:ai_movie_app/feature/tv_series/data/models/cast/tv_cast_model.dart';
-import 'package:ai_movie_app/feature/tv_series/data/models/season/tv_season_model.dart';
-
-import 'package:ai_movie_app/feature/tv_series/data/models/tv_series_model.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/season_entities.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../domain/repository/tv_series_repo.dart';
@@ -13,12 +12,12 @@ class TvSeriesRepoImpl implements TvSeriesRepo {
   final TvSeriesRemoteDatasource remoteDatasource;
   TvSeriesRepoImpl({required this.remoteDatasource});
   @override
-  AsyncSingleDataResponse<TvSeriesDetailsModel> getTvSeriesDetails(
+  AsyncSingleDataResponse<TvSeriesDetailsEntity> getTvSeriesDetails(
     int id,
   ) async {
     try {
       final response = await remoteDatasource.getTvSeriesDetails(id);
-      return Right(response);
+      return Right(response); // Model extends Entity, so can be cast
     } on FormatException catch (_) {
       return Left(FormatFailure('Invalid data format received'));
     } on Exception catch (_) {
@@ -27,10 +26,10 @@ class TvSeriesRepoImpl implements TvSeriesRepo {
   }
 
   @override
-  AsyncSingleDataResponse<TvCastModel> getTvSeriesCast(int id) async {
+  AsyncSingleDataResponse<TvCastEntity> getTvSeriesCast(int id) async {
     try {
       final response = await remoteDatasource.getTvSeriesCast(id);
-      return Right(response);
+      return Right(response); // Model extends Entity, so can be cast
     } on FormatException catch (_) {
       return Left(FormatFailure('Invalid data format received'));
     } on Exception catch (_) {
@@ -39,7 +38,7 @@ class TvSeriesRepoImpl implements TvSeriesRepo {
   }
 
   @override
-  AsyncSingleDataResponse<TvSeasonModel> getTvSeriesSeasonsDetails(
+  AsyncSingleDataResponse<TvSeasonEntity> getTvSeriesSeasonsDetails(
     int id,
     int seasonNumber,
   ) async {
@@ -48,7 +47,7 @@ class TvSeriesRepoImpl implements TvSeriesRepo {
         id,
         seasonNumber,
       );
-      return Right(response);
+      return Right(response); // Model extends Entity, so can be cast
     } on FormatException catch (_) {
       return Left(FormatFailure('Invalid data format received'));
     } on Exception catch (_) {

@@ -1,10 +1,11 @@
 import 'package:ai_movie_app/feature/tv_series/data/models/season/crew.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/season_entities.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'episode.g.dart';
 
 @JsonSerializable()
-class Episode {
+class Episode extends EpisodeEntity {
   @JsonKey(name: "air_date")
   final DateTime? airDate;
   @JsonKey(name: "episode_number")
@@ -52,7 +53,13 @@ class Episode {
     this.voteCount,
     this.crew,
     this.guestStars,
-  });
+  }) : super(
+         episodeNumber: episodeNumber,
+         name: name,
+         overview: overview,
+         runtime: runtime,
+         stillPath: stillPath,
+       );
 
   Episode copyWith({
     DateTime? airDate,

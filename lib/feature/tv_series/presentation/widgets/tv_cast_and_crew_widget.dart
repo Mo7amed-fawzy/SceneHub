@@ -1,4 +1,4 @@
-import 'package:ai_movie_app/feature/tv_series/data/models/cast/tv_cast_model.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_actor_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +15,7 @@ class TvCastAndCrewWidget extends StatefulWidget {
 }
 
 class _TvCastAndCrewWidgetState extends State<TvCastAndCrewWidget> {
-  TvCastModel? tvCast;
+  TvCastEntity? tvCast;
   @override
   void initState() {
     context.read<TvSeriesBloc>().add(FetchTvSeriesCast(widget.tvSeriesId));
@@ -24,7 +24,7 @@ class _TvCastAndCrewWidgetState extends State<TvCastAndCrewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<TvSeriesBloc, TvSeriesState, TvCastModel?>(
+    return BlocSelector<TvSeriesBloc, TvSeriesState, TvCastEntity?>(
       selector: (state) {
         if (state is TvSeriesCastLoaded) {
           tvCast = state.tvCast;

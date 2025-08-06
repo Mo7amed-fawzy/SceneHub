@@ -1,5 +1,6 @@
+import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
+
 import '../../../../core/constants/app_data_types.dart';
-import '../../data/models/tv_series_model.dart';
 import '../repository/tv_series_repo.dart';
 
 class GetTvSeriesDetailsUseCase {
@@ -7,7 +8,7 @@ class GetTvSeriesDetailsUseCase {
 
   GetTvSeriesDetailsUseCase(this.tvSeriesRepo);
 
-  AsyncSingleDataResponse<TvSeriesDetailsModel> call(int id) {
+  AsyncSingleDataResponse<TvSeriesDetailsEntity> call(int id) {
     return tvSeriesRepo.getTvSeriesDetails(id);
   }
 }

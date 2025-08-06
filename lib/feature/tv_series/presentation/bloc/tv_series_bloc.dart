@@ -1,10 +1,10 @@
+import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/season_entities.dart';
+import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/usecases/get_tv_series_details_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../data/models/cast/tv_cast_model.dart';
-import '../../data/models/season/tv_season_model.dart';
-import '../../data/models/tv_series_model.dart';
 import '../../domain/usecases/get_tv_series_cast_usecase.dart';
 import '../../domain/usecases/get_tv_series_seasons_details_usecase.dart';
 

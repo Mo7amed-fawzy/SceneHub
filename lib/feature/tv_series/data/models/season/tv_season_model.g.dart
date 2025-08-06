@@ -12,7 +12,7 @@ TvSeasonModel _$TvSeasonModelFromJson(Map<String, dynamic> json) =>
       airDate: json['air_date'] == null
           ? null
           : DateTime.parse(json['air_date'] as String),
-      episodes: (json['episodes'] as List<dynamic>?)
+      episodesModel: (json['episodes'] as List<dynamic>?)
           ?.map((e) => Episode.fromJson(e as Map<String, dynamic>))
           .toList(),
       name: json['name'] as String?,
@@ -27,7 +27,7 @@ Map<String, dynamic> _$TvSeasonModelToJson(TvSeasonModel instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'air_date': instance.airDate?.toIso8601String(),
-      'episodes': instance.episodes,
+      'episodes': instance.episodesModel,
       'name': instance.name,
       'overview': instance.overview,
       'id': instance.tvSeasonModelId,

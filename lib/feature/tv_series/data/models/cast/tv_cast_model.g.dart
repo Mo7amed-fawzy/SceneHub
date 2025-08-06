@@ -7,7 +7,7 @@ part of 'tv_cast_model.dart';
 // **************************************************************************
 
 TvCastModel _$TvCastModelFromJson(Map<String, dynamic> json) => TvCastModel(
-  cast: (json['cast'] as List<dynamic>?)
+  castModel: (json['cast'] as List<dynamic>?)
       ?.map((e) => Cast.fromJson(e as Map<String, dynamic>))
       .toList(),
   crew: json['crew'] as List<dynamic>?,
@@ -16,7 +16,7 @@ TvCastModel _$TvCastModelFromJson(Map<String, dynamic> json) => TvCastModel(
 
 Map<String, dynamic> _$TvCastModelToJson(TvCastModel instance) =>
     <String, dynamic>{
-      'cast': instance.cast,
+      'cast': instance.castModel,
       'crew': instance.crew,
       'id': instance.id,
     };
