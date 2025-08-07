@@ -1,7 +1,13 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../core/utils/app_text_styles.dart';
+import '../bloc/tv_series_bloc.dart';
 
 class TvTopBarNav extends StatelessWidget {
   const TvTopBarNav({super.key, required this.title});
@@ -9,56 +15,56 @@ class TvTopBarNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 32.w,
-          height: 32.h,
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+    return Skeletonizer(
+      enabled: context.watch<TvSeriesBloc>().state is TvSeriesDetailsLoading,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 32.w,
+            height: 32.h,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              color: AppColors.dialogBackground,
             ),
-            color: const Color(0xFF252836),
-          ),
-          child: SvgPicture.asset(
-            AppStyle.icons.backArrow,
-            width: 16.w,
-            height: 16.h,
-            fit: BoxFit.cover,
-          ),
-        ),
-        SizedBox(
-          width: 270.w,
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.12,
+            child: SvgPicture.asset(
+              AppStyle.icons.backArrow,
+              width: 16.w,
+              height: 16.h,
+              fit: BoxFit.cover,
             ),
           ),
-        ),
-        Container(
-          width: 32.w,
-          height: 32.h,
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+          SizedBox(
+            width: 270.w,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: CustomTextStyles.montserrat600style16.copyWith(
+                color: Colors.white,
+                letterSpacing: 0.12,
+              ),
             ),
-            color: const Color(0xFF252836),
           ),
-          child: SvgPicture.asset(
-            AppStyle.icons.heart,
-            width: 16.w,
-            height: 16.h,
-            fit: BoxFit.cover,
+          Container(
+            width: 32.w,
+            height: 32.h,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              color: AppColors.dialogBackground,
+            ),
+            child: SvgPicture.asset(
+              AppStyle.icons.heart,
+              width: 16.w,
+              height: 16.h,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

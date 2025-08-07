@@ -1,7 +1,12 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../core/utils/app_text_styles.dart';
+import '../bloc/tv_series_bloc.dart';
 
 class TvInfoNavWidget extends StatelessWidget {
   const TvInfoNavWidget({
@@ -16,56 +21,54 @@ class TvInfoNavWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(AppStyle.icons.calendar, width: 16.w, height: 16.h),
-          SizedBox(width: 4.w),
-          Text(
-            year ?? 'N/A',
-            style: TextStyle(
-              color: const Color(0xFF92929D),
-              fontSize: 12.sp,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.12.w,
+    return Skeletonizer(
+      enabled: context.watch<TvSeriesBloc>().state is TvSeriesDetailsLoading,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              AppStyle.icons.calendar,
+              width: 16.w,
+              height: 16.h,
             ),
-          ),
-          SizedBox(width: 12.w),
-          SvgPicture.asset(AppStyle.icons.vector),
-          SizedBox(width: 12.w),
-          SvgPicture.asset(AppStyle.icons.clock, width: 16.w, height: 16.h),
-          SizedBox(width: 4.w),
-          Text(
-            duration ?? 'N/A',
-            style: TextStyle(
-              color: const Color(0xFF92929D),
-              fontSize: 12.sp,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.12.w,
+            4.horizontalSpace,
+            Text(
+              year ?? 'N/A',
+              style: CustomTextStyles.montserrat500style12.copyWith(
+                color: const Color(0xFF92929D),
+                letterSpacing: 0.12.w,
+              ),
             ),
-          ),
-          SizedBox(width: 12.w),
-          SvgPicture.asset(AppStyle.icons.vector),
-          SizedBox(width: 12.w),
-          SvgPicture.asset(AppStyle.icons.film, width: 16.w, height: 16.h),
-          SizedBox(width: 4.w),
-          Text(
-            genre ?? 'N/A',
-            style: TextStyle(
-              color: const Color(0xFF92929D),
-              fontSize: 12.sp,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.12.w,
+            12.horizontalSpace,
+            SvgPicture.asset(AppStyle.icons.vector),
+            12.horizontalSpace,
+            SvgPicture.asset(AppStyle.icons.clock, width: 16.w, height: 16.h),
+            4.horizontalSpace,
+            Text(
+              duration ?? 'N/A',
+              style: CustomTextStyles.montserrat500style12.copyWith(
+                color: const Color(0xFF92929D),
+                letterSpacing: 0.12.w,
+              ),
             ),
-          ),
-        ],
+            12.horizontalSpace,
+            SvgPicture.asset(AppStyle.icons.vector),
+            12.horizontalSpace,
+            SvgPicture.asset(AppStyle.icons.film, width: 16.w, height: 16.h),
+            4.horizontalSpace,
+            Text(
+              genre ?? 'N/A',
+              style: CustomTextStyles.montserrat500style12.copyWith(
+                color: const Color(0xFF92929D),
+                letterSpacing: 0.12.w,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

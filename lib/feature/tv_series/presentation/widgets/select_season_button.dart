@@ -1,4 +1,5 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,26 +24,31 @@ class SelectSeasonButton extends StatefulWidget {
 }
 
 class _SelectSeasonButtonState extends State<SelectSeasonButton> {
+  late int currentSeasonNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    currentSeasonNumber = widget.seasonNumber;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Text(
-          'Season ${widget.seasonNumber}',
+          'Season $currentSeasonNumber',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: CustomTextStyles.montserrat500style14.copyWith(
             color: Colors.white,
-            fontSize: 14.sp,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w500,
             letterSpacing: 0.12.w,
           ),
         ),
-        SizedBox(width: 5.w),
+        5.horizontalSpace,
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             final tvSeriesBloc = BlocProvider.of<TvSeriesBloc>(context);
-            showDialog(
+            final result = await showDialog<int>(
               context: context,
               builder: (dialogContext) {
                 return AlertDialog(
@@ -63,32 +69,19 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
                             child: GestureDetector(
                               child: Text(
                                 'Season ${index + 1}',
-                                style: widget.seasonNumber == index + 1
-                                    ? TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24.sp,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 0.12.w,
-                                      )
-                                    : TextStyle(
-                                        color: const Color(0xFF696974),
-                                        fontSize: 20.sp,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 0.12.w,
-                                      ),
+                                style: currentSeasonNumber == index + 1
+                                    ? CustomTextStyles.montserrat600style24
+                                          .copyWith(
+                                            color: Colors.white,
+                                            letterSpacing: 0.12.w,
+                                          )
+                                    : CustomTextStyles.montserrat600style20
+                                          .copyWith(
+                                            color: const Color(0xFF696974),
+                                          ),
                               ),
                               onTap: () {
-                                widget.seasonNumber = index + 1;
-                                setState(() {});
-                                tvSeriesBloc.add(
-                                  FetchTvSeriesSeasonDetails(
-                                    id: widget.tvSeriesId,
-                                    seasonNumber: widget.seasonNumber,
-                                  ),
-                                );
-                                Navigator.pop(dialogContext);
+                                Navigator.pop(dialogContext, index + 1);
                               },
                             ),
                           ),
@@ -99,6 +92,18 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
                 );
               },
             );
+
+            if (result != null && result != currentSeasonNumber) {
+              setState(() {
+                currentSeasonNumber = result;
+              });
+              tvSeriesBloc.add(
+                FetchTvSeriesSeasonDetails(
+                  id: widget.tvSeriesId,
+                  seasonNumber: currentSeasonNumber,
+                ),
+              );
+            }
           },
           child: SvgPicture.asset(
             AppStyle.icons.downArrow,

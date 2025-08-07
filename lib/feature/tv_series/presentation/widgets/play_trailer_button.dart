@@ -1,9 +1,11 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/services/service_locator.dart';
+import '../../../../core/utils/app_colors.dart';
 import '../../domain/repository/tv_series_repo.dart';
 
 class PlayTrailerButton extends StatelessWidget {
@@ -16,7 +18,7 @@ class PlayTrailerButton extends StatelessWidget {
         await sl<TvSeriesRepo>().getTvSeriesDetails(244808);
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF12CDD9),
+        backgroundColor: AppColors.trailerButton,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32.r),
         ),
@@ -28,14 +30,11 @@ class PlayTrailerButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(AppStyle.icons.play, width: 24.w, height: 24.h),
-          SizedBox(width: 8.w),
+          8.horizontalSpace,
           Text(
             'Trailer',
-            style: TextStyle(
+            style: CustomTextStyles.montserrat600style16.copyWith(
               color: Colors.white,
-              fontSize: 16.sp,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
               letterSpacing: 0.12.w,
             ),
           ),

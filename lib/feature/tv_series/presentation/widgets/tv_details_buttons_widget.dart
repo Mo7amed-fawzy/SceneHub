@@ -1,4 +1,5 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/play_trailer_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +16,7 @@ class TvDetailsButtonsWidget extends StatelessWidget {
       children: [
         const PlayTrailerButton(),
         CircleAvatar(
-          backgroundColor: const Color(0xFF252836),
+          backgroundColor: AppColors.dialogBackground,
           radius: 24.r,
           child: SvgPicture.asset(
             AppStyle.icons.download,
@@ -24,7 +25,7 @@ class TvDetailsButtonsWidget extends StatelessWidget {
           ),
         ),
         CircleAvatar(
-          backgroundColor: const Color(0xFF252836),
+          backgroundColor: AppColors.dialogBackground,
           radius: 24.r,
           child: SvgPicture.asset(
             AppStyle.icons.share,

@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/app_text_styles.dart';
+
 class TvActorInfoWidget extends StatelessWidget {
   const TvActorInfoWidget({
     super.key,
@@ -28,30 +30,12 @@ class TvActorInfoWidget extends StatelessWidget {
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
-        SizedBox(width: 8.w),
+        8.horizontalSpace,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              actorName,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14.sp,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.12.w,
-              ),
-            ),
-            Text(
-              characterName,
-              style: TextStyle(
-                color: Color(0xFF92929D),
-                fontSize: 10.sp,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.12.w,
-              ),
-            ),
+            Text(actorName, style: CustomTextStyles.montserrat600style14),
+            Text(characterName, style: CustomTextStyles.montserrat500style10),
           ],
         ),
       ],

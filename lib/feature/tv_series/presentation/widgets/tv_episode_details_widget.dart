@@ -1,8 +1,11 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../../../core/utils/app_colors.dart';
 
 class TvEpisodeDetailsWidget extends StatelessWidget {
   const TvEpisodeDetailsWidget({
@@ -25,8 +28,10 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
       height: 212.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: ShapeDecoration(
-        color: const Color(0xFF252836),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        color: AppColors.dialogBackground,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -59,7 +64,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 16.w),
+              16.horizontalSpace,
               Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,11 +76,8 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                     child: Text(
                       'Episode $episodeNumber',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: const Color(0xFFEBEBEF),
-                        fontSize: 14.sp,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w400,
+                      style: CustomTextStyles.montserrat400style14.copyWith(
+                        color: AppColors.dialogText,
                         height: 1.1.h,
                         letterSpacing: 0.12.w,
                       ),
@@ -86,11 +88,8 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                     child: Text(
                       episodeTitle,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: CustomTextStyles.montserrat600style12.copyWith(
                         color: Colors.white,
-                        fontSize: 12.sp,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
                         letterSpacing: 0.12.w,
                       ),
                     ),
@@ -100,11 +99,8 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                     child: Text(
                       episodeDuration,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: CustomTextStyles.montserrat500style12.copyWith(
                         color: const Color(0xFF92929D),
-                        fontSize: 12.sp,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w500,
                         letterSpacing: 0.12.w,
                       ),
                     ),
@@ -113,7 +109,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
               ),
               const Spacer(),
               CircleAvatar(
-                backgroundColor: const Color(0xFF1F1D2B),
+                backgroundColor: AppColors.dialogBorder,
                 radius: 24.r,
                 child: SvgPicture.asset(
                   AppStyle.icons.download2,
@@ -123,16 +119,13 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 16.h),
+          16.verticalSpace,
           Text(
             episodeDescription,
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: CustomTextStyles.montserrat400style14.copyWith(
               color: const Color(0xFFEBEBEF),
-              fontSize: 14.sp,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w400,
               height: 1.1.h,
               letterSpacing: 0.12.w,
             ),
