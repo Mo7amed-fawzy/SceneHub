@@ -1,8 +1,8 @@
-import 'package:ai_movie_app/feature/tv_series/data/models/genre_model.dart';
+import 'package:ai_movie_app/core/models/genre_model.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/network_model.dart';
-import 'package:ai_movie_app/feature/tv_series/data/models/production_country_model.dart';
+import 'package:ai_movie_app/core/models/production_country_model.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/season_model.dart';
-import 'package:ai_movie_app/feature/tv_series/data/models/spoken_language_model.dart';
+import 'package:ai_movie_app/core/models/spoken_language_model.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/t_episode_to_air_model.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/entities/genre_entity.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
