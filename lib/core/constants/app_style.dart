@@ -10,12 +10,6 @@ class _Images {
   const _Images();
 
   String get avengers => 'assets/images/avengers.png';
-  String get cart => 'assets/images/cart.png';
-  String get checkOut => 'assets/images/check-out 1.png';
-  String get placedOrder => 'assets/images/placed_order.png';
-  String get profilePicture => 'assets/images/profile_picture.png';
-  String get sendEmail => 'assets/images/sende_email.png';
-  String get splash => 'assets/images/splash.png';
 }
 
 class _Icons {

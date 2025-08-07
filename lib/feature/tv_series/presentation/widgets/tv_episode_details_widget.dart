@@ -1,4 +1,6 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/constants/endpoint_constants.dart';
+import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +51,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                       opacity: 0.5,
                       child: CachedNetworkImage(
                         imageUrl:
-                            'https://image.tmdb.org/t/p/w500/$episodeImageUrl',
+                            '${EndpointConstants.imageBaseUrl}$episodeImageUrl',
                         width: 121.w,
                         height: 83.h,
                         fit: BoxFit.cover,
@@ -74,7 +76,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                   SizedBox(
                     width: 100.w,
                     child: Text(
-                      'Episode $episodeNumber',
+                      '${AppStrings.episode} $episodeNumber',
                       overflow: TextOverflow.ellipsis,
                       style: CustomTextStyles.montserrat400style14.copyWith(
                         color: AppColors.dialogText,
@@ -100,7 +102,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                       episodeDuration,
                       overflow: TextOverflow.ellipsis,
                       style: CustomTextStyles.montserrat500style12.copyWith(
-                        color: const Color(0xFF92929D),
+                        color: AppColors.hashedText,
                         letterSpacing: 0.12.w,
                       ),
                     ),
@@ -125,7 +127,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
             style: CustomTextStyles.montserrat400style14.copyWith(
-              color: const Color(0xFFEBEBEF),
+              color: AppColors.dialogText,
               height: 1.1.h,
               letterSpacing: 0.12.w,
             ),

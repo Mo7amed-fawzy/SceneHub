@@ -1,10 +1,13 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../../../core/utils/app_colors.dart';
 
 // ignore: must_be_immutable
 class SelectSeasonButton extends StatefulWidget {
@@ -37,7 +40,7 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
     return Row(
       children: [
         Text(
-          'Season $currentSeasonNumber',
+          '${AppStrings.season} $currentSeasonNumber',
           textAlign: TextAlign.center,
           style: CustomTextStyles.montserrat500style14.copyWith(
             color: Colors.white,
@@ -55,7 +58,7 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
                   ),
-                  backgroundColor: const Color(0xFF252836),
+                  backgroundColor: AppColors.dialogBackground,
                   content: SizedBox(
                     width: 327.w,
                     height: 351.h,
@@ -68,7 +71,7 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             child: GestureDetector(
                               child: Text(
-                                'Season ${index + 1}',
+                                '${AppStrings.season} ${index + 1}',
                                 style: currentSeasonNumber == index + 1
                                     ? CustomTextStyles.montserrat600style24
                                           .copyWith(
@@ -76,9 +79,7 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
                                             letterSpacing: 0.12.w,
                                           )
                                     : CustomTextStyles.montserrat600style20
-                                          .copyWith(
-                                            color: const Color(0xFF696974),
-                                          ),
+                                          .copyWith(color: AppColors.disabled),
                               ),
                               onTap: () {
                                 Navigator.pop(dialogContext, index + 1);

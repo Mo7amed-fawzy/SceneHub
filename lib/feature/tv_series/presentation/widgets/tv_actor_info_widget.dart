@@ -1,3 +1,4 @@
+import 'package:ai_movie_app/core/constants/endpoint_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,7 @@ class TvActorInfoWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(20.r),
           child: CachedNetworkImage(
-            imageUrl: 'https://image.tmdb.org/t/p/w500/$actorImageUrl',
+            imageUrl: '${EndpointConstants.imageBaseUrl}$actorImageUrl',
             width: 40.w,
             height: 40.h,
             fit: BoxFit.cover,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import '../../../../core/utils/app_strings.dart';
 import '../../domain/entities/season_entities.dart';
 import '../bloc/tv_series_bloc.dart';
 import 'tv_episode_details_widget.dart';
@@ -62,11 +63,12 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: TvEpisodeDetailsWidget(
                       episodeDuration: episode?.runtime != null
-                          ? '${episode!.runtime!} Minutes'
-                          : 'N/A',
-                      episodeTitle: episode?.name ?? 'Unknown Episode',
+                          ? '${episode!.runtime!} ${AppStrings.minutes}'
+                          : AppStrings.notAvailabl,
+                      episodeTitle: episode?.name ?? AppStrings.notAvailabl,
                       episodeDescription:
-                          episode?.overview ?? 'No description available.',
+                          episode?.overview ??
+                          AppStrings.noDescriptionAvailable,
                       episodeImageUrl:
                           episode?.stillPath ?? 'episode_image.jpg',
                       episodeNumber: episode?.episodeNumber ?? 0,

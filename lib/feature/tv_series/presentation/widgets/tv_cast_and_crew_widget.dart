@@ -1,3 +1,4 @@
+import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_actor_info_widget.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _TvCastAndCrewWidgetState extends State<TvCastAndCrewWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Cast and Crew',
+            AppStrings.castAndCrew,
             style: CustomTextStyles.montserrat600style16.copyWith(
               color: Colors.white,
               letterSpacing: 0.12.w,
@@ -63,10 +64,11 @@ class _TvCastAndCrewWidgetState extends State<TvCastAndCrewWidget> {
                         child: TvActorInfoWidget(
                           actorImageUrl: tvCast?.cast![index].profilePath ?? '',
                           actorName:
-                              tvCast?.cast![index].name ?? 'Unknown Actor',
+                              tvCast?.cast![index].name ??
+                              AppStrings.unknownActor,
                           characterName:
                               tvCast?.cast![index].roles![0].character ??
-                              'Unknown Character',
+                              AppStrings.unknownCharacter,
                         ),
                       );
                     },

@@ -1,4 +1,5 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,7 @@ class TvRatingWidget extends StatelessWidget {
             Text(
               '$rating',
               style: CustomTextStyles.montserrat600style12.copyWith(
-                color: const Color(0xFFFF8700),
+                color: AppColors.rating,
                 letterSpacing: 0.12.w,
               ),
             ),

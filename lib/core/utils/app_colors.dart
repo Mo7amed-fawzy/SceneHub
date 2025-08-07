@@ -14,4 +14,9 @@ abstract class AppColors {
   static Color dialogBackground = const Color(0xFF252836);
   static Color dialogText = const Color(0xFFEBEBEF);
   static Color dialogBorder = const Color(0xFF1F1D2B);
+  static List<Color> gradientColors = const [
+    Color(0x911F1D2B),
+    Color(0xFF1F1D2B),
+  ];
+  static Color disabled = const Color(0xFF696974);
 }

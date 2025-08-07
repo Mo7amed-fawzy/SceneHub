@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/app_text_styles.dart';
 import '../bloc/tv_series_bloc.dart';
 
@@ -22,7 +23,7 @@ class TvDescriptionWidget extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Story Line',
+              AppStrings.storyLine,
               style: CustomTextStyles.montserrat600style16.copyWith(
                 color: Colors.white,
                 letterSpacing: 0.12.w,
@@ -35,11 +36,11 @@ class TvDescriptionWidget extends StatelessWidget {
                 TextSpan(
                   text: description,
                   style: CustomTextStyles.montserrat400style14.copyWith(
-                    color: const Color(0xFFEBEBEF),
+                    color: AppColors.dialogText,
                   ),
                 ),
                 TextSpan(
-                  text: 'More',
+                  text: AppStrings.more,
                   style: CustomTextStyles.montserrat600style14.copyWith(
                     color: AppColors.trailerButton,
                     letterSpacing: 0.12.w,

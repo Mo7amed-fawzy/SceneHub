@@ -1,4 +1,5 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,7 @@ class PlayTrailerButton extends StatelessWidget {
           SvgPicture.asset(AppStyle.icons.play, width: 24.w, height: 24.h),
           8.horizontalSpace,
           Text(
-            'Trailer',
+            AppStrings.trailer,
             style: CustomTextStyles.montserrat600style16.copyWith(
               color: Colors.white,
               letterSpacing: 0.12.w,

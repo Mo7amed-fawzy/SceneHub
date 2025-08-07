@@ -16,6 +16,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/constants/endpoint_constants.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_strings.dart';
+
 class TvDataShow extends StatelessWidget {
   const TvDataShow({
     super.key,
@@ -30,6 +34,13 @@ class TvDataShow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late int totalDuration;
+    if (tvSeries.episodeRunTime?.isNotEmpty ??
+        false || tvSeries.episodeRunTime != null) {
+      for (var element in tvSeries.episodeRunTime!) {
+        totalDuration += element;
+      }
+    }
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -46,7 +57,7 @@ class TvDataShow extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          'https://image.tmdb.org/t/p/w500/${tvSeries.backdropPath}',
+                          '${EndpointConstants.imageBaseUrl}${tvSeries.backdropPath}',
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -56,11 +67,11 @@ class TvDataShow extends StatelessWidget {
               ),
               Container(
                 height: 450.h,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment(0.50, 0.00),
-                    end: Alignment(0.50, 1.00),
-                    colors: [Color(0x911F1D2B), Color(0xFF1F1D2B)],
+                    begin: const Alignment(0.50, 0.00),
+                    end: const Alignment(0.50, 1.00),
+                    colors: AppColors.gradientColors,
                   ),
                 ),
               ),
@@ -77,7 +88,7 @@ class TvDataShow extends StatelessWidget {
                     decoration: ShapeDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          'https://image.tmdb.org/t/p/w500/${tvSeries.posterPath}',
+                          '${EndpointConstants.imageBaseUrl}${tvSeries.posterPath}',
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -94,11 +105,11 @@ class TvDataShow extends StatelessWidget {
                 child: TvInfoNavWidget(
                   year: tvSeries.firstAirDate?.year.toString(),
                   duration: tvSeries.episodeRunTime?.isNotEmpty ?? false
-                      ? '${tvSeries.episodeRunTime![0] * tvSeries.numberOfEpisodes!} Minutes'
-                      : 'N/A',
+                      ? '$totalDuration ${AppStrings.minutes}'
+                      : AppStrings.notAvailabl,
                   genre: tvSeries.genres?.isNotEmpty ?? false
                       ? tvSeries.genres![0].name
-                      : 'N/A',
+                      : AppStrings.notAvailabl,
                 ),
               ),
               Positioned(
@@ -128,7 +139,8 @@ class TvDataShow extends StatelessWidget {
                 const TvDetailsButtonsWidget(),
                 4.verticalSpace,
                 TvDescriptionWidget(
-                  description: tvSeries.overview ?? 'No description available.',
+                  description:
+                      tvSeries.overview ?? AppStrings.noDescriptionAvailable,
                 ),
                 16.verticalSpace,
                 TvCastAndCrewWidget(tvSeriesId: widget.tvSeriesId),
@@ -140,7 +152,7 @@ class TvDataShow extends StatelessWidget {
                       context.watch<TvSeriesBloc>().state
                           is TvSeriesSeasonDetailsLoading,
                   child: Text(
-                    'Episode',
+                    AppStrings.episode,
                     style: CustomTextStyles.montserrat600style16.copyWith(
                       color: Colors.white,
                       letterSpacing: 0.12.w,

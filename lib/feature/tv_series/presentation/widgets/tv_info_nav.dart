@@ -1,10 +1,12 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
+import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/app_text_styles.dart';
 import '../bloc/tv_series_bloc.dart';
 
@@ -37,9 +39,9 @@ class TvInfoNavWidget extends StatelessWidget {
             ),
             4.horizontalSpace,
             Text(
-              year ?? 'N/A',
+              year ?? AppStrings.notAvailabl,
               style: CustomTextStyles.montserrat500style12.copyWith(
-                color: const Color(0xFF92929D),
+                color: AppColors.hashedText,
                 letterSpacing: 0.12.w,
               ),
             ),
@@ -49,9 +51,9 @@ class TvInfoNavWidget extends StatelessWidget {
             SvgPicture.asset(AppStyle.icons.clock, width: 16.w, height: 16.h),
             4.horizontalSpace,
             Text(
-              duration ?? 'N/A',
+              duration ?? AppStrings.notAvailabl,
               style: CustomTextStyles.montserrat500style12.copyWith(
-                color: const Color(0xFF92929D),
+                color: AppColors.hashedText,
                 letterSpacing: 0.12.w,
               ),
             ),
@@ -61,9 +63,9 @@ class TvInfoNavWidget extends StatelessWidget {
             SvgPicture.asset(AppStyle.icons.film, width: 16.w, height: 16.h),
             4.horizontalSpace,
             Text(
-              genre ?? 'N/A',
+              genre ?? AppStrings.notAvailabl,
               style: CustomTextStyles.montserrat500style12.copyWith(
-                color: const Color(0xFF92929D),
+                color: AppColors.hashedText,
                 letterSpacing: 0.12.w,
               ),
             ),

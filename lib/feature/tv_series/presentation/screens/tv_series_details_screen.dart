@@ -1,9 +1,9 @@
+import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_data_show.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import '../../domain/entities/genre_entity.dart';
 
 class TvSeriesDetailsScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1F1D2B),
+      backgroundColor: AppColors.dialogBackground,
       body: BlocSelector<TvSeriesBloc, TvSeriesState, TvSeriesDetailsEntity?>(
         selector: (state) {
           if (state is TvSeriesDetailsLoaded) {
