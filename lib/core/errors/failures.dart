@@ -18,6 +18,10 @@ class AuthFailure extends Failure {
   AuthFailure([super.message = 'Authentication Error', super.statusCode = 401]);
 }
 
-class OrderFailure extends Failure {
-  OrderFailure([super.message = 'Order Error', super.statusCode = 400]);
+class NetworkFailure extends Failure {
+  NetworkFailure([super.message = 'Network Error', super.statusCode = 503]);
+}
+
+class FormatFailure extends Failure {
+  FormatFailure([super.message = 'Format Error', super.statusCode = 422]);
 }

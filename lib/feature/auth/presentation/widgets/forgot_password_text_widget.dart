@@ -1,5 +1,6 @@
 import 'package:ai_movie_app/core/functions/navigation.dart';
 import 'package:ai_movie_app/core/routes/app_router.dart';
+// ignore: library_prefixes
 import 'package:ai_movie_app/core/routes/app_router.dart' as AppStrings;
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 

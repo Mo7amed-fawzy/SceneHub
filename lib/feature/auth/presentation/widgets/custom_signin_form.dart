@@ -6,6 +6,7 @@ import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/widgets/custom_btn.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_state.dart'
+    // ignore: library_prefixes
     as myAuth;
 import 'package:ai_movie_app/feature/auth/presentation/widgets/custom_text_field.dart';
 import 'package:ai_movie_app/feature/auth/presentation/widgets/forgot_password_text_widget.dart';

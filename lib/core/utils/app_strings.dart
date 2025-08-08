@@ -19,7 +19,9 @@ abstract class AppStrings {
   //!Payment Strings
   checkoutScreen = "Checkout Screen", deliveryAddress = "Delivery Address", change = "Change", items = "1 items", selectedProduct = "Selected Product", paymentMethod = "Payment Method", confirmPayment = "Confirm Payment", orderSuccess = "Order Success", thankYou = "Thank you for your order here and your package will be sent to your address very quickly and fast good product", backToHome = "Back To Home",
   //!Forgot password
-  forgotPasswordPage = "Forgot Password", sendResetPasswordLink = "Send Reset Passwrod Link", verificationNow = "Verification Now", resendCode = "Resend Code", verifyAccount = "Verify Account", enter4DigitCodeWeHaveSentTo = "Enter 4 digit code we have sent to ", haventReceivedVerificationCode = "Haven’t received verification code?";
+  forgotPasswordPage = "Forgot Password", sendResetPasswordLink = "Send Reset Passwrod Link", verificationNow = "Verification Now", resendCode = "Resend Code", verifyAccount = "Verify Account", enter4DigitCodeWeHaveSentTo = "Enter 4 digit code we have sent to ", haventReceivedVerificationCode = "Haven’t received verification code?",
+  //!Tv Series Details
+  minutes = "Minutes", notAvailabl = 'N/A', noDescriptionAvailable = "No description available.", episode = 'Episode', trailer = 'Trailer', season = 'Season', castAndCrew = 'Cast and Crew', unknownActor = 'Unknown Actor', unknownCharacter = 'Unknown Character', storyLine = 'Story Line', more = 'More';
 }
 
 abstract class SupabaseKeys {
@@ -30,8 +32,8 @@ abstract class SupabaseKeys {
   static const String runtime = "runtime";
   static const String genres = "genres";
   static const String desc = "desc";
-  static const String release_date = "date";
-  static const String vote_average = "rate";
+  static const String releaseDate = "date";
+  static const String voteAverage = "rate";
   static const String adult = "adult";
 }
 
