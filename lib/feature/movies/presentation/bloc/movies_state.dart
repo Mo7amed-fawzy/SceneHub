@@ -8,7 +8,7 @@ final class MoviesInitial extends MoviesState {}
 final class MoviesDetailsLoading extends MoviesState {}
 
 final class MoviesLoaded extends MoviesState {
-  final MoviesDetailsModel movieDetails;
+  final MoviesDetailsEntity movieDetails;
 
   MoviesLoaded(this.movieDetails);
 }

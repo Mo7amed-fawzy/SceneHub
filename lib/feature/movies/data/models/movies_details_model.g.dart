@@ -13,7 +13,7 @@ MoviesDetailsModel _$MoviesDetailsModelFromJson(
   backdropPath: json['backdrop_path'] as String?,
   belongsToCollection: json['belongs_to_collection'],
   budget: (json['budget'] as num?)?.toInt(),
-  genres: (json['genres'] as List<dynamic>?)
+  genresModel: (json['genres'] as List<dynamic>?)
       ?.map((e) => GenreModel.fromJson(e as Map<String, dynamic>))
       .toList(),
   homepage: json['homepage'] as String?,
@@ -55,7 +55,7 @@ Map<String, dynamic> _$MoviesDetailsModelToJson(MoviesDetailsModel instance) =>
       'backdrop_path': instance.backdropPath,
       'belongs_to_collection': instance.belongsToCollection,
       'budget': instance.budget,
-      'genres': instance.genres,
+      'genres': instance.genresModel,
       'homepage': instance.homepage,
       'id': instance.id,
       'imdb_id': instance.imdbId,

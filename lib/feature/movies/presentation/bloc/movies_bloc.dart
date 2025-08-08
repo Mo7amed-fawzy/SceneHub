@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/movies_details_model.dart';
+import '../../domain/entities/movies_details_entity.dart';
 import '../../domain/usecases/get_movies_details_usecase.dart';
 
 part 'movies_event.dart';

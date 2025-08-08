@@ -4,7 +4,7 @@ import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_buttons_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_info_nav.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_top_bar_nav.dart';
-import 'package:ai_movie_app/feature/movies/data/models/movies_details_model.dart';
+import 'package:ai_movie_app/feature/movies/domain/entities/movies_details_entity.dart';
 import 'package:ai_movie_app/feature/movies/presentation/bloc/movies_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_description_widget.dart';
 import 'package:ai_movie_app/core/utils/details_screen_rating_widget.dart';
@@ -18,7 +18,7 @@ import '../../../../core/constants/endpoint_constants.dart';
 
 class MoviesDetailsShow extends StatelessWidget {
   const MoviesDetailsShow({super.key, required this.moviesDetails});
-  final MoviesDetailsModel moviesDetails;
+  final MoviesDetailsEntity moviesDetails;
 
   @override
   Widget build(BuildContext context) {

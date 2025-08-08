@@ -1,6 +1,6 @@
 import 'package:ai_movie_app/core/constants/app_data_types.dart';
 
-import '../../data/models/movies_details_model.dart';
+import '../entities/movies_details_entity.dart';
 import '../repository/movies_repo.dart';
 
 class GetMovieDetailsUseCase {
@@ -8,7 +8,7 @@ class GetMovieDetailsUseCase {
 
   GetMovieDetailsUseCase(this.repository);
 
-  AsyncSingleDataResponse<MoviesDetailsModel> call(int movieId) async {
+  AsyncSingleDataResponse<MoviesDetailsEntity> call(int movieId) async {
     return await repository.getMovieDetails(movieId);
   }
 }

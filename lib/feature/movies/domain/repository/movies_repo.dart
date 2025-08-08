@@ -1,6 +1,6 @@
 import 'package:ai_movie_app/core/constants/app_data_types.dart';
-import 'package:ai_movie_app/feature/movies/data/models/movies_details_model.dart';
+import 'package:ai_movie_app/feature/movies/domain/entities/movies_details_entity.dart';
 
 abstract class MoviesRepository {
-  AsyncSingleDataResponse<MoviesDetailsModel> getMovieDetails(int movieId);
+  AsyncSingleDataResponse<MoviesDetailsEntity> getMovieDetails(int movieId);
 }

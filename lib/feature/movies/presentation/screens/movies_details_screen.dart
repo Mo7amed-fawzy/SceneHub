@@ -1,4 +1,4 @@
-import 'package:ai_movie_app/feature/movies/data/models/movies_details_model.dart';
+import 'package:ai_movie_app/feature/movies/domain/entities/movies_details_entity.dart';
 import 'package:ai_movie_app/feature/movies/presentation/screens/movies_details_show.dart';
 
 import 'package:flutter/material.dart';
@@ -32,14 +32,13 @@ class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
           }
           if (state is MoviesDetailsLoading) {
             return MoviesDetailsShow(
-              moviesDetails: MoviesDetailsModel(
+              moviesDetails: const MoviesDetailsEntity(
                 backdropPath: 'dsfgfdg',
                 id: 0,
-                originalTitle: 'sdgsdfsdg',
+                title: 'sdgsdfsdgsdf',
                 overview:
                     'sdgsdfskld sdklgsiod h;gsiodgjf sdoipgj; sidgj siodgjsdoi;g ',
-                releaseDate: DateTime(2000),
-                title: 'sdgsdfsdgsdf',
+                releaseDate: null,
                 voteAverage: 0.0,
                 runtime: 120,
                 genres: [],
