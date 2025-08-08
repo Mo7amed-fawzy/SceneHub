@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../constants/endpoint_constants.dart';
+import '../errors/exceptions.dart';
 import 'api_consumer.dart';
 import 'interceptors.dart';
-// import 'status_code.dart';
+import 'status_code.dart';
 
 class DioConsumer implements ApiConsumer {
   final Dio client;
@@ -17,26 +18,19 @@ class DioConsumer implements ApiConsumer {
       ..receiveTimeout = const Duration(seconds: 15);
 
     client.interceptors.add(AppInterceptors());
-    client.interceptors.add(
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90,
-        enabled: kDebugMode,
-        filter: (options, args) {
-          // don't print requests with uris containing '/posts'
-          if (options.path.contains('/posts')) {
-            return false;
-          }
-          // don't print responses with unit8 list data
-          return !args.isResponse || !args.hasUint8ListData;
-        },
-      ),
-    );
+
+    if (kDebugMode) {
+      client.interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+        ),
+      );
+    }
   }
 
   @override
@@ -52,24 +46,8 @@ class DioConsumer implements ApiConsumer {
     }
   }
 
-  // Implement other methods (post, put, delete)
-
-  void _handleDioError(DioException error) {
-    // Handle different error types
-  }
-
   @override
-  Future delete(String path) async {
-    try {
-      final response = await client.delete(path);
-      return response.data;
-    } on DioException catch (error) {
-      _handleDioError(error);
-    }
-  }
-
-  @override
-  Future post(String path, {Map<String, dynamic>? body}) async {
+  Future<dynamic> post(String path, {Map<String, dynamic>? body}) async {
     try {
       final response = await client.post(path, data: body);
       return response.data;
@@ -79,12 +57,54 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future put(String path, {Map<String, dynamic>? body}) async {
+  Future<dynamic> put(String path, {Map<String, dynamic>? body}) async {
     try {
       final response = await client.put(path, data: body);
       return response.data;
     } on DioException catch (error) {
       _handleDioError(error);
+    }
+  }
+
+  @override
+  Future<dynamic> delete(String path) async {
+    try {
+      final response = await client.delete(path);
+      return response.data;
+    } on DioException catch (error) {
+      _handleDioError(error);
+    }
+  }
+
+  void _handleDioError(DioException error) {
+    switch (error.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        throw const ServerException('Connection timeout');
+      case DioExceptionType.badResponse:
+        switch (error.response?.statusCode) {
+          case StatusCode.badRequest:
+            throw const ServerException('Bad request');
+          case StatusCode.unauthorized:
+            throw const ServerException('Unauthorized');
+          case StatusCode.forbidden:
+            throw const ServerException('Forbidden');
+          case StatusCode.notFound:
+            throw const ServerException('Not found');
+          case StatusCode.conflict:
+            throw const ServerException('Conflict');
+          case StatusCode.internalServerError:
+            throw const ServerException('Internal server error');
+          default:
+            throw const ServerException('Unknown error');
+        }
+      case DioExceptionType.cancel:
+        throw const ServerException('Request cancelled');
+      case DioExceptionType.connectionError:
+        throw const ServerException('No internet connection');
+      default:
+        throw const ServerException('Unknown error occurred');
     }
   }
 }
