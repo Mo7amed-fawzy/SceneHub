@@ -1,22 +1,25 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/utils/app_text_styles.dart';
-import '../bloc/tv_series_bloc.dart';
+import '../utils/app_text_styles.dart';
 
-class TvTopBarNav extends StatelessWidget {
-  const TvTopBarNav({super.key, required this.title});
+class DetailsScreenTopBarNav extends StatelessWidget {
+  const DetailsScreenTopBarNav({
+    super.key,
+    required this.title,
+    required this.isLoading,
+  });
   final String title;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
-      enabled: context.watch<TvSeriesBloc>().state is TvSeriesDetailsLoading,
+      enabled: isLoading,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

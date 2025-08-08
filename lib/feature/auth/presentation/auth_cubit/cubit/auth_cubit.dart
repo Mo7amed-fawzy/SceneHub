@@ -1,5 +1,6 @@
 import 'package:ai_movie_app/core/functions/print_statement.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_state.dart'
+    // ignore: library_prefixes
     as myAuth;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

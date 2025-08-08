@@ -2,7 +2,7 @@ import 'package:ai_movie_app/feature/movies/domain/repository/movies_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../feature/movies/data/datasorce/movies_remote_datasource.dart';
+import '../../feature/movies/data/datasource/movies_remote_datasource.dart';
 import '../../feature/movies/data/repository/movies_repo_impl.dart';
 import '../../feature/movies/domain/usecases/get_movies_details_usecase.dart';
 import '../../feature/tv_series/data/datasource/tv_series_remote_datasource.dart';

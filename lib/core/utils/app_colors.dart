@@ -19,4 +19,5 @@ abstract class AppColors {
     Color(0xFF1F1D2B),
   ];
   static Color disabled = const Color(0xFF696974);
+  static Color backgroundColor = const Color(0xFF1F1D2B);
 }

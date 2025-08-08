@@ -5,21 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/services/service_locator.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../domain/repository/tv_series_repo.dart';
-
 class PlayTrailerButton extends StatelessWidget {
-  const PlayTrailerButton({super.key});
+  const PlayTrailerButton({super.key, required this.buttonColor, this.text});
+  final Color buttonColor;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () async {
-        await sl<TvSeriesRepo>().getTvSeriesDetails(244808);
-      },
+      onPressed: () {},
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.trailerButton,
+        backgroundColor: buttonColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32.r),
         ),
@@ -33,7 +29,7 @@ class PlayTrailerButton extends StatelessWidget {
           SvgPicture.asset(AppStyle.icons.play, width: 24.w, height: 24.h),
           8.horizontalSpace,
           Text(
-            AppStrings.trailer,
+            text ?? AppStrings.trailer,
             style: CustomTextStyles.montserrat600style16.copyWith(
               color: Colors.white,
               letterSpacing: 0.12.w,

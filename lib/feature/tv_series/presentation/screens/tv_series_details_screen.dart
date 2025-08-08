@@ -26,7 +26,7 @@ class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.dialogBackground,
+      backgroundColor: AppColors.backgroundColor,
       body: BlocSelector<TvSeriesBloc, TvSeriesState, TvSeriesDetailsEntity?>(
         selector: (state) {
           if (state is TvSeriesDetailsLoaded) {

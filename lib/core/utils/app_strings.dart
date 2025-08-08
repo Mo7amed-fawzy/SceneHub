@@ -32,8 +32,8 @@ abstract class SupabaseKeys {
   static const String runtime = "runtime";
   static const String genres = "genres";
   static const String desc = "desc";
-  static const String release_date = "date";
-  static const String vote_average = "rate";
+  static const String releaseDate = "date";
+  static const String voteAverage = "rate";
   static const String adult = "adult";
 }
 

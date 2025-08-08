@@ -1,3 +1,5 @@
+// ignore_for_file: annotate_overrides, overridden_fields
+
 import 'package:ai_movie_app/core/models/genre_model.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/network_model.dart';
 import 'package:ai_movie_app/core/models/production_country_model.dart';

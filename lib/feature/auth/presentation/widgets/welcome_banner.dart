@@ -15,7 +15,7 @@ class WelcomeBanner extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(AppStrings.appName, style: CustomTextStyles.roboto500style12),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             // children: [Assets.imagesDetails1, Assets.imagesHomeIconActive],

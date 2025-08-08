@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields, annotate_overrides
+
 import 'package:ai_movie_app/feature/tv_series/domain/entities/genre_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 

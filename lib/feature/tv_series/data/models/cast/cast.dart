@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:ai_movie_app/feature/tv_series/data/models/cast/role.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -14,12 +16,14 @@ class Cast extends CastEntity {
   final int? id;
   @JsonKey(name: "known_for_department")
   final String? knownForDepartment;
+  @override
   @JsonKey(name: "name")
   final String? name;
   @JsonKey(name: "original_name")
   final String? originalName;
   @JsonKey(name: "popularity")
   final double? popularity;
+  @override
   @JsonKey(name: "profile_path")
   final String? profilePath;
   @JsonKey(name: "roles")

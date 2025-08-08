@@ -1,15 +1,13 @@
+import 'package:ai_movie_app/core/utils/app_colors.dart';
+import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
-import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
-import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
-import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_series_details_screen.dart';
-import 'package:ai_movie_app/feature/tv_series/presentation/widgets/episodes_list_widget.dart';
-import 'package:ai_movie_app/feature/tv_series/presentation/widgets/select_season_button.dart';
-import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_cast_and_crew_widget.dart';
-import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_description_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_buttons_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_info_nav.dart';
-import 'package:ai_movie_app/core/utils/details_screen_rating_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_top_bar_nav.dart';
+import 'package:ai_movie_app/feature/movies/data/models/movies_details_model.dart';
+import 'package:ai_movie_app/feature/movies/presentation/bloc/movies_bloc.dart';
+import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_description_widget.dart';
+import 'package:ai_movie_app/core/utils/details_screen_rating_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,30 +15,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/constants/endpoint_constants.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_strings.dart';
 
-class TvDataShow extends StatelessWidget {
-  const TvDataShow({
-    super.key,
-    required this.widget,
-    required this.seasonNumber,
-    required this.tvSeries,
-  });
-
-  final TvSeriesDetailsScreen widget;
-  final int seasonNumber;
-  final TvSeriesDetailsEntity tvSeries;
+class MoviesDetailsShow extends StatelessWidget {
+  const MoviesDetailsShow({super.key, required this.moviesDetails});
+  final MoviesDetailsModel moviesDetails;
 
   @override
   Widget build(BuildContext context) {
-    late int totalDuration;
-    if (tvSeries.episodeRunTime?.isNotEmpty ??
-        false || tvSeries.episodeRunTime != null) {
-      for (var element in tvSeries.episodeRunTime!) {
-        totalDuration += element;
-      }
-    }
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -48,8 +29,7 @@ class TvDataShow extends StatelessWidget {
             children: [
               Skeletonizer(
                 enabled:
-                    context.watch<TvSeriesBloc>().state
-                        is TvSeriesDetailsLoading,
+                    context.watch<MoviesBloc>().state is MoviesDetailsLoading,
                 child: Opacity(
                   opacity: 0.24,
                   child: Container(
@@ -57,7 +37,7 @@ class TvDataShow extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          '${EndpointConstants.imageBaseUrl}${tvSeries.backdropPath}',
+                          '${EndpointConstants.imageBaseUrl}${moviesDetails.backdropPath}',
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -79,16 +59,14 @@ class TvDataShow extends StatelessWidget {
                 left: 95.w,
                 top: 80.h,
                 child: Skeletonizer(
-                  enabled:
-                      context.watch<TvSeriesBloc>().state
-                          is TvSeriesDetailsLoading,
+                  enabled: false,
                   child: Container(
                     width: 190.w,
                     height: 270.h,
                     decoration: ShapeDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          '${EndpointConstants.imageBaseUrl}${tvSeries.posterPath}',
+                          '${EndpointConstants.imageBaseUrl}${moviesDetails.posterPath}',
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -103,15 +81,13 @@ class TvDataShow extends StatelessWidget {
                 left: 65.w,
                 bottom: 50.h,
                 child: DetailsScreenInfoNavWidget(
-                  isLoading:
-                      context.watch<TvSeriesBloc>().state
-                          is TvSeriesDetailsLoading,
-                  year: tvSeries.firstAirDate?.year.toString(),
-                  duration: tvSeries.episodeRunTime?.isNotEmpty ?? false
-                      ? '$totalDuration ${AppStrings.minutes}'
+                  isLoading: false,
+                  year: moviesDetails.releaseDate?.year.toString(),
+                  duration: moviesDetails.runtime != null
+                      ? '${moviesDetails.runtime} ${AppStrings.minutes}'
                       : AppStrings.notAvailabl,
-                  genre: tvSeries.genres?.isNotEmpty ?? false
-                      ? tvSeries.genres![0].name
+                  genre: moviesDetails.genres?.isNotEmpty ?? false
+                      ? moviesDetails.genres![0].name
                       : AppStrings.notAvailabl,
                 ),
               ),
@@ -119,11 +95,9 @@ class TvDataShow extends StatelessWidget {
                 left: 165.w,
                 bottom: 25.h,
                 child: DetailsScreenRatingWidget(
-                  isLoading:
-                      context.watch<TvSeriesBloc>().state
-                          is TvSeriesDetailsLoading,
+                  isLoading: false,
                   rating: double.parse(
-                    (tvSeries.voteAverage!).toStringAsFixed(1),
+                    (moviesDetails.voteAverage ?? 0).toStringAsFixed(1),
                   ),
                 ),
               ),
@@ -131,10 +105,9 @@ class TvDataShow extends StatelessWidget {
                 top: 40.h,
                 left: 20.w,
                 child: DetailsScreenTopBarNav(
-                  title: tvSeries.name!,
+                  title: moviesDetails.title ?? AppStrings.notAvailabl,
                   isLoading:
-                      context.watch<TvSeriesBloc>().state
-                          is TvSeriesDetailsLoading,
+                      context.watch<MoviesBloc>().state is MoviesDetailsLoading,
                 ),
               ),
             ],
@@ -147,44 +120,34 @@ class TvDataShow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10.h,
               children: [
-                const DetailsScreenButtonsWidget(),
+                DetailsScreenButtonsWidget(
+                  buttonColor: AppColors.rating,
+                  text: 'Play',
+                ),
                 4.verticalSpace,
                 TvDescriptionWidget(
+                  description: moviesDetails.overview ?? AppStrings.notAvailabl,
                   isLoading:
-                      context.watch<TvSeriesBloc>().state
-                          is TvSeriesDetailsLoading,
-                  description:
-                      tvSeries.overview ?? AppStrings.noDescriptionAvailable,
+                      context.watch<MoviesBloc>().state is MoviesDetailsLoading,
                 ),
                 16.verticalSpace,
-                TvCastAndCrewWidget(tvSeriesId: widget.tvSeriesId),
-                12.verticalSpace,
-                Skeletonizer(
-                  enabled:
-                      context.watch<TvSeriesBloc>().state
-                          is TvSeriesDetailsLoading ||
-                      context.watch<TvSeriesBloc>().state
-                          is TvSeriesSeasonDetailsLoading,
+                // TODO: Implement MovieCastAndCrewWidget
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.h),
                   child: Text(
-                    AppStrings.episode,
+                    AppStrings.castAndCrew,
                     style: CustomTextStyles.montserrat600style16.copyWith(
                       color: Colors.white,
                       letterSpacing: 0.12.w,
                     ),
                   ),
                 ),
-                SelectSeasonButton(
-                  seasonNumber: seasonNumber,
-                  tvSeriesId: widget.tvSeriesId,
-                  numberOfSeasons: tvSeries.numberOfSeasons ?? 1,
-                ),
-                EpisodesListWidget(
-                  isLoading:
-                      context.watch<TvSeriesBloc>().state
-                          is TvSeriesSeasonDetailsLoading,
-                  tvSeriesId: widget.tvSeriesId,
-                  numberOfSeasons: tvSeries.numberOfSeasons ?? 1,
-                ),
+                12.verticalSpace,
+                // SelectSeasonButton(
+                //   seasonNumber: 2,
+                //   tvSeriesId: 2,
+                //   numberOfSeasons: 2,
+                // ),
               ],
             ),
           ),

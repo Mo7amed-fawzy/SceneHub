@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/movies_details_model.dart';
 import '../../domain/usecases/get_movies_details_usecase.dart';
@@ -21,7 +21,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
     int movieId,
     Emitter<MoviesState> emit,
   ) async {
-    emit(MoviesLoading());
+    emit(MoviesDetailsLoading());
     final result = await getMovieDetailsUseCase.call(movieId);
     result.fold(
       (error) => emit(MoviesError(error.message)),

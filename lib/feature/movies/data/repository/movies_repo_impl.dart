@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/constants/app_data_types.dart';
 import '../../domain/repository/movies_repo.dart';
-import '../datasorce/movies_remote_datasource.dart';
+import '../datasource/movies_remote_datasource.dart';
 import '../models/movies_details_model.dart';
 
 class MoviesRepositoryImpl implements MoviesRepository {

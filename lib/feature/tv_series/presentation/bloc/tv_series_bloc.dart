@@ -2,8 +2,8 @@ import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dar
 import 'package:ai_movie_app/feature/tv_series/domain/entities/season_entities.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/usecases/get_tv_series_details_usecase.dart';
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/usecases/get_tv_series_cast_usecase.dart';
 import '../../domain/usecases/get_tv_series_seasons_details_usecase.dart';

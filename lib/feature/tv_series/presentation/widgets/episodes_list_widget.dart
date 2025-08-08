@@ -12,10 +12,11 @@ class EpisodesListWidget extends StatefulWidget {
     super.key,
     required this.tvSeriesId,
     required this.numberOfSeasons,
+    required this.isLoading,
   });
   final int tvSeriesId;
   final int numberOfSeasons;
-
+  final bool isLoading;
   @override
   State<EpisodesListWidget> createState() => _EpisodesListWidgetState();
 }
@@ -37,9 +38,7 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
-      enabled:
-          tvSeason == null ||
-          context.watch<TvSeriesBloc>().state is TvSeriesSeasonDetailsLoading,
+      enabled: tvSeason == null || widget.isLoading,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10.h,

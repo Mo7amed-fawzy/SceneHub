@@ -1,30 +1,30 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/app_text_styles.dart';
-import '../bloc/tv_series_bloc.dart';
+import '../utils/app_strings.dart';
+import '../utils/app_text_styles.dart';
 
-class TvInfoNavWidget extends StatelessWidget {
-  const TvInfoNavWidget({
+class DetailsScreenInfoNavWidget extends StatelessWidget {
+  const DetailsScreenInfoNavWidget({
     super.key,
     required this.year,
     required this.duration,
     required this.genre,
+    required this.isLoading,
   });
   final String? year;
   final String? duration;
   final String? genre;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
-      enabled: context.watch<TvSeriesBloc>().state is TvSeriesDetailsLoading,
+      enabled: isLoading,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         child: Row(

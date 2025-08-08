@@ -5,7 +5,7 @@ sealed class MoviesState {}
 
 final class MoviesInitial extends MoviesState {}
 
-final class MoviesLoading extends MoviesState {}
+final class MoviesDetailsLoading extends MoviesState {}
 
 final class MoviesLoaded extends MoviesState {
   final MoviesDetailsModel movieDetails;
