@@ -78,7 +78,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - .env
+    - env/.env
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

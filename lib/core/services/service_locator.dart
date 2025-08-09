@@ -3,6 +3,10 @@ import 'package:ai_movie_app/feature/cast/data/repository/cast_repo_impl.dart';
 import 'package:ai_movie_app/feature/cast/domain/repository/cast_repo.dart';
 import 'package:ai_movie_app/feature/cast/domain/usecases/get_movies_cast_usecase.dart';
 import 'package:ai_movie_app/feature/movies/domain/repository/movies_repo.dart';
+import 'package:ai_movie_app/feature/splash/data/repositories/supabase_auth_repository.dart';
+import 'package:ai_movie_app/feature/splash/domain/repositories/auth_repository.dart';
+import 'package:ai_movie_app/feature/splash/domain/use_case/decide_start_destination_usecase.dart';
+import 'package:ai_movie_app/feature/splash/presentation/manager/splash_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -33,6 +37,19 @@ Future<void> initSl() async {
   sl.registerSingleton(appPreferences);
   sl.registerLazySingleton<Dio>(() => Dio());
   sl.registerLazySingleton<ApiConsumer>(() => DioConsumer(client: sl()));
+
+  // splash
+  sl.registerFactory(() => SplashCubit(sl()));
+
+  sl.registerLazySingleton<DecideStartDestinationUseCase>(
+    () => DecideStartDestinationUseCase(
+      appPreferences: sl<AppPreferences>(),
+      authRepository: sl<AuthRepository>(),
+    ),
+  );
+
+  // auth
+  sl.registerLazySingleton<AuthRepository>(() => SupabaseAuthRepository());
 
   //* Tv Series
   sl.registerLazySingleton<TvSeriesRemoteDatasource>(
