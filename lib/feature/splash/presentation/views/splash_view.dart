@@ -1,12 +1,9 @@
-import 'package:ai_movie_app/core/database/cache/app_shared_preferences.dart';
 import 'package:ai_movie_app/core/functions/navigation.dart';
-import 'package:ai_movie_app/core/functions/print_statement.dart';
-import 'package:ai_movie_app/core/routes/app_router.dart';
 import 'package:ai_movie_app/core/services/service_locator.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
+import 'package:ai_movie_app/feature/splash/domain/use_case/decide_start_destination_usecase.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -19,12 +16,13 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    checkFirstVisitOrNot(
-      context,
-      'isOnBoardingVisited',
-      signInPage,
-      toOnbourding,
-    );
+    _navigateAfterSplash();
+  }
+
+  Future<void> _navigateAfterSplash() async {
+    final nextRoute = await sl<DecideStartDestinationUseCase>()();
+    if (!mounted) return;
+    customReplacementNavigate(context, nextRoute);
   }
 
   @override
@@ -39,50 +37,3 @@ class _SplashViewState extends State<SplashView> {
     );
   }
 }
-
-void checkFirstVisitOrNot(
-  BuildContext context,
-  String key,
-  String ifFirstContinue,
-  String ifNoTToOnBoarding,
-) {
-  bool isVisited = sl<AppPreferences>().getData(key) ?? false;
-
-  Future.delayed(const Duration(seconds: 2), () async {
-    if (!context.mounted) return;
-
-    final user = Supabase.instance.client.auth.currentUser;
-    printHere('Supabase User: $user');
-
-    if (isVisited) {
-      if (user != null) {
-        checkEmailVerifiedOrNotSupabase(context, homeNavBar, signInPage);
-      } else {
-        customReplacementNavigate(context, signInPage);
-      }
-    } else {
-      customReplacementNavigate(context, ifNoTToOnBoarding);
-    }
-  });
-}
-
-void checkEmailVerifiedOrNotSupabase(
-  BuildContext context,
-  String home,
-  String signIn,
-) {
-  final user = Supabase.instance.client.auth.currentUser;
-
-  if (user != null) {
-    customReplacementNavigate(context, home);
-  } else {
-    customReplacementNavigate(context, signIn);
-  }
-}
-
-// void checkEmailVerifiedOrNot(
-//     BuildContext context, String homePage, String signInPage) {
-//   FirebaseAuth.instance.currentUser?.emailVerified == false
-//       ? customReplacementNavigate(context, signInPage)
-//       : customReplacementNavigate(context, homePage);
-// }

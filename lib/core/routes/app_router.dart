@@ -1,7 +1,10 @@
+import 'package:ai_movie_app/core/services/service_locator.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/forgot_password_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_in_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_up_view.dart';
+import 'package:ai_movie_app/feature/movies/presentation/bloc/movies_bloc.dart';
+import 'package:ai_movie_app/feature/movies/presentation/screens/movies_details_screen.dart';
 import 'package:ai_movie_app/feature/on_bourding/presentation/views/on_boarding_view.dart';
 import 'package:ai_movie_app/feature/splash/presentation/views/splash_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +17,7 @@ const String homeView = "/HomeView";
 const String forgotPassword = "/ForgotPasswordView";
 const String homeNavBar = "/HomeNavBar";
 
-final GoRouter starterrouter = GoRouter(
+final GoRouter goRouter = GoRouter(
   routes: [
     GoRoute(path: "/", builder: (context, state) => const SplashView()),
     GoRoute(
@@ -46,6 +49,17 @@ final GoRouter starterrouter = GoRouter(
         create: (context) => AuthCubit(),
         child: const ForgotPasswordView(),
       ),
+    ),
+
+    GoRoute(
+      path: '$homeView/:id',
+      builder: (context, state) {
+        final movieId = int.parse(state.pathParameters['id']!);
+        return BlocProvider(
+          create: (context) => MoviesBloc(sl()),
+          child: MoviesDetailsScreen(movieId: movieId),
+        );
+      },
     ),
   ],
 );
