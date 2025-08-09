@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_text_styles.dart';
 
-class TvActorInfoWidget extends StatelessWidget {
-  const TvActorInfoWidget({
+class ActorInfoWidget extends StatelessWidget {
+  const ActorInfoWidget({
     super.key,
     required this.actorImageUrl,
     required this.actorName,

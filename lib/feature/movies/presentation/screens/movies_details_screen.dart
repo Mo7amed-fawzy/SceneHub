@@ -8,7 +8,8 @@ import '../../../../core/utils/app_colors.dart';
 import '../bloc/movies_bloc.dart';
 
 class MoviesDetailsScreen extends StatefulWidget {
-  const MoviesDetailsScreen({super.key});
+  const MoviesDetailsScreen({super.key, required this.movieId});
+  final int movieId;
 
   @override
   State<MoviesDetailsScreen> createState() => _MoviesDetailsScreenState();
@@ -17,7 +18,7 @@ class MoviesDetailsScreen extends StatefulWidget {
 class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
   @override
   void initState() {
-    context.read<MoviesBloc>().add(FetchMovieDetailsEvent(12));
+    context.read<MoviesBloc>().add(FetchMovieDetailsEvent(widget.movieId));
     super.initState();
   }
 
@@ -28,7 +29,10 @@ class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
       body: BlocBuilder<MoviesBloc, MoviesState>(
         builder: (context, state) {
           if (state is MoviesLoaded) {
-            return MoviesDetailsShow(moviesDetails: state.movieDetails);
+            return MoviesDetailsShow(
+              moviesDetails: state.movieDetails,
+              movieId: widget.movieId,
+            );
           }
           if (state is MoviesDetailsLoading) {
             return MoviesDetailsShow(
@@ -44,6 +48,7 @@ class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
                 genres: [],
                 posterPath: 'dsfgfdg',
               ),
+              movieId: widget.movieId,
             );
           }
           return const Center(child: CircularProgressIndicator());

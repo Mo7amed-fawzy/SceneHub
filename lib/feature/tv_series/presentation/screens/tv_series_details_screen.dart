@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/genre_entity.dart';
 
 class TvSeriesDetailsScreen extends StatefulWidget {
-  const TvSeriesDetailsScreen({super.key});
-  final int tvSeriesId = 1396; // Example ID, can be passed dynamically
+  const TvSeriesDetailsScreen({super.key, required this.tvSeriesId});
+  final int tvSeriesId; //= 1396; // Example ID, can be passed dynamically
 
   @override
   State<TvSeriesDetailsScreen> createState() => _TvSeriesDetailsScreenState();
