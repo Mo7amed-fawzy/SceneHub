@@ -15,9 +15,3 @@ final class FetchTvSeriesSeasonDetails extends TvSeriesEvent {
 
   FetchTvSeriesSeasonDetails({required this.id, required this.seasonNumber});
 }
-
-final class FetchTvSeriesCast extends TvSeriesEvent {
-  final int id;
-
-  FetchTvSeriesCast(this.id);
-}

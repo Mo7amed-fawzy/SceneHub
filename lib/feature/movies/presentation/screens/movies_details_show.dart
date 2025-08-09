@@ -1,6 +1,5 @@
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
-import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_buttons_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_info_nav.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_top_bar_nav.dart';
@@ -15,10 +14,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/constants/endpoint_constants.dart';
+import '../../../../core/services/service_locator.dart';
+import '../../../cast/presentation/bloc/cast_bloc.dart';
+import '../../../cast/presentation/screens/cast_and_crew_widget.dart';
 
 class MoviesDetailsShow extends StatelessWidget {
-  const MoviesDetailsShow({super.key, required this.moviesDetails});
+  const MoviesDetailsShow({
+    super.key,
+    required this.moviesDetails,
+    required this.movieId,
+  });
   final MoviesDetailsEntity moviesDetails;
+  final int movieId;
 
   @override
   Widget build(BuildContext context) {
@@ -131,23 +138,12 @@ class MoviesDetailsShow extends StatelessWidget {
                       context.watch<MoviesBloc>().state is MoviesDetailsLoading,
                 ),
                 16.verticalSpace,
-                // TODO: Implement MovieCastAndCrewWidget
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 8.h),
-                  child: Text(
-                    AppStrings.castAndCrew,
-                    style: CustomTextStyles.montserrat600style16.copyWith(
-                      color: Colors.white,
-                      letterSpacing: 0.12.w,
-                    ),
-                  ),
+                BlocProvider(
+                  create: (context) => CastBloc(sl(), sl()),
+
+                  child: CastAndCrewWidget(movieId: movieId),
                 ),
                 12.verticalSpace,
-                // SelectSeasonButton(
-                //   seasonNumber: 2,
-                //   tvSeriesId: 2,
-                //   numberOfSeasons: 2,
-                // ),
               ],
             ),
           ),

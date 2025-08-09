@@ -1,9 +1,9 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
-import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dart';
+import 'package:ai_movie_app/feature/cast/domain/entities/cast_entities.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'role.g.dart';
+part '../datasource/role.g.dart';
 
 @JsonSerializable()
 class Role extends RoleEntity {

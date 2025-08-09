@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'role.dart';
+part of '../models/role.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

@@ -1,10 +1,11 @@
+import 'package:ai_movie_app/core/services/service_locator.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/entities/tv_series_entities.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_series_details_screen.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/episodes_list_widget.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/select_season_button.dart';
-import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_cast_and_crew_widget.dart';
+import 'package:ai_movie_app/feature/cast/presentation/screens/cast_and_crew_widget.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_description_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_buttons_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_info_nav.dart';
@@ -19,6 +20,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/constants/endpoint_constants.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../cast/presentation/bloc/cast_bloc.dart';
 
 class TvDataShow extends StatelessWidget {
   const TvDataShow({
@@ -34,9 +36,8 @@ class TvDataShow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late int totalDuration;
-    if (tvSeries.episodeRunTime?.isNotEmpty ??
-        false || tvSeries.episodeRunTime != null) {
+    int totalDuration = 0;
+    if (tvSeries.episodeRunTime?.isNotEmpty ?? false) {
       for (var element in tvSeries.episodeRunTime!) {
         totalDuration += element;
       }
@@ -157,7 +158,13 @@ class TvDataShow extends StatelessWidget {
                       tvSeries.overview ?? AppStrings.noDescriptionAvailable,
                 ),
                 16.verticalSpace,
-                TvCastAndCrewWidget(tvSeriesId: widget.tvSeriesId),
+                BlocProvider(
+                  create: (context) => CastBloc(sl(), sl()),
+                  child: CastAndCrewWidget(
+                    tvSeriesId: widget.tvSeriesId,
+                    isTvSeries: true,
+                  ),
+                ),
                 12.verticalSpace,
                 Skeletonizer(
                   enabled:

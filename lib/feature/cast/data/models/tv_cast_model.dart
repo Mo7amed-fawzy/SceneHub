@@ -1,5 +1,5 @@
-import 'package:ai_movie_app/feature/tv_series/data/models/cast/cast.dart';
-import 'package:ai_movie_app/feature/tv_series/domain/entities/cast_entities.dart';
+import 'package:ai_movie_app/feature/cast/data/models/cast.dart';
+import 'package:ai_movie_app/feature/cast/domain/entities/cast_entities.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'tv_cast_model.g.dart';

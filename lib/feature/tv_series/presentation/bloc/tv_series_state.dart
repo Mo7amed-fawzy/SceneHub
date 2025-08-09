@@ -32,16 +32,3 @@ final class TvSeriesSeasonDetailsError extends TvSeriesState {
 
   TvSeriesSeasonDetailsError(this.message);
 }
-
-final class TvSeriesCastLoaded extends TvSeriesState {
-  final TvCastEntity tvCast;
-
-  TvSeriesCastLoaded(this.tvCast);
-}
-
-final class TvSeriesCastLoading extends TvSeriesState {}
-
-final class TvSeriesCastError extends TvSeriesState {
-  final String message;
-  TvSeriesCastError(this.message);
-}
