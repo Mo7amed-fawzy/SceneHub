@@ -41,3 +41,30 @@ It handles initial routing logic through the `DecideStartDestinationUseCase` and
 
 ---
 
+## Second Implemented Feature: OnBoarding Screen 🎉
+
+The **OnBoarding Screen** introduces new users to the app features with a clean UI and smooth navigation.  
+It is fully integrated using **Clean Architecture** principles with **Cubit** for state management and **Shared Preferences** to track if the onboarding was already visited.
+
+**Key Highlights of OnBoarding Feature:**
+- Uses **local data only** for images and text (no remote API required).
+- Implements **OnBoardingLocalDataSource** and **OnBoardingRepository**.
+- Includes **GetOnBoardingDataUseCase** and **SetOnBoardingVisitedUseCase**.
+- Integrates **OnBoardingCubit** for state management.
+- Provides **skip functionality** to navigate directly to SignUp/SignIn.
+- Connects UI buttons with Cubit actions instead of direct local calls.
+- OnBoarding pages display **3 slides** with informative text and images.
+- Images for OnBoarding included in README for reference.
+
+---
+
+## OnBoarding Screenshots 📸
+
+<p align="center">
+  <img src="assets/screenshots/onboarding/onboarding_1.png" alt="OnBoarding Screen 1" width="300">
+  <img src="assets/screenshots/onboarding/onboarding_2.png" alt="OnBoarding Screen 2" width="300">
+  <img src="assets/screenshots/onboarding/onboarding_3.png" alt="OnBoarding Screen 3" width="300">
+</p>
+
+---
+

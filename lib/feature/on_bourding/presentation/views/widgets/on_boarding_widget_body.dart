@@ -1,5 +1,5 @@
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
-import 'package:ai_movie_app/feature/on_bourding/data/models/on_boarding_model.dart';
+import 'package:ai_movie_app/feature/on_bourding/domain/entities/on_boarding_entity.dart';
 import 'package:ai_movie_app/feature/on_bourding/presentation/views/widgets/custom_smooth_page_indecator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,11 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class OnBoardingBody extends StatelessWidget {
   const OnBoardingBody({
     super.key,
-    required this.controler,
+    required this.controller,
+    required this.data,
     this.onPageChanged,
   });
 
-  final PageController controler;
+  final PageController controller;
+  final List<OnBoardingEntity> data;
   final Function(int)? onPageChanged;
 
   @override
@@ -19,8 +21,8 @@ class OnBoardingBody extends StatelessWidget {
     return PageView.builder(
       onPageChanged: onPageChanged,
       physics: const BouncingScrollPhysics(),
-      controller: controler,
-      itemCount: onBoardingData.length,
+      controller: controller,
+      itemCount: data.length,
       itemBuilder: (context, index) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -28,19 +30,16 @@ class OnBoardingBody extends StatelessWidget {
             SizedBox(
               width: 0.75.sw,
               height: 0.45.sh,
-              child: Image.asset(
-                onBoardingData[index].imagePath,
-                fit: BoxFit.contain,
-              ),
+              child: Image.asset(data[index].imagePath, fit: BoxFit.contain),
             ),
             SizedBox(height: 13.h),
-            CustomSmoothPageIndicator(controller: controler),
+            CustomSmoothPageIndicator(controller: controller),
             SizedBox(height: 13.h),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               child: Text(
-                onBoardingData[index].title,
-                key: ValueKey(onBoardingData[index].title),
+                data[index].title,
+                key: ValueKey(data[index].title),
                 style: CustomTextStyles.poppins400style16.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -51,8 +50,8 @@ class OnBoardingBody extends StatelessWidget {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               child: Text(
-                onBoardingData[index].subTitle,
-                key: ValueKey(onBoardingData[index].subTitle),
+                data[index].subTitle,
+                key: ValueKey(data[index].subTitle),
                 style: CustomTextStyles.poppins400style14,
                 textAlign: TextAlign.center,
               ),
