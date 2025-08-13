@@ -1,3 +1,4 @@
+import 'package:ai_movie_app/core/utils/theme_cubit.dart';
 import 'package:ai_movie_app/feature/cast/data/datasource/cast_remote_datasource.dart';
 import 'package:ai_movie_app/feature/cast/data/repository/cast_repo_impl.dart';
 import 'package:ai_movie_app/feature/cast/domain/repository/cast_repo.dart';
@@ -6,7 +7,6 @@ import 'package:ai_movie_app/feature/movies/domain/repository/movies_repo.dart';
 import 'package:ai_movie_app/feature/splash/data/repositories/supabase_auth_repository.dart';
 import 'package:ai_movie_app/feature/splash/domain/repositories/auth_repository.dart';
 import 'package:ai_movie_app/feature/splash/domain/use_case/decide_start_destination_usecase.dart';
-import 'package:ai_movie_app/feature/splash/presentation/manager/splash_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -39,7 +39,8 @@ Future<void> initSl() async {
   sl.registerLazySingleton<ApiConsumer>(() => DioConsumer(client: sl()));
 
   // splash
-  sl.registerFactory(() => SplashCubit(sl()));
+  // sl.registerFactory(() => SplashCubit(sl()));
+  sl.registerLazySingleton<ThemeCubit>(() => ThemeCubit()..loadTheme());
 
   sl.registerLazySingleton<DecideStartDestinationUseCase>(
     () => DecideStartDestinationUseCase(

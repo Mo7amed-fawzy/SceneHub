@@ -14,14 +14,14 @@ class CustomShimmerCategory extends StatelessWidget {
           width: 164.0,
           height: 96.0,
           child: Shimmer.fromColors(
-            baseColor: AppColors.secondaryColor,
+            baseColor: AppColorsDark.secondaryColor,
             highlightColor: Colors.white,
             child: Container(
               width: 100,
               height: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: AppColors.secondaryColor,
+                color: AppColorsDark.secondaryColor,
               ),
             ),
           ),
@@ -31,14 +31,14 @@ class CustomShimmerCategory extends StatelessWidget {
           width: 164.0,
           height: 96.0,
           child: Shimmer.fromColors(
-            baseColor: AppColors.secondaryColor,
+            baseColor: AppColorsDark.secondaryColor,
             highlightColor: Colors.white,
             child: Container(
               width: 100,
               height: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: AppColors.secondaryColor,
+                color: AppColorsDark.secondaryColor,
               ),
             ),
           ),

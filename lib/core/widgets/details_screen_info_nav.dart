@@ -41,7 +41,7 @@ class DetailsScreenInfoNavWidget extends StatelessWidget {
             Text(
               year ?? AppStrings.notAvailabl,
               style: CustomTextStyles.montserrat500style12.copyWith(
-                color: AppColors.hashedText,
+                color: AppColorsDark.hashedText,
                 letterSpacing: 0.12.w,
               ),
             ),
@@ -53,7 +53,7 @@ class DetailsScreenInfoNavWidget extends StatelessWidget {
             Text(
               duration ?? AppStrings.notAvailabl,
               style: CustomTextStyles.montserrat500style12.copyWith(
-                color: AppColors.hashedText,
+                color: AppColorsDark.hashedText,
                 letterSpacing: 0.12.w,
               ),
             ),
@@ -65,7 +65,7 @@ class DetailsScreenInfoNavWidget extends StatelessWidget {
             Text(
               genre ?? AppStrings.notAvailabl,
               style: CustomTextStyles.montserrat500style12.copyWith(
-                color: AppColors.hashedText,
+                color: AppColorsDark.hashedText,
                 letterSpacing: 0.12.w,
               ),
             ),

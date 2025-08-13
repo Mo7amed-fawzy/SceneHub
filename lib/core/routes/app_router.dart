@@ -1,4 +1,5 @@
 import 'package:ai_movie_app/core/services/service_locator.dart';
+import 'package:ai_movie_app/core/utils/theme_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/forgot_password_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_in_view.dart';
@@ -19,7 +20,13 @@ const String homeNavBar = "/HomeNavBar";
 
 final GoRouter goRouter = GoRouter(
   routes: [
-    GoRoute(path: "/", builder: (context, state) => const SplashView()),
+    GoRoute(
+      path: "/",
+      builder: (context, state) => BlocProvider.value(
+        value: sl<ThemeCubit>(),
+        child: const SplashView(),
+      ),
+    ),
     GoRoute(
       path: toOnbourding,
       builder: (context, state) => const OnBourdingView(),

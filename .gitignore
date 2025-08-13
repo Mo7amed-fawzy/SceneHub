@@ -12,7 +12,8 @@
 .swiftpm/
 migrate_working_dir/
 env/.env
-.env
+lib/feature/on_bourding/presentation/views/widgets/stateful_on_boarding_body.dart
+/lib/core/utils/theme_helper.dart
 # IntelliJ related
 *.iml
 *.ipr

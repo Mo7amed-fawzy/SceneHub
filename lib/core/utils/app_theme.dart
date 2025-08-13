@@ -1,76 +1,66 @@
 import 'package:flutter/material.dart';
+import 'app_colors.dart';
 
 class AppTheme {
-  static const _backgroundDark = Color(0xFF1E1E2F);
-  static const _purpleAccentDark = Color(0xFF6C63FF);
-  static const _skyBlueDark = Color(0xFF00C9FF);
-  static const _textColorDark = Color(0xFFF5F5F5);
-
-  static const _backgroundLight = Color(0xFFF5F7FB);
-  static const _cardColor = Color(0xFFFFFFFF);
-  static const _purpleAccentLight = Color(0xFF6C63FF);
-  static const _skyBlueLight = Color(0xFF00C9FF);
-  static const _textColorLight = Color(0xFF1E1E2F);
-
   static ThemeData darkNeoFuturisticTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: _backgroundDark,
-    primaryColor: _purpleAccentDark,
-    colorScheme: const ColorScheme.dark(
-      primary: _purpleAccentDark,
-      secondary: _skyBlueDark,
-      onPrimary: Colors.white,
+    scaffoldBackgroundColor: AppColorsDark.backgroundColor,
+    primaryColor: AppColorsDark.primaryColor,
+    colorScheme: ColorScheme.dark(
+      primary: AppColorsDark.selectedIcon,
+      secondary: AppColorsDark.trailerButton,
+      onPrimary: AppColorsDark.text,
     ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: _backgroundDark,
-      foregroundColor: _textColorDark,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColorsDark.backgroundColor,
+      foregroundColor: AppColorsDark.text,
       centerTitle: true,
       elevation: 4,
       titleTextStyle: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: _textColorDark,
+        color: AppColorsDark.text,
       ),
     ),
-    cardColor: const Color(0xFF2C2C3C),
+    cardColor: AppColorsDark.secondaryColor,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: const Color(0xFF2A2A3A),
+      fillColor: AppColorsDark.secondaryColor,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: _skyBlueDark),
+        borderSide: BorderSide(color: AppColorsDark.trailerButton),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: _purpleAccentDark, width: 2),
+        borderSide: BorderSide(color: AppColorsDark.selectedIcon, width: 2),
       ),
-      hintStyle: const TextStyle(color: Colors.grey),
+      hintStyle: TextStyle(color: AppColorsDark.hashedText),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: _purpleAccentDark,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColorsDark.selectedIcon,
+        foregroundColor: AppColorsDark.text,
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: _skyBlueDark,
-        backgroundColor: _skyBlueDark.withValues(alpha: 0.1),
+        foregroundColor: AppColorsDark.trailerButton,
+        backgroundColor: AppColorsDark.trailerButton.withValues(alpha: 0.1),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         textStyle: const TextStyle(fontWeight: FontWeight.bold),
       ),
     ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontSize: 16, color: _textColorDark),
-      bodyMedium: TextStyle(fontSize: 14, color: Colors.white70),
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(fontSize: 16, color: AppColorsDark.text),
+      bodyMedium: TextStyle(fontSize: 14, color: AppColorsDark.hashedText),
       titleLarge: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: _textColorDark,
+        color: AppColorsDark.text,
       ),
     ),
   );
@@ -78,63 +68,63 @@ class AppTheme {
   static ThemeData lightNeoFuturisticTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    scaffoldBackgroundColor: _backgroundLight,
-    primaryColor: _purpleAccentLight,
-    colorScheme: const ColorScheme.light(
-      primary: _purpleAccentLight,
-      secondary: _skyBlueLight,
-      onPrimary: Colors.white,
-      surface: _backgroundLight,
+    scaffoldBackgroundColor: AppColorsLight.backgroundColor,
+    primaryColor: AppColorsLight.primaryColor,
+    colorScheme: ColorScheme.light(
+      primary: AppColorsLight.selectedIcon,
+      secondary: AppColorsLight.trailerButton,
+      onPrimary: AppColorsLight.text,
+      surface: AppColorsLight.backgroundColor,
     ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: _purpleAccentLight,
-      foregroundColor: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColorsLight.primaryColor,
+      foregroundColor: AppColorsLight.text,
       elevation: 4,
       centerTitle: true,
       titleTextStyle: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: AppColorsLight.text,
       ),
     ),
-    cardColor: _cardColor,
+    cardColor: AppColorsLight.secondaryColor,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: AppColorsLight.secondaryColor,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: _skyBlueLight),
+        borderSide: BorderSide(color: AppColorsLight.trailerButton),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: _purpleAccentLight, width: 2),
+        borderSide: BorderSide(color: AppColorsLight.selectedIcon, width: 2),
       ),
-      hintStyle: const TextStyle(color: Colors.grey),
+      hintStyle: TextStyle(color: AppColorsLight.hashedText),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: _purpleAccentLight,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColorsLight.selectedIcon,
+        foregroundColor: AppColorsLight.text,
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: _skyBlueLight,
-        backgroundColor: _skyBlueLight.withValues(alpha: 0.1),
+        foregroundColor: AppColorsLight.trailerButton,
+        backgroundColor: AppColorsLight.trailerButton.withValues(alpha: 0.1),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         textStyle: const TextStyle(fontWeight: FontWeight.bold),
       ),
     ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontSize: 16, color: _textColorLight),
-      bodyMedium: TextStyle(fontSize: 14, color: Colors.black87),
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(fontSize: 16, color: AppColorsLight.text),
+      bodyMedium: TextStyle(fontSize: 14, color: AppColorsLight.hashedText),
       titleLarge: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: _textColorLight,
+        color: AppColorsLight.text,
       ),
     ),
   );

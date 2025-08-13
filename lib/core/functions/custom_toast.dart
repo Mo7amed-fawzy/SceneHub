@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 showToast(String mymsg, [Color? customBackgroundColor]) {
-  customBackgroundColor ??= AppColors.primaryColor; // default value
+  customBackgroundColor ??= AppColorsDark.primaryColor; // default value
 
   Fluttertoast.showToast(
     msg: mymsg,
@@ -11,7 +11,7 @@ showToast(String mymsg, [Color? customBackgroundColor]) {
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
     backgroundColor: customBackgroundColor,
-    textColor: AppColors.save,
+    textColor: AppColorsDark.save,
     fontSize: 16.0,
   );
 }

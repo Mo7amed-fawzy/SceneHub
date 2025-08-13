@@ -1,4 +1,6 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 abstract class AuthRepository {
-  dynamic getCurrentUser();
+  /// Returns the currently authenticated user, or null if not signed in.
+  User? getCurrentUser();
 }
-//! The domain layer must not depend on any external library (as per the principles of Clean Architecture).

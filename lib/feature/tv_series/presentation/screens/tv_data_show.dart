@@ -72,7 +72,7 @@ class TvDataShow extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: const Alignment(0.50, 0.00),
                     end: const Alignment(0.50, 1.00),
-                    colors: AppColors.gradientColors,
+                    colors: AppColorsDark.gradientColors,
                   ),
                 ),
               ),

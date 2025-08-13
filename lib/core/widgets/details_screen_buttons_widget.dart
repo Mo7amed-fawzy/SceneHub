@@ -17,11 +17,11 @@ class DetailsScreenButtonsWidget extends StatelessWidget {
       spacing: 16.w,
       children: [
         PlayTrailerButton(
-          buttonColor: buttonColor ?? AppColors.trailerButton,
+          buttonColor: buttonColor ?? AppColorsDark.trailerButton,
           text: text,
         ),
         CircleAvatar(
-          backgroundColor: AppColors.dialogBackground,
+          backgroundColor: AppColorsDark.dialogBackground,
           radius: 24.r,
           child: SvgPicture.asset(
             buttonColor == null
@@ -32,7 +32,7 @@ class DetailsScreenButtonsWidget extends StatelessWidget {
           ),
         ),
         CircleAvatar(
-          backgroundColor: AppColors.dialogBackground,
+          backgroundColor: AppColorsDark.dialogBackground,
           radius: 24.r,
           child: SvgPicture.asset(
             AppStyle.icons.share,

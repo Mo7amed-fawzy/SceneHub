@@ -30,7 +30,7 @@ class DetailsScreenTopBarNav extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.r),
               ),
-              color: AppColors.dialogBackground,
+              color: AppColorsDark.dialogBackground,
             ),
             child: SvgPicture.asset(
               AppStyle.icons.backArrow,
@@ -57,7 +57,7 @@ class DetailsScreenTopBarNav extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.r),
               ),
-              color: AppColors.dialogBackground,
+              color: AppColorsDark.dialogBackground,
             ),
             child: SvgPicture.asset(
               AppStyle.icons.heart,

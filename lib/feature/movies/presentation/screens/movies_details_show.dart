@@ -58,7 +58,7 @@ class MoviesDetailsShow extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: const Alignment(0.50, 0.00),
                     end: const Alignment(0.50, 1.00),
-                    colors: AppColors.gradientColors,
+                    colors: AppColorsDark.gradientColors,
                   ),
                 ),
               ),
@@ -128,7 +128,7 @@ class MoviesDetailsShow extends StatelessWidget {
               spacing: 10.h,
               children: [
                 DetailsScreenButtonsWidget(
-                  buttonColor: AppColors.rating,
+                  buttonColor: AppColorsDark.rating,
                   text: 'Play',
                 ),
                 4.verticalSpace,
