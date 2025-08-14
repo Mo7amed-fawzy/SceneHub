@@ -36,7 +36,7 @@ class DetailsScreenRatingWidget extends StatelessWidget {
             Text(
               '$rating',
               style: CustomTextStyles.montserrat600style12.copyWith(
-                color: AppColors.rating,
+                color: AppColorsDark.rating,
                 letterSpacing: 0.12.w,
               ),
             ),

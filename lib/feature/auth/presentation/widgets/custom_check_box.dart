@@ -17,7 +17,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
     return Checkbox(
       value: value,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-      side: BorderSide(color: AppColors.secondaryColor),
+      side: BorderSide(color: AppColorsDark.secondaryColor),
       onChanged: (newValue) {
         setState(() {
           value = newValue;

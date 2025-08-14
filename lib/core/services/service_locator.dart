@@ -1,12 +1,17 @@
+import 'package:ai_movie_app/core/utils/theme_cubit.dart';
 import 'package:ai_movie_app/feature/cast/data/datasource/cast_remote_datasource.dart';
 import 'package:ai_movie_app/feature/cast/data/repository/cast_repo_impl.dart';
 import 'package:ai_movie_app/feature/cast/domain/repository/cast_repo.dart';
 import 'package:ai_movie_app/feature/cast/domain/usecases/get_movies_cast_usecase.dart';
 import 'package:ai_movie_app/feature/movies/domain/repository/movies_repo.dart';
+import 'package:ai_movie_app/feature/on_bourding/data/models/local_data_source.dart';
+import 'package:ai_movie_app/feature/on_bourding/data/repo_impl/on_boarding_repo_impl.dart';
+import 'package:ai_movie_app/feature/on_bourding/domain/repository/on_boarding_repository.dart';
+import 'package:ai_movie_app/feature/on_bourding/domain/use_cases/on_boarding_usecases.dart';
+import 'package:ai_movie_app/feature/on_bourding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:ai_movie_app/feature/splash/data/repositories/supabase_auth_repository.dart';
 import 'package:ai_movie_app/feature/splash/domain/repositories/auth_repository.dart';
 import 'package:ai_movie_app/feature/splash/domain/use_case/decide_start_destination_usecase.dart';
-import 'package:ai_movie_app/feature/splash/presentation/manager/splash_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -39,7 +44,8 @@ Future<void> initSl() async {
   sl.registerLazySingleton<ApiConsumer>(() => DioConsumer(client: sl()));
 
   // splash
-  sl.registerFactory(() => SplashCubit(sl()));
+  // sl.registerFactory(() => SplashCubit(sl()));
+  sl.registerLazySingleton<ThemeCubit>(() => ThemeCubit()..loadTheme());
 
   sl.registerLazySingleton<DecideStartDestinationUseCase>(
     () => DecideStartDestinationUseCase(
@@ -47,6 +53,21 @@ Future<void> initSl() async {
       authRepository: sl<AuthRepository>(),
     ),
   );
+
+  // OnBoarding Feature
+  sl.registerLazySingleton<OnBoardingLocalDataSource>(
+    () => OnBoardingLocalDataSourceImpl(sl()),
+  );
+
+  sl.registerLazySingleton<OnBoardingRepository>(
+    () => OnBoardingRepositoryImpl(sl()),
+  );
+
+  sl.registerLazySingleton(() => GetOnBoardingDataUseCase(sl()));
+  sl.registerLazySingleton(() => SetOnBoardingVisitedUseCase(sl()));
+
+  // Cubit
+  sl.registerFactory(() => OnBoardingCubit(sl(), sl()));
 
   // auth
   sl.registerLazySingleton<AuthRepository>(() => SupabaseAuthRepository());

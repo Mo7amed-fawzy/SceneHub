@@ -30,7 +30,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
       height: 212.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: ShapeDecoration(
-        color: AppColors.dialogBackground,
+        color: AppColorsDark.dialogBackground,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
         ),
@@ -79,7 +79,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                       '${AppStrings.episode} $episodeNumber',
                       overflow: TextOverflow.ellipsis,
                       style: CustomTextStyles.montserrat400style14.copyWith(
-                        color: AppColors.dialogText,
+                        color: AppColorsDark.dialogText,
                         height: 1.1.h,
                         letterSpacing: 0.12.w,
                       ),
@@ -102,7 +102,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                       episodeDuration,
                       overflow: TextOverflow.ellipsis,
                       style: CustomTextStyles.montserrat500style12.copyWith(
-                        color: AppColors.hashedText,
+                        color: AppColorsDark.hashedText,
                         letterSpacing: 0.12.w,
                       ),
                     ),
@@ -111,7 +111,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
               ),
               const Spacer(),
               CircleAvatar(
-                backgroundColor: AppColors.dialogBorder,
+                backgroundColor: AppColorsDark.dialogBorder,
                 radius: 24.r,
                 child: SvgPicture.asset(
                   AppStyle.icons.download2,
@@ -127,7 +127,7 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
             style: CustomTextStyles.montserrat400style14.copyWith(
-              color: AppColors.dialogText,
+              color: AppColorsDark.dialogText,
               height: 1.1.h,
               letterSpacing: 0.12.w,
             ),

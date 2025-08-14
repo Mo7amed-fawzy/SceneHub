@@ -9,10 +9,10 @@ class CustomSmoothPageIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SmoothPageIndicator(
-      controller: controller, // مدير للصفحات
+      controller: controller,
       count: 3,
       effect: ExpandingDotsEffect(
-        activeDotColor: AppColors.secondaryColor,
+        activeDotColor: AppColorsDark.secondaryColor,
         dotHeight: 7,
         dotWidth: 10,
       ),

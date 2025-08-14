@@ -6,73 +6,73 @@ abstract class CustomTextStyles {
   static final poppins600style18 = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w600,
-    color: AppColors.text,
+    color: AppColorsDark.text,
     fontFamily: "Poppins",
   );
   static final poppins400style14 = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
-    color: AppColors.tertiaryColor,
+    color: AppColorsDark.tertiaryColor,
     fontFamily: "Poppins",
   );
   static final poppins400style12 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w400,
-    color: AppColors.text,
+    color: AppColorsDark.text,
     fontFamily: "Poppins",
   );
   static final poppins500style14 = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w500,
-    color: AppColors.text,
+    color: AppColorsDark.text,
     fontFamily: "Poppins",
   );
   static final poppins400style16 = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w400,
-    color: AppColors.text,
+    color: AppColorsDark.text,
     fontFamily: "Poppins",
   );
   static final poppins500style12 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w500,
-    color: AppColors.text,
+    color: AppColorsDark.text,
     fontFamily: "Poppins",
   );
   static final roboto500style12 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w500,
-    color: AppColors.tertiaryColor,
+    color: AppColorsDark.tertiaryColor,
     fontFamily: "Roboto",
   );
   static final roboto500style12Selected = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w500,
-    color: AppColors.selectedIcon,
+    color: AppColorsDark.selectedIcon,
     fontFamily: "Roboto",
   );
   static final montserrat500style12 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w500,
-    color: AppColors.hashedText,
+    color: AppColorsDark.hashedText,
     fontFamily: "Montserrat",
   );
   static final montserrat600style12 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w600,
-    color: AppColors.rating,
+    color: AppColorsDark.rating,
     fontFamily: "Montserrat",
   );
   static final montserrat600style16 = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w600,
-    color: AppColors.titles,
+    color: AppColorsDark.titles,
     fontFamily: "Montserrat",
   );
   static final montserrat500style14 = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w500,
-    color: AppColors.text,
+    color: AppColorsDark.text,
     fontFamily: "Montserrat",
   );
   static final montserrat600style24 = TextStyle(

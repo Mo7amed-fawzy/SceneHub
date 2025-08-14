@@ -23,7 +23,7 @@ class HaveAnAccountWidget extends StatelessWidget {
               TextSpan(
                 text: text2,
                 style: CustomTextStyles.poppins400style12.copyWith(
-                  color: AppColors.tertiaryColor,
+                  color: AppColorsDark.tertiaryColor,
                 ),
               ),
             ],

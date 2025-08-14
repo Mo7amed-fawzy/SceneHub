@@ -26,7 +26,7 @@ class CustomDataListViewItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryColor,
+              color: AppColorsDark.primaryColor,
               blurRadius: 10,
               offset: const Offset(0, 7),
             ),
@@ -48,7 +48,7 @@ class CustomDataListViewItem extends StatelessWidget {
                 maxLines: 2,
                 style: CustomTextStyles.poppins600style18.copyWith(
                   fontSize: 16,
-                  color: AppColors.primaryColor,
+                  color: AppColorsDark.primaryColor,
                 ),
               ),
             ),
@@ -58,12 +58,12 @@ class CustomDataListViewItem extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: model.image,
                 placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: AppColors.secondaryColor,
+                  baseColor: AppColorsDark.secondaryColor,
                   highlightColor: Colors.white,
                   child: Container(
                     width: 47,
                     height: 64,
-                    color: AppColors.secondaryColor,
+                    color: AppColorsDark.secondaryColor,
                   ),
                 ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),

@@ -22,7 +22,7 @@ class CustomSignUpForm extends StatelessWidget {
           showToast('Successfully, check your email to verify your account');
           customReplacementNavigate(context, signInPage);
         } else if (state is SignUpFailureState) {
-          showToast(state.errMessage, AppColors.tertiaryColor);
+          showToast(state.errMessage, AppColorsDark.tertiaryColor);
         }
       },
       builder: (context, state) {
@@ -67,7 +67,7 @@ class CustomSignUpForm extends StatelessWidget {
               const SizedBox(height: 80),
               CustomBtn(
                 color: authCubit.termsAndConditionCheckValues == false
-                    ? AppColors.primaryColor
+                    ? AppColorsDark.primaryColor
                     : null,
                 onPressed: () async {
                   if (authCubit.termsAndConditionCheckValues == true) {
@@ -78,7 +78,7 @@ class CustomSignUpForm extends StatelessWidget {
                 },
                 text: isLoading ? '' : AppStrings.signUp, // isLoading == false
                 customWidget: isLoading
-                    ? CircularProgressIndicator(color: AppColors.save)
+                    ? CircularProgressIndicator(color: AppColorsDark.save)
                     : null,
               ),
             ],

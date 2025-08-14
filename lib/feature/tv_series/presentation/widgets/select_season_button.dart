@@ -58,7 +58,7 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
                   ),
-                  backgroundColor: AppColors.dialogBackground,
+                  backgroundColor: AppColorsDark.dialogBackground,
                   content: SizedBox(
                     width: 327.w,
                     height: 351.h,
@@ -79,7 +79,9 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
                                             letterSpacing: 0.12.w,
                                           )
                                     : CustomTextStyles.montserrat600style20
-                                          .copyWith(color: AppColors.disabled),
+                                          .copyWith(
+                                            color: AppColorsDark.disabled,
+                                          ),
                               ),
                               onTap: () {
                                 Navigator.pop(dialogContext, index + 1);

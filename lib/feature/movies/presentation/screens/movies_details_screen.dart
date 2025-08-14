@@ -25,7 +25,7 @@ class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColorsDark.backgroundColor,
       body: BlocBuilder<MoviesBloc, MoviesState>(
         builder: (context, state) {
           if (state is MoviesLoaded) {

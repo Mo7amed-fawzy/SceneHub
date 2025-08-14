@@ -59,7 +59,7 @@ class CustomSignInForm extends StatelessWidget {
               const ForgotPasswordTextWidget(),
               const SizedBox(height: 102),
               state is myAuth.SigninLoadingState
-                  ? CircularProgressIndicator(color: AppColors.primaryColor)
+                  ? CircularProgressIndicator(color: AppColorsDark.primaryColor)
                   : CustomBtn(
                       onPressed: () async {
                         if (authCubit.signinFormKey.currentState!.validate()) {

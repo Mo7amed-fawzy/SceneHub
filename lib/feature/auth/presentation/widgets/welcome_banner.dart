@@ -10,7 +10,7 @@ class WelcomeBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 290,
-      decoration: BoxDecoration(color: AppColors.primaryColor),
+      decoration: BoxDecoration(color: AppColorsDark.primaryColor),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

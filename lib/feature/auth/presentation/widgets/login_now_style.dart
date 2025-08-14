@@ -11,7 +11,7 @@ class LoginNowStyle extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.primaryColor, width: 2),
+        border: Border.all(color: AppColorsDark.primaryColor, width: 2),
       ),
       padding: const EdgeInsets.all(5),
       child: Text(
