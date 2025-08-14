@@ -61,9 +61,9 @@ It is fully integrated using **Clean Architecture** principles with **Cubit** fo
 ## OnBoarding Screenshots 📸
 
 <p align="center">
-  <img src="assets/screenshots/onboarding/onboarding_1.png" alt="OnBoarding Screen 1" width="300">
-  <img src="assets/screenshots/onboarding/onboarding_2.png" alt="OnBoarding Screen 2" width="300">
-  <img src="assets/screenshots/onboarding/onboarding_3.png" alt="OnBoarding Screen 3" width="300">
+  <img src="assets/screenshots/on_boarding_feature/onboarding_1.png" alt="OnBoarding Screen 1" width="300">
+  <img src="assets/screenshots/on_boarding_feature/onboarding_2.png" alt="OnBoarding Screen 2" width="300">
+  <img src="assets/screenshots/on_boarding_feature/onboarding_3.png" alt="OnBoarding Screen 3" width="300">
 </p>
 
 ---
