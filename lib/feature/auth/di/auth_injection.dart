@@ -1,6 +1,3 @@
-import 'package:ai_movie_app/feature/auth/data/auth_services/auth_data_orchestrator.dart';
-import 'package:ai_movie_app/feature/auth/data/auth_services/auth_network_service.dart';
-import 'package:ai_movie_app/feature/auth/data/auth_services/auth_sync_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ai_movie_app/core/database/cache/app_shared_preferences.dart';
 import 'package:ai_movie_app/core/network/api_consumer.dart';
@@ -9,7 +6,9 @@ import 'package:ai_movie_app/feature/auth/data/datasources/auth_local_data_sourc
 import 'package:ai_movie_app/feature/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:ai_movie_app/feature/auth/data/datasources/auth_remote_data_source_impl.dart';
 import 'package:ai_movie_app/feature/auth/data/repositories/auth_repository_impl.dart';
-
+import 'package:ai_movie_app/feature/auth/data/services/auth_network_service.dart';
+import 'package:ai_movie_app/feature/auth/data/services/auth_data_orchestrator.dart';
+import 'package:ai_movie_app/feature/auth/data/services/auth_sync_service.dart';
 import 'package:ai_movie_app/feature/auth/domain/repositories/auth_repository.dart';
 import 'package:ai_movie_app/feature/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:ai_movie_app/feature/auth/domain/usecases/is_email_verified_usecase.dart';
@@ -67,8 +66,8 @@ Future<void> initAuthDependencies() async {
   );
 
   // Use Cases
-  getIt.registerLazySingleton(() => ValidateAuthCredentialsUseCase());
-  getIt.registerLazySingleton(() => ValidateSignupCredentialsUseCase());
+  getIt.registerLazySingleton(() => const ValidateAuthCredentialsUseCase());
+  getIt.registerLazySingleton(() => const ValidateSignupCredentialsUseCase());
   getIt.registerLazySingleton(() => SignOutUseCase(getIt<AuthRepository>()));
   getIt.registerLazySingleton(
     () => ResetPasswordUseCase(getIt<AuthRepository>()),
@@ -85,7 +84,7 @@ Future<void> initAuthDependencies() async {
   );
   getIt.registerLazySingleton(() => SignUpUseCase(getIt<AuthRepository>()));
   getIt.registerLazySingleton(() => SignInUseCase(getIt<AuthRepository>()));
-  getIt.registerLazySingleton(() => MapAuthFailureToMessageUseCase());
+  getIt.registerLazySingleton(() => const MapAuthFailureToMessageUseCase());
   getIt.registerLazySingleton(
     () => SignupWithValidationUseCase(
       validateUseCase: getIt<ValidateSignupCredentialsUseCase>(),

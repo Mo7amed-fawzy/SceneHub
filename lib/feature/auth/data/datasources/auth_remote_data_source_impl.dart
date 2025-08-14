@@ -1,6 +1,6 @@
-import 'package:ai_movie_app/feature/auth/data/auth_services/auth_network_service.dart';
 import 'package:ai_movie_app/feature/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:ai_movie_app/feature/auth/data/models/user_model.dart';
+import 'package:ai_movie_app/feature/auth/data/services/auth_network_service.dart';
 import 'package:ai_movie_app/feature/auth/domain/entities/auth_credentials.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
