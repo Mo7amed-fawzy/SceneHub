@@ -1,5 +1,5 @@
 class EndpointConstants {
-  static const String baseUrl3 = 'https://api.themoviedb.org/3/';
+  static const String baseUrl = 'https://api.themoviedb.org/3/';
   static const String tvSeriesDetails = 'tv/';
   static const String movieDetails = 'movie/';
   static const String movieCast = '/credits';
@@ -8,7 +8,7 @@ class EndpointConstants {
   static const String imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
   // Add your endpoints here
 
-  static const String baseUrl = 'https://api.example.com/v1';
+  static const String baseUrl1 = 'https://api.example.com/v1';
 
   // Authentication endpoints
   static const String auth = '/auth';

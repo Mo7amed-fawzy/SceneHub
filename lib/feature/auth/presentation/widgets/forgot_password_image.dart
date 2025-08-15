@@ -1,4 +1,4 @@
-import 'package:ai_movie_app/core/utils/app_assets.dart';
+import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswrodImage extends StatelessWidget {
@@ -9,7 +9,7 @@ class ForgotPasswrodImage extends StatelessWidget {
     return SizedBox(
       height: 235,
       width: 235,
-      child: Image.asset(Assets.imagesForgotPassword),
+      child: Image.asset(AppStyle.images.forgotPassword),
     );
   }
 }
