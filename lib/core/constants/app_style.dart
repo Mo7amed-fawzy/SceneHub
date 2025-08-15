@@ -10,6 +10,18 @@ class _Images {
   const _Images();
 
   String get avengers => 'assets/images/avengers.png';
+  String get details1 => 'assets/images/avengers.png';
+  String get details2 => 'assets/images/cidade.png';
+  String get details3 => 'assets/images/doctor.png';
+  String get forgotPassword => 'assets/images/dog.png';
+  String get frame1 => 'assets/images/jurassik.png';
+  String get frame2 => 'assets/images/segredos.png';
+  String get frame3 => 'assets/images/sonic.png';
+  String get homeIcon => 'assets/images/spider1.png';
+  String get homeIconActive => 'assets/images/spider2.png';
+  String get menu => 'assets/images/spider3.png';
+  String get onBoarding => 'assets/images/spider4.png';
+  String get authBackground => 'assets/images/auth_background.jpg';
 }
 
 class _Icons {

@@ -71,10 +71,10 @@ abstract class BaseAuthFormState extends State<BaseAuthForm> {
         children: [
           // Form fields
           ...buildFormFields(),
-          
+
           // Additional widgets
           ...buildAdditionalWidgets(),
-          
+
           // Submit button
           const SizedBox(height: 24),
           buildSubmitButton(),
@@ -84,10 +84,7 @@ abstract class BaseAuthFormState extends State<BaseAuthForm> {
   }
 
   /// Build a form field with common styling
-  Widget buildFormField({
-    required Widget child,
-    EdgeInsetsGeometry? margin,
-  }) {
+  Widget buildFormField({required Widget child, EdgeInsetsGeometry? margin}) {
     return Container(
       margin: margin ?? const EdgeInsets.only(bottom: 16),
       child: child,
@@ -95,10 +92,7 @@ abstract class BaseAuthFormState extends State<BaseAuthForm> {
   }
 
   /// Build a section divider
-  Widget buildDivider({
-    String? text,
-    EdgeInsetsGeometry? margin,
-  }) {
+  Widget buildDivider({String? text, EdgeInsetsGeometry? margin}) {
     return Container(
       margin: margin ?? const EdgeInsets.symmetric(vertical: 16),
       child: Row(
@@ -109,10 +103,7 @@ abstract class BaseAuthFormState extends State<BaseAuthForm> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 text,
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
+                style: const TextStyle(color: Colors.grey, fontSize: 14),
               ),
             ),
             const Expanded(child: Divider()),
@@ -132,9 +123,7 @@ abstract class BaseAuthFormState extends State<BaseAuthForm> {
       onPressed: onPressed,
       child: Text(
         text,
-        style: style ?? const TextStyle(
-          decoration: TextDecoration.underline,
-        ),
+        style: style ?? const TextStyle(decoration: TextDecoration.underline),
       ),
     );
   }
@@ -163,9 +152,7 @@ abstract class BaseAuthFormState extends State<BaseAuthForm> {
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
     );

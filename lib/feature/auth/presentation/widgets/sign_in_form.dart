@@ -1,13 +1,14 @@
+import 'package:ai_movie_app/feature/auth/presentation/widgets/auth_text_field.dart';
+import 'package:ai_movie_app/feature/auth/presentation/widgets/forgot_password_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
+import 'package:ai_movie_app/core/utils/app_text_styles.dart';
+import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/widgets/custom_btn.dart';
 import 'package:ai_movie_app/feature/auth/presentation/base/base_auth_form.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_state.dart';
-import 'package:ai_movie_app/feature/auth/presentation/widgets/auth_text_field.dart';
-import 'package:ai_movie_app/feature/auth/presentation/widgets/forgot_password_link.dart';
 
 class SignInForm extends BaseAuthForm {
   const SignInForm({super.key});
@@ -18,7 +19,7 @@ class SignInForm extends BaseAuthForm {
 
 class _SignInFormState extends BaseAuthFormState {
   @override
-  bool get isLoading => false; // Will be managed by cubit state
+  bool get isLoading => false;
 
   @override
   List<Widget> buildFormFields() {
@@ -68,6 +69,9 @@ class _SignInFormState extends BaseAuthFormState {
             }
           },
           text: AppStrings.signIn,
+          textStyle: CustomTextStyles.poppins600style18.copyWith(
+            color: AppColorsDark.save,
+          ),
         );
       },
     );

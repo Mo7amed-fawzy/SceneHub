@@ -9,12 +9,14 @@ class CustomBtn extends StatelessWidget {
     this.text = '',
     this.onPressed,
     this.customWidget,
+    this.textStyle,
   });
 
   final Color? color;
   final String text;
   final VoidCallback? onPressed;
   final Widget? customWidget;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +26,20 @@ class CustomBtn extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: color ?? AppColorsDark.primaryColor,
+          backgroundColor: color ?? AppColorsDark.primaryColor, // صح
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        // show customWidget if found and if not show and last
         child:
             customWidget ??
             Text(
               text,
-              style: CustomTextStyles.poppins600style18.copyWith(
-                color: AppColorsDark.save,
-              ),
+              style:
+                  textStyle ??
+                  CustomTextStyles.poppins600style18.copyWith(
+                    color: AppColorsDark.save,
+                  ),
             ),
       ),
     );
