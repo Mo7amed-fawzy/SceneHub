@@ -10,7 +10,7 @@ import '../models/get_episodes_prams.dart';
 class EpisodesRepositoryImpl implements EpisodesRepository {
   final EpisodeRemoteDataSource remoteDataSource;
 
-  EpisodesRepositoryImpl({required this.remoteDataSource});
+  EpisodesRepositoryImpl(this.remoteDataSource);
 
   @override
   AsyncSingleDataResponse<EpisodesModel> getEpisodes(

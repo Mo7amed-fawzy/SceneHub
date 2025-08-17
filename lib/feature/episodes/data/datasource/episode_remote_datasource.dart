@@ -9,7 +9,7 @@ abstract class EpisodeRemoteDataSource {
 
 class EpisodeRemoteDataSourceImpl implements EpisodeRemoteDataSource {
   final ApiConsumer apiConsumer;
-  EpisodeRemoteDataSourceImpl({required this.apiConsumer});
+  EpisodeRemoteDataSourceImpl(this.apiConsumer);
   @override
   Future<EpisodesModel> getEpisodes(GetEpisodesParams params) {
     try {
