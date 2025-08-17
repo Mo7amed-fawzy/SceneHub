@@ -1,6 +1,6 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
-import 'package:ai_movie_app/feature/tv_series/data/models/season/crew.dart';
+import 'package:ai_movie_app/core/models/crew.dart';
 import 'package:ai_movie_app/feature/tv_series/domain/entities/season_entities.dart';
 import 'package:json_annotation/json_annotation.dart';
 
