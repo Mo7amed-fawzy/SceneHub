@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
+import 'package:ai_movie_app/core/utils/app_text_styles.dart';
+import 'package:flutter/material.dart';
 
 class AuthTextField extends StatefulWidget {
   final String labelText;
@@ -52,6 +53,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
       enabled: widget.enabled,
       decoration: InputDecoration(
         labelText: widget.labelText,
+        labelStyle: CustomTextStyles.poppins400style14,
         hintText: widget.hintText,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.isPassword

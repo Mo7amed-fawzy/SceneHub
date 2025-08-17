@@ -9,22 +9,29 @@ class TermsAndConditionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const CustomCheckBox(),
-        Text.rich(
-          TextSpan(
-            children: [
+        const SizedBox(width: 1),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text.rich(
               TextSpan(
-                text: AppStrings.iHaveAgreeToOur,
-                style: CustomTextStyles.poppins400style12,
+                children: [
+                  TextSpan(
+                    text: AppStrings.iHaveAgreeToOur,
+                    style: CustomTextStyles.poppins400style12,
+                  ),
+                  TextSpan(
+                    text: AppStrings.termsAndCondition,
+                    style: CustomTextStyles.poppins400style12.copyWith(
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ],
               ),
-              TextSpan(
-                text: AppStrings.termsAndCondition,
-                style: CustomTextStyles.poppins400style12.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ],

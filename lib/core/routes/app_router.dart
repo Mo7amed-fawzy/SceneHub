@@ -33,13 +33,13 @@ const String settings = "/settings";
 
 final GoRouter goRouter = GoRouter(
   routes: [
-    GoRoute(
-      path: "/",
-      builder: (context, state) => BlocProvider.value(
-        value: sl<ThemeCubit>(),
-        child: const SplashView(),
-      ),
-    ),
+    // GoRoute(
+    //   path: "/",
+    //   builder: (context, state) => BlocProvider.value(
+    //     value: sl<ThemeCubit>(),
+    //     child: const SplashView(),
+    //   ),
+    // ),
     GoRoute(
       path: toOnbourding,
       builder: (context, state) => BlocProvider(
