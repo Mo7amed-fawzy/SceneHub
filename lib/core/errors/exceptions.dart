@@ -6,8 +6,10 @@ abstract class AppException implements Exception {
 }
 
 class ServerException extends AppException {
-  const ServerException(
-      [super.message = 'Server Error', super.statusCode = 500]);
+  const ServerException([
+    super.message = 'Server Error',
+    super.statusCode = 500,
+  ]);
 }
 
 class CacheException extends AppException {
