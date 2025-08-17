@@ -1,4 +1,4 @@
-import 'package:ai_movie_app/core/utils/app_assets.dart';
+import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:flutter/material.dart';
 
 class StatfulOnBoardingbody extends StatefulWidget {
@@ -46,7 +46,9 @@ class StatfulOnBoardingbodyState extends State<StatfulOnBoardingbody> {
               onPageChanged: _onPageChanged, // دا بحدد بيه الصفحه الحاليه
               controller: _pageController, // بتمكني اضيف انيميشن بعدين فالريترن
               itemBuilder: (context, index) {
-                return Column(children: [Image.asset(Assets.imagesFrame)]);
+                return Column(
+                  children: [Image.asset(AppStyle.images.onBoarding)],
+                );
               },
             ),
           ),

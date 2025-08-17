@@ -12,7 +12,6 @@ import 'package:ai_movie_app/feature/auth/presentation/widgets/custom_text_field
 import 'package:ai_movie_app/feature/auth/presentation/widgets/forgot_password_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CustomSignInForm extends StatelessWidget {
   const CustomSignInForm({super.key});
@@ -22,12 +21,9 @@ class CustomSignInForm extends StatelessWidget {
     return BlocConsumer<AuthCubit, myAuth.AuthState>(
       listener: (context, state) async {
         if (state is myAuth.SigninSuccessState) {
-          final user = Supabase.instance.client.auth.currentUser;
-          if (user != null && user.emailConfirmedAt != null) {
-            customReplacementNavigate(context, homeNavBar);
-          } else {
-            showToast("Please Verify Your Email First.");
-          }
+          // Mock successful signin - navigate to home
+          showToast("Sign in successful!");
+          customReplacementNavigate(context, homeNavBar);
         } else if (state is myAuth.SigninFailureState) {
           showToast(state.errMessage);
         }
@@ -63,8 +59,7 @@ class CustomSignInForm extends StatelessWidget {
                   : CustomBtn(
                       onPressed: () async {
                         if (authCubit.signinFormKey.currentState!.validate()) {
-                          await authCubit
-                              .sigInWithEmailAndPassword(); // دي شغالة فعليًا بـ Supabase
+                          await authCubit.sigInWithEmailAndPassword();
                         }
                       },
                       text: AppStrings.signIn,

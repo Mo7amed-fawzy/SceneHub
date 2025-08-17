@@ -1,11 +1,11 @@
 import 'package:ai_movie_app/core/database/cache/app_shared_preferences.dart';
 import 'package:ai_movie_app/core/routes/app_router.dart';
-import 'package:ai_movie_app/feature/splash/domain/repositories/auth_repository.dart';
+import 'package:ai_movie_app/feature/splash/domain/repositories/splash_auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DecideStartDestinationUseCase {
   final AppPreferences appPreferences;
-  final AuthRepository authRepository;
+  final SplashAuthRepository authRepository;
 
   DecideStartDestinationUseCase({
     required this.appPreferences,

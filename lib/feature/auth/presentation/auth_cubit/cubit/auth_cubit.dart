@@ -1,15 +1,40 @@
-import 'package:ai_movie_app/core/functions/print_statement.dart';
+import 'package:ai_movie_app/feature/auth/domain/entities/auth_credentials.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/get_current_user_usecase.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/is_email_verified_usecase.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/is_signed_in_usecase.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/reset_password_usecase.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/send_email_verification_usecase.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/sign_out_usecase.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/signup_with_validation_usecase.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/signin_with_validation_usecase.dart';
+import 'package:ai_movie_app/feature/auth/domain/usecases/map_auth_failure_to_message_usecase.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_state.dart'
-    // ignore: library_prefixes
-    as myAuth;
+    as auth_state;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AuthCubit extends Cubit<myAuth.AuthState> {
-  AuthCubit() : super(myAuth.AuthInitial());
+class AuthCubit extends Cubit<auth_state.AuthState> {
+  final SignupWithValidationUseCase signupWithValidationUseCase;
+  final SigninWithValidationUseCase signinWithValidationUseCase;
+  final SignOutUseCase signOutUseCase;
+  final ResetPasswordUseCase resetPasswordUseCase;
+  final GetCurrentUserUseCase getCurrentUserUseCase;
+  final IsSignedInUseCase isSignedInUseCase;
+  final IsEmailVerifiedUseCase isEmailVerifiedUseCase;
+  final SendEmailVerificationUseCase sendEmailVerificationUseCase;
+  final MapAuthFailureToMessageUseCase mapFailureToMessageUseCase;
 
-  final supabase = Supabase.instance.client;
+  AuthCubit({
+    required this.signupWithValidationUseCase,
+    required this.signinWithValidationUseCase,
+    required this.signOutUseCase,
+    required this.resetPasswordUseCase,
+    required this.getCurrentUserUseCase,
+    required this.isSignedInUseCase,
+    required this.isEmailVerifiedUseCase,
+    required this.sendEmailVerificationUseCase,
+    required this.mapFailureToMessageUseCase,
+  }) : super(auth_state.AuthInitial());
 
   String? firstName;
   String? lastName;
@@ -25,79 +50,116 @@ class AuthCubit extends Cubit<myAuth.AuthState> {
 
   Future<void> createUserWithEmailAndPassword() async {
     try {
-      emit(myAuth.SignUpLoadingState());
+      emit(auth_state.SignUpLoadingState());
 
-      final response = await supabase.auth.signUp(
+      final credentials = AuthCredentials(
         email: emailAddress!,
         password: password!,
-        data: {'first_name': firstName, 'last_name': lastName},
+        firstName: firstName,
+        lastName: lastName,
       );
 
-      await addUserProfile(response.user?.id ?? '');
+      final result = await signupWithValidationUseCase(credentials);
 
-      emit(myAuth.SignUpSuccessState());
-    } on AuthException catch (e) {
-      emit(myAuth.SignUpFailureState(errMessage: e.message));
+      result.fold(
+        (failure) async {
+          final errorMessage = await mapFailureToMessageUseCase(failure);
+          errorMessage.fold(
+            (errorFailure) => emit(
+              auth_state.SignUpFailureState(
+                errMessage: 'Error mapping failure',
+              ),
+            ),
+            (message) =>
+                emit(auth_state.SignUpFailureState(errMessage: message)),
+          );
+        },
+        (user) {
+          emit(auth_state.SignUpSuccessState());
+        },
+      );
     } catch (e) {
-      emit(myAuth.SignUpFailureState(errMessage: e.toString()));
+      emit(auth_state.SignUpFailureState(errMessage: 'Signup failed: $e'));
     }
   }
 
   Future<void> sigInWithEmailAndPassword() async {
     try {
-      emit(myAuth.SigninLoadingState());
+      emit(auth_state.SigninLoadingState());
 
-      await supabase.auth.signInWithPassword(
+      final credentials = AuthCredentials(
         email: emailAddress!,
         password: password!,
       );
 
-      emit(myAuth.SigninSuccessState());
-    } on AuthException catch (e) {
-      emit(myAuth.SigninFailureState(errMessage: e.message));
+      final result = await signinWithValidationUseCase(credentials);
+
+      result.fold(
+        (failure) async {
+          final errorMessage = await mapFailureToMessageUseCase(failure);
+          errorMessage.fold(
+            (errorFailure) => emit(
+              auth_state.SigninFailureState(
+                errMessage: 'Error mapping failure',
+              ),
+            ),
+            (message) =>
+                emit(auth_state.SigninFailureState(errMessage: message)),
+          );
+        },
+        (user) {
+          emit(auth_state.SigninSuccessState());
+        },
+      );
     } catch (e) {
-      emit(myAuth.SigninFailureState(errMessage: e.toString()));
+      emit(auth_state.SigninFailureState(errMessage: 'Signin failed: $e'));
     }
   }
 
   Future<void> resetPasswordWithLink() async {
     try {
-      emit(myAuth.ResetPasswordLoadingState());
+      emit(auth_state.ResetPasswordLoadingState());
 
-      await supabase.auth.resetPasswordForEmail(emailAddress!);
+      final result = await resetPasswordUseCase(emailAddress!);
 
-      emit(myAuth.ResetPasswordSuccessState());
+      result.fold(
+        (failure) async {
+          final errorMessage = await mapFailureToMessageUseCase(failure);
+          errorMessage.fold(
+            (errorFailure) => emit(
+              auth_state.ResetPasswordFailureState(
+                errMessage: 'Error mapping failure',
+              ),
+            ),
+            (message) =>
+                emit(auth_state.ResetPasswordFailureState(errMessage: message)),
+          );
+        },
+        (_) {
+          emit(auth_state.ResetPasswordSuccessState());
+        },
+      );
     } catch (e) {
-      emit(myAuth.ResetPasswordFailureState(errMessage: e.toString()));
-    }
-  }
-
-  Future<void> addUserProfile(String userId) async {
-    try {
-      await supabase.from('users').insert({
-        'id': userId,
-        'email': emailAddress,
-        'first_name': firstName,
-        'last_name': lastName,
-        'created_at': DateTime.now().toIso8601String(),
-      });
-    } catch (e) {
-      printHere('Error adding user profile: $e');
+      emit(
+        auth_state.ResetPasswordFailureState(
+          errMessage: 'Password reset failed: $e',
+        ),
+      );
     }
   }
 
   void updatesTermsAndConditionsCeckBox({required bool newValue}) {
     termsAndConditionCheckValues = newValue;
-    emit(myAuth.TermsAndConditionUpdateState());
+    emit(auth_state.TermsAndConditionUpdateState());
   }
 
   void togglePasswordVisibility() {
     isPasswordVisible = !isPasswordVisible!;
-    emit(myAuth.TogglePasswordVisibilityState());
+    emit(auth_state.TogglePasswordVisibilityState());
   }
 
   Future<bool> isEmailVerified() async {
-    final user = supabase.auth.currentUser;
-    return user?.emailConfirmedAt != null;
+    final result = await isEmailVerifiedUseCase();
+    return result.fold((failure) => false, (isVerified) => isVerified);
   }
 }
