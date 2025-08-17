@@ -23,20 +23,25 @@ class DetailsScreenTopBarNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 32.w,
-            height: 32.h,
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              width: 32.w,
+              height: 32.h,
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                color: AppColorsDark.dialogBackground,
               ),
-              color: AppColorsDark.dialogBackground,
-            ),
-            child: SvgPicture.asset(
-              AppStyle.icons.backArrow,
-              width: 16.w,
-              height: 16.h,
-              fit: BoxFit.cover,
+              child: SvgPicture.asset(
+                AppStyle.icons.backArrow,
+                width: 16.w,
+                height: 16.h,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SizedBox(
