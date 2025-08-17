@@ -28,10 +28,7 @@ class AuthApiService {
   Future<UserModel> signIn(AuthCredentials credentials) async {
     final response = await _apiConsumer.post(
       EndpointConstants.signIn,
-      body: {
-        'email': credentials.email,
-        'password': credentials.password,
-      },
+      body: {'email': credentials.email, 'password': credentials.password},
     );
 
     return UserModel.fromJson(response);
