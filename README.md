@@ -61,10 +61,36 @@ It is fully integrated using **Clean Architecture** principles with **Cubit** fo
 ## OnBoarding Screenshots 📸
 
 <p align="center">
-  <img src="assets/screenshots/onboarding/onboarding_1.png" alt="OnBoarding Screen 1" width="300">
-  <img src="assets/screenshots/onboarding/onboarding_2.png" alt="OnBoarding Screen 2" width="300">
-  <img src="assets/screenshots/onboarding/onboarding_3.png" alt="OnBoarding Screen 3" width="300">
+  <img src="assets/screenshots/on_boarding_feature/onboarding_1.png" alt="OnBoarding Screen 1" width="300">
+  <img src="assets/screenshots/on_boarding_feature/onboarding_2.png" alt="OnBoarding Screen 2" width="300">
+  <img src="assets/screenshots/on_boarding_feature/onboarding_3.png" alt="OnBoarding Screen 3" width="300">
 </p>
 
 ---
 
+## Third Implemented Feature: Authentication Screens 🔑
+
+The **Authentication Feature** includes SignIn, SignUp, and Forgot Password screens with a clean UI and smooth animations.  
+It follows the **Clean Architecture** principles and integrates **Cubit/BLoC** for state management.
+
+**Key Highlights of Auth Feature:**
+- SignIn, SignUp, and Forgot Password screens with consistent UI design
+- Custom reusable text fields and buttons
+- Smooth entrance and error animations for form fields
+- Connected with Cubit for state management and validation
+- Integrated with Shared Preferences for lightweight persistent data
+- Prepared placeholders for future interactive improvements
+
+---
+
+## Authentication Screenshots 📸
+
+
+<p align="center">
+  <img src="assets/screenshots/auth_feature/sign_in.png" alt="SignIn Screen" width="300">
+  <img src="assets/screenshots/auth_feature/sign_up_1.png" alt="SignUp Screen" width="300">
+  <img src="assets/screenshots/auth_feature/sign_up_2.png" alt="SignUp Screen" width="300">
+  <img src="assets/screenshots/auth_feature/forgot_password.png" alt="Forgot Password Screen" width="300">
+</p>
+
+---
