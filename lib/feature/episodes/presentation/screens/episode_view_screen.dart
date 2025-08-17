@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_colors.dart';
-import '../../data/models/episodes_model.dart';
+import '../../domain/entities/episode_entities.dart';
 import '../bloc/episode_bloc.dart';
 import 'Episode_details_show.dart';
 
@@ -29,25 +29,19 @@ class _EpisodeViewScreenState extends State<EpisodeViewScreen> {
       body: BlocBuilder<EpisodeBloc, EpisodeState>(
         builder: (context, state) {
           if (state is EpisodeLoaded) {
-            return EpisodeDetailsShow(episodesModel: state.episode);
+            return EpisodeDetailsShow(episodeEntity: state.episode);
           }
           if (state is EpisodeLoading) {
             return EpisodeDetailsShow(
-              episodesModel: EpisodesModel(
+              episodeEntity: EpisodeEntity(
                 airDate: DateTime.now(),
-                id: 0,
                 name: 'Episode Name',
                 overview: 'Episode Overview',
                 voteAverage: 0.0,
                 runtime: 60,
-                productionCode: 'Production Code',
-                stillPath: 'Still Path',
+                stillPath: '',
                 crew: [],
-                episodeNumber: 2,
                 episodeType: 'episodeType',
-                guestStars: [],
-                seasonNumber: 3,
-                voteCount: 3,
               ),
             );
           }

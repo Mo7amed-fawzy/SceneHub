@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/models/crew.dart';
+import '../../domain/entities/episode_entities.dart';
 part 'episodes_model.g.dart';
 
 @JsonSerializable()
@@ -55,4 +56,17 @@ class EpisodesModel {
       _$EpisodesModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$EpisodesModelToJson(this);
+
+  EpisodeEntity toEntity() {
+    return EpisodeEntity(
+      airDate: airDate,
+      crew: crew.map((crewMember) => crewMember.toEntity()).toList(),
+      episodeType: episodeType,
+      name: name,
+      overview: overview,
+      runtime: runtime,
+      stillPath: stillPath,
+      voteAverage: voteAverage,
+    );
+  }
 }

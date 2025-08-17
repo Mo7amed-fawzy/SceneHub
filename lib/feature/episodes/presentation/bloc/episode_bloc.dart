@@ -1,5 +1,5 @@
-import 'package:ai_movie_app/feature/episodes/data/models/episodes_model.dart';
 import 'package:ai_movie_app/feature/episodes/data/models/get_episodes_prams.dart';
+import 'package:ai_movie_app/feature/episodes/domain/entities/episode_entities.dart';
 import 'package:ai_movie_app/feature/episodes/domain/usecases/get_episode_details_usecases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

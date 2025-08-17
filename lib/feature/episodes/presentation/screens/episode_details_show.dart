@@ -3,7 +3,7 @@ import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_buttons_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_info_nav.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_top_bar_nav.dart';
-import 'package:ai_movie_app/feature/episodes/data/models/episodes_model.dart';
+import 'package:ai_movie_app/feature/episodes/domain/entities/episode_entities.dart';
 import 'package:ai_movie_app/feature/episodes/presentation/bloc/episode_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_description_widget.dart';
 import 'package:ai_movie_app/core/utils/details_screen_rating_widget.dart';
@@ -17,8 +17,8 @@ import '../../../../core/constants/endpoint_constants.dart';
 import '../../../../core/utils/app_text_styles.dart';
 
 class EpisodeDetailsShow extends StatelessWidget {
-  const EpisodeDetailsShow({super.key, required this.episodesModel});
-  final EpisodesModel episodesModel;
+  const EpisodeDetailsShow({super.key, required this.episodeEntity});
+  final EpisodeEntity episodeEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class EpisodeDetailsShow extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          '${EndpointConstants.imageBaseUrl}${episodesModel.stillPath}',
+                          '${EndpointConstants.imageBaseUrl}${episodeEntity.stillPath}',
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -65,7 +65,7 @@ class EpisodeDetailsShow extends StatelessWidget {
                     decoration: ShapeDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          '${EndpointConstants.imageBaseUrl}${episodesModel.stillPath}',
+                          '${EndpointConstants.imageBaseUrl}${episodeEntity.stillPath}',
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -81,9 +81,9 @@ class EpisodeDetailsShow extends StatelessWidget {
                 bottom: 50.h,
                 child: DetailsScreenInfoNavWidget(
                   isLoading: false,
-                  year: episodesModel.airDate.year.toString(),
-                  duration: '${episodesModel.runtime} ${AppStrings.minutes}',
-                  genre: episodesModel.episodeType,
+                  year: episodeEntity.airDate.year.toString(),
+                  duration: '${episodeEntity.runtime} ${AppStrings.minutes}',
+                  genre: episodeEntity.episodeType,
                 ),
               ),
               Positioned(
@@ -92,7 +92,7 @@ class EpisodeDetailsShow extends StatelessWidget {
                 child: DetailsScreenRatingWidget(
                   isLoading: false,
                   rating: double.parse(
-                    (episodesModel.voteAverage).toStringAsFixed(1),
+                    (episodeEntity.voteAverage).toStringAsFixed(1),
                   ),
                 ),
               ),
@@ -100,7 +100,7 @@ class EpisodeDetailsShow extends StatelessWidget {
                 top: 40.h,
                 left: 20.w,
                 child: DetailsScreenTopBarNav(
-                  title: episodesModel.name,
+                  title: episodeEntity.name,
                   isLoading:
                       context.watch<EpisodeBloc>().state is EpisodeLoading,
                 ),
@@ -121,7 +121,7 @@ class EpisodeDetailsShow extends StatelessWidget {
                 ),
                 4.verticalSpace,
                 TvDescriptionWidget(
-                  description: episodesModel.overview,
+                  description: episodeEntity.overview,
                   isLoading:
                       context.watch<EpisodeBloc>().state is EpisodeLoading,
                 ),
@@ -137,10 +137,10 @@ class EpisodeDetailsShow extends StatelessWidget {
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: episodesModel.crew.length,
+                  itemCount: episodeEntity.crew.length,
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
-                    final crewMember = episodesModel.crew[index];
+                    final crewMember = episodeEntity.crew[index];
                     return ListTile(
                       title: Text(
                         crewMember.name ?? '',

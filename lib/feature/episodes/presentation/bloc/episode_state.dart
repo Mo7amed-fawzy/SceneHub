@@ -8,7 +8,7 @@ final class EpisodeInitial extends EpisodeState {}
 final class EpisodeLoading extends EpisodeState {}
 
 final class EpisodeLoaded extends EpisodeState {
-  final EpisodesModel episode;
+  final EpisodeEntity episode;
 
   EpisodeLoaded(this.episode);
 }
