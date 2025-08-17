@@ -110,10 +110,10 @@ class TvDataShow extends StatelessWidget {
                   year: tvSeries.firstAirDate?.year.toString(),
                   duration: tvSeries.episodeRunTime?.isNotEmpty ?? false
                       ? '$totalDuration ${AppStrings.minutes}'
-                      : AppStrings.notAvailabl,
+                      : AppStrings.notAvailable,
                   genre: tvSeries.genres?.isNotEmpty ?? false
                       ? tvSeries.genres![0].name
-                      : AppStrings.notAvailabl,
+                      : AppStrings.notAvailable,
                 ),
               ),
               Positioned(

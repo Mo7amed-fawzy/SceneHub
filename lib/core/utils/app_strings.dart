@@ -21,7 +21,7 @@ abstract class AppStrings {
   //!Forgot password
   forgotPasswordPage = "Forgot Password", sendResetPasswordLink = "Send Reset Passwrod Link", verificationNow = "Verification Now", resendCode = "Resend Code", verifyAccount = "Verify Account", enter4DigitCodeWeHaveSentTo = "Enter 4 digit code we have sent to ", haventReceivedVerificationCode = "Haven’t received verification code?",
   //!Tv Series Details
-  minutes = "Minutes", notAvailabl = 'N/A', noDescriptionAvailable = "No description available.", episode = 'Episode', trailer = 'Trailer', season = 'Season', castAndCrew = 'Cast and Crew', unknownActor = 'Unknown Actor', unknownCharacter = 'Unknown Character', storyLine = 'Story Line', more = 'More';
+  minutes = "Minutes", notAvailable = 'N/A', noDescriptionAvailable = "No description available.", episode = 'Episode', trailer = 'Trailer', season = 'Season', castAndCrew = 'Cast and Crew', unknownActor = 'Unknown Actor', unknownCharacter = 'Unknown Character', storyLine = 'Story Line', more = 'More';
 }
 
 abstract class SupabaseKeys {

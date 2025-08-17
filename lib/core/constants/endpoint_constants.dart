@@ -4,6 +4,7 @@ class EndpointConstants {
   static const String movieDetails = 'movie/';
   static const String movieCast = '/credits';
   static const String tvSeriesSeason = '/season/';
+  static const String tvSeriesEpisode = '/episode/';
   static const String tvSeriesCast = '/aggregate_credits';
   static const String imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
   // Add your endpoints here

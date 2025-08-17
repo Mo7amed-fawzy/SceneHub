@@ -3,8 +3,8 @@ import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_buttons_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_info_nav.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_top_bar_nav.dart';
-import 'package:ai_movie_app/feature/movies/domain/entities/movies_details_entity.dart';
-import 'package:ai_movie_app/feature/movies/presentation/bloc/movies_bloc.dart';
+import 'package:ai_movie_app/feature/episodes/domain/entities/episode_entities.dart';
+import 'package:ai_movie_app/feature/episodes/presentation/bloc/episode_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_description_widget.dart';
 import 'package:ai_movie_app/core/utils/details_screen_rating_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,18 +14,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/constants/endpoint_constants.dart';
-import '../../../../core/services/service_locator.dart';
-import '../../../cast/presentation/bloc/cast_bloc.dart';
-import '../../../cast/presentation/screens/cast_and_crew_widget.dart';
+import '../../../../core/utils/app_text_styles.dart';
 
-class MoviesDetailsShow extends StatelessWidget {
-  const MoviesDetailsShow({
-    super.key,
-    required this.moviesDetails,
-    required this.movieId,
-  });
-  final MoviesDetailsEntity moviesDetails;
-  final int movieId;
+class EpisodeDetailsShow extends StatelessWidget {
+  const EpisodeDetailsShow({super.key, required this.episodeEntity});
+  final EpisodeEntity episodeEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +28,7 @@ class MoviesDetailsShow extends StatelessWidget {
           Stack(
             children: [
               Skeletonizer(
-                enabled:
-                    context.watch<MoviesBloc>().state is MoviesDetailsLoading,
+                enabled: context.watch<EpisodeBloc>().state is EpisodeLoading,
                 child: Opacity(
                   opacity: 0.24,
                   child: Container(
@@ -44,7 +36,7 @@ class MoviesDetailsShow extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          '${EndpointConstants.imageBaseUrl}${moviesDetails.backdropPath}',
+                          '${EndpointConstants.imageBaseUrl}${episodeEntity.stillPath}',
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -64,16 +56,16 @@ class MoviesDetailsShow extends StatelessWidget {
               ),
               Positioned(
                 left: 95.w,
-                top: 80.h,
+                top: 150.h,
                 child: Skeletonizer(
                   enabled: false,
                   child: Container(
                     width: 190.w,
-                    height: 270.h,
+                    height: 170.h,
                     decoration: ShapeDecoration(
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          '${EndpointConstants.imageBaseUrl}${moviesDetails.posterPath}',
+                          '${EndpointConstants.imageBaseUrl}${episodeEntity.stillPath}',
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -89,13 +81,9 @@ class MoviesDetailsShow extends StatelessWidget {
                 bottom: 50.h,
                 child: DetailsScreenInfoNavWidget(
                   isLoading: false,
-                  year: moviesDetails.releaseDate?.year.toString(),
-                  duration: moviesDetails.runtime != null
-                      ? '${moviesDetails.runtime} ${AppStrings.minutes}'
-                      : AppStrings.notAvailable,
-                  genre: moviesDetails.genres?.isNotEmpty ?? false
-                      ? moviesDetails.genres![0].name
-                      : AppStrings.notAvailable,
+                  year: episodeEntity.airDate.year.toString(),
+                  duration: '${episodeEntity.runtime} ${AppStrings.minutes}',
+                  genre: episodeEntity.episodeType,
                 ),
               ),
               Positioned(
@@ -104,7 +92,7 @@ class MoviesDetailsShow extends StatelessWidget {
                 child: DetailsScreenRatingWidget(
                   isLoading: false,
                   rating: double.parse(
-                    (moviesDetails.voteAverage ?? 0).toStringAsFixed(1),
+                    (episodeEntity.voteAverage).toStringAsFixed(1),
                   ),
                 ),
               ),
@@ -112,9 +100,9 @@ class MoviesDetailsShow extends StatelessWidget {
                 top: 40.h,
                 left: 20.w,
                 child: DetailsScreenTopBarNav(
-                  title: moviesDetails.title ?? AppStrings.notAvailable,
+                  title: episodeEntity.name,
                   isLoading:
-                      context.watch<MoviesBloc>().state is MoviesDetailsLoading,
+                      context.watch<EpisodeBloc>().state is EpisodeLoading,
                 ),
               ),
             ],
@@ -133,16 +121,43 @@ class MoviesDetailsShow extends StatelessWidget {
                 ),
                 4.verticalSpace,
                 TvDescriptionWidget(
-                  description:
-                      moviesDetails.overview ?? AppStrings.notAvailable,
+                  description: episodeEntity.overview,
                   isLoading:
-                      context.watch<MoviesBloc>().state is MoviesDetailsLoading,
+                      context.watch<EpisodeBloc>().state is EpisodeLoading,
                 ),
                 16.verticalSpace,
-                BlocProvider(
-                  create: (context) => CastBloc(sl(), sl()),
-
-                  child: CastAndCrewWidget(movieId: movieId),
+                Text(
+                  AppStrings.castAndCrew,
+                  style: CustomTextStyles.montserrat600style16.copyWith(
+                    color: Colors.white,
+                    letterSpacing: 0.12.w,
+                  ),
+                ),
+                8.verticalSpace,
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: episodeEntity.crew.length,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    final crewMember = episodeEntity.crew[index];
+                    return ListTile(
+                      title: Text(
+                        crewMember.name ?? '',
+                        style: CustomTextStyles.montserrat600style16.copyWith(
+                          color: Colors.white,
+                          letterSpacing: 0.12.w,
+                        ),
+                      ),
+                      subtitle: Text(
+                        crewMember.job ?? '',
+                        style: CustomTextStyles.montserrat400style14.copyWith(
+                          color: Colors.grey,
+                          letterSpacing: 0.12.w,
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 12.verticalSpace,
               ],

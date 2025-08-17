@@ -39,7 +39,7 @@ class DetailsScreenInfoNavWidget extends StatelessWidget {
             ),
             4.horizontalSpace,
             Text(
-              year ?? AppStrings.notAvailabl,
+              year ?? AppStrings.notAvailable,
               style: CustomTextStyles.montserrat500style12.copyWith(
                 color: AppColorsDark.hashedText,
                 letterSpacing: 0.12.w,
@@ -51,7 +51,7 @@ class DetailsScreenInfoNavWidget extends StatelessWidget {
             SvgPicture.asset(AppStyle.icons.clock, width: 16.w, height: 16.h),
             4.horizontalSpace,
             Text(
-              duration ?? AppStrings.notAvailabl,
+              duration ?? AppStrings.notAvailable,
               style: CustomTextStyles.montserrat500style12.copyWith(
                 color: AppColorsDark.hashedText,
                 letterSpacing: 0.12.w,
@@ -63,7 +63,7 @@ class DetailsScreenInfoNavWidget extends StatelessWidget {
             SvgPicture.asset(AppStyle.icons.film, width: 16.w, height: 16.h),
             4.horizontalSpace,
             Text(
-              genre ?? AppStrings.notAvailabl,
+              genre ?? AppStrings.notAvailable,
               style: CustomTextStyles.montserrat500style12.copyWith(
                 color: AppColorsDark.hashedText,
                 letterSpacing: 0.12.w,
