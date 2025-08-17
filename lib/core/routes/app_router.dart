@@ -10,12 +10,14 @@ import 'package:ai_movie_app/feature/movies/presentation/screens/movies_details_
 import 'package:ai_movie_app/feature/on_bourding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:ai_movie_app/feature/on_bourding/presentation/views/on_boarding_view.dart';
 import 'package:ai_movie_app/feature/splash/presentation/views/splash_view.dart';
+import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/episodes/data/models/get_episodes_prams.dart';
 import '../../feature/episodes/presentation/bloc/episode_bloc.dart';
+import '../../feature/tv_series/presentation/screens/tv_series_details_screen.dart';
 
 const String toOnbourding = "/onBourding";
 const String signUpPage = "/signUp";
@@ -24,6 +26,7 @@ const String homeView = "/HomeView";
 const String forgotPassword = "/ForgotPasswordView";
 const String homeNavBar = "/HomeNavBar";
 const String episodeView = "/EpisodeView";
+const String tvSeriesDetails = "/TvSeriesDetails";
 
 final GoRouter goRouter = GoRouter(
   routes: [
@@ -88,8 +91,21 @@ final GoRouter goRouter = GoRouter(
         final params = state.extra as GetEpisodesParams?;
         if (params == null) return const SizedBox(); // In error case
         return BlocProvider(
-          create: (context) => EpisodeBloc(),
+          create: (context) => EpisodeBloc(sl()),
           child: EpisodeViewScreen(params: params),
+        );
+      },
+    ),
+    GoRoute(
+      path: '$tvSeriesDetails/:tvSeriesId',
+      builder: (context, state) {
+        final tvSeriesIdStr = state.pathParameters['tvSeriesId'];
+        if (tvSeriesIdStr == null) return const SizedBox(); // In error case
+        final tvSeriesId = int.tryParse(tvSeriesIdStr);
+        if (tvSeriesId == null) return const SizedBox(); // In error case
+        return BlocProvider(
+          create: (context) => TvSeriesBloc(sl(), sl()),
+          child: TvSeriesDetailsScreen(tvSeriesId: tvSeriesId),
         );
       },
     ),

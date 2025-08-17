@@ -63,8 +63,8 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
                     child: TvEpisodeDetailsWidget(
                       episodeDuration: episode?.runtime != null
                           ? '${episode!.runtime!} ${AppStrings.minutes}'
-                          : AppStrings.notAvailabl,
-                      episodeTitle: episode?.name ?? AppStrings.notAvailabl,
+                          : AppStrings.notAvailable,
+                      episodeTitle: episode?.name ?? AppStrings.notAvailable,
                       episodeDescription:
                           episode?.overview ??
                           AppStrings.noDescriptionAvailable,
