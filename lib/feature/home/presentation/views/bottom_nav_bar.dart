@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:ai_movie_app/core/routes/app_router.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,10 +21,10 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
 
   final List<String> tabs = [
     '/',
-    '/${AppStrings.search}',
-    '/${AppStrings.watchlist}',
-    '/${AppStrings.profile}',
-    '/${AppStrings.settings}',
+    RouterPath.search,
+    RouterPath.wishlistView,
+    RouterPath.profile,
+    RouterPath.settings,
   ];
 
   final List<IconData> icons = [

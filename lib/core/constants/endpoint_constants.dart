@@ -20,4 +20,7 @@ class EndpointConstants {
   static const String verifyEmail = '$auth/verify-email';
   static const String currentUser = '$auth/me';
   static const String refreshToken = '$auth/refresh';
+
+  // home endpoints
+  static const String nowPlaying = 'now_playing';
 }

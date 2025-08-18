@@ -103,7 +103,16 @@ class _SignUpViewState extends State<SignUpView> with TickerProviderStateMixin {
                 ),
               ),
             ),
-          ),
+//             const SliverToBoxAdapter(child: SizedBox(height: 16)),
+//             const SliverToBoxAdapter(child: CustomSignUpForm()),
+//             const SliverToBoxAdapter(child: SizedBox(height: 16)),
+//             SliverToBoxAdapter(
+//               child: HaveAnAccountWidget(
+//                 text1: AppStrings.alreadyHaveAnAccount,
+//                 text2: AppStrings.signUp,
+//                 onTap: () {
+//                   customReplacementNavigate(context, RouterPath.signInPage);
+                },
 
           SafeArea(
             child: Center(

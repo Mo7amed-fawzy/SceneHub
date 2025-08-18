@@ -31,14 +31,14 @@ class GetButtons extends StatelessWidget {
                   text: AppStrings.createAccount,
                   onPressed: () {
                     context.read<OnBoardingCubit>().completeOnBoarding();
-                    customReplacementNavigate(context, signUpPage);
+                    customReplacementNavigate(context, RouterPath.signUpPage);
                   },
                 ),
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: () {
                     context.read<OnBoardingCubit>().completeOnBoarding();
-                    customReplacementNavigate(context, signInPage);
+                    customReplacementNavigate(context, RouterPath.signInPage);
                   },
                   child: const LoginNowStyle(),
                 ),

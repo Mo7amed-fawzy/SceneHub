@@ -1,4 +1,3 @@
-import 'package:ai_movie_app/feature/splash/domain/repositories/splash_auth_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 
@@ -85,6 +84,7 @@ Future<void> initSl() async {
   //         remoteDataSource: sl(),
   //         localDataSource: sl()
   //     ));
+  // sl.registerLazySingleton<ApiConsumer>(() => ApiConsumerImpl());
 
   // // UseCases
   // sl.registerLazySingleton(() => SignUpUseCase(sl()));
@@ -109,26 +109,8 @@ Future<void> initSl() async {
   //     ));
 
   // ===================== OnBoarding =====================
-  sl.registerLazySingleton<OnBoardingLocalDataSource>(
-    () => OnBoardingLocalDataSourceImpl(sl()),
-  );
-  sl.registerLazySingleton<OnBoardingRepository>(
-    () => OnBoardingRepositoryImpl(sl()),
-  );
-  sl.registerLazySingleton(() => GetOnBoardingDataUseCase(sl()));
-  sl.registerLazySingleton(() => SetOnBoardingVisitedUseCase(sl()));
-  sl.registerFactory(() => OnBoardingCubit(sl(), sl()));
 
   // ===================== Splash =====================
-  sl.registerLazySingleton<SplashAuthRepository>(
-    () => SupabaseAuthRepository(),
-  );
-  sl.registerLazySingleton<DecideStartDestinationUseCase>(
-    () => DecideStartDestinationUseCase(
-      appPreferences: sl(),
-      authRepository: sl(),
-    ),
-  );
 
   // ===================== Movies =====================
   sl.registerLazySingleton<MoviesRemoteDataSource>(

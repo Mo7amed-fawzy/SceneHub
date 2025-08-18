@@ -1,3 +1,5 @@
+
+import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:ai_movie_app/core/routes/app_router.dart' as AppStrings;
 import 'package:ai_movie_app/feature/auth/presentation/widgets/custom_forgot_password_form.dart';

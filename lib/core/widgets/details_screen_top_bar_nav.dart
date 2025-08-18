@@ -1,11 +1,10 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
+import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
-import '../utils/app_text_styles.dart';
 
 class DetailsScreenTopBarNav extends StatelessWidget {
   const DetailsScreenTopBarNav({
@@ -23,6 +22,7 @@ class DetailsScreenTopBarNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+
           GestureDetector(
             onTap: () {
               Navigator.of(context).pop();
