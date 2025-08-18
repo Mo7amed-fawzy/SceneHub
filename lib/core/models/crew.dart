@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../feature/episodes/domain/entities/episode_entities.dart';
+
 part 'crew.g.dart';
 
 @JsonSerializable()
@@ -80,4 +82,8 @@ class Crew {
   factory Crew.fromJson(Map<String, dynamic> json) => _$CrewFromJson(json);
 
   Map<String, dynamic> toJson() => _$CrewToJson(this);
+
+  CrewEntity toEntity() {
+    return CrewEntity(job: job, name: name);
+  }
 }

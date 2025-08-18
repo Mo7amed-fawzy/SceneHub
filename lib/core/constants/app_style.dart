@@ -21,6 +21,8 @@ class _Images {
   String get homeIconActive => 'assets/images/spider2.png';
   String get menu => 'assets/images/spider3.png';
   String get onBoarding => 'assets/images/spider4.png';
+  String get authBackground => 'assets/images/auth_background.jpg';
+
 }
 
 class _Icons {
