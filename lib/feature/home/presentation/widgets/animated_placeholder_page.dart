@@ -67,7 +67,7 @@ class _AnimatedPlaceholderPageState extends State<AnimatedPlaceholderPage>
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColorsDark.trailerButton.withOpacity(0.3),
+                    color: AppColorsDark.trailerButton.withValues(alpha: .3),
                     blurRadius: 12,
                     offset: const Offset(0, 6),
                   ),

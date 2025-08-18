@@ -67,7 +67,7 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
                       onTap: () {
                         customNavigate(
                           context,
-                          episodeView,
+                          RouterPath.episodeView,
                           extra: GetEpisodesParams(
                             seriesId: widget.tvSeriesId,
                             seasonNumber: seasonNumber,

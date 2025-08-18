@@ -95,25 +95,26 @@ class _SignUpViewState extends State<SignUpView> with TickerProviderStateMixin {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Colors.black.withOpacity(0.6),
-                    Colors.black.withOpacity(0.3),
+                    Colors.black.withValues(alpha: 0.6),
+                    Colors.black.withValues(alpha: 0.3),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
               ),
             ),
-//             const SliverToBoxAdapter(child: SizedBox(height: 16)),
-//             const SliverToBoxAdapter(child: CustomSignUpForm()),
-//             const SliverToBoxAdapter(child: SizedBox(height: 16)),
-//             SliverToBoxAdapter(
-//               child: HaveAnAccountWidget(
-//                 text1: AppStrings.alreadyHaveAnAccount,
-//                 text2: AppStrings.signUp,
-//                 onTap: () {
-//                   customReplacementNavigate(context, RouterPath.signInPage);
-                },
+          ),
 
+          //             const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          //             const SliverToBoxAdapter(child: CustomSignUpForm()),
+          //             const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          //             SliverToBoxAdapter(
+          //               child: HaveAnAccountWidget(
+          //                 text1: AppStrings.alreadyHaveAnAccount,
+          //                 text2: AppStrings.signUp,
+          //                 onTap: () {
+          //                   customReplacementNavigate(context, RouterPath.signInPage);
+          // },
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
@@ -178,10 +179,10 @@ class _SignUpViewState extends State<SignUpView> with TickerProviderStateMixin {
                             filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.1),
+                                color: Colors.white.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: Colors.white.withValues(alpha: 0.2),
                                 ),
                               ),
                               padding: const EdgeInsets.all(24),
@@ -200,7 +201,7 @@ class _SignUpViewState extends State<SignUpView> with TickerProviderStateMixin {
                         text1: AppStrings.alreadyHaveAnAccount,
                         text2: AppStrings.signIn,
                         onTap: () {
-                          GoRouter.of(context).go(signInPage);
+                          GoRouter.of(context).go(RouterPath.signInPage);
                         },
                         // text1Style: CustomTextStyles.montserrat500style14
                         //     .copyWith(color: Colors.white70),

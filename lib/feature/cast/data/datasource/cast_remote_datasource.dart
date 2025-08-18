@@ -15,7 +15,7 @@ class CastRemoteDataSourceImpl implements CastRemoteDataSource {
   @override
   Future<TvCastModel> getTvSeriesCast(int id) async {
     final response = await apiConsumer.get(
-      '${EndpointConstants.tvSeriesDetails}$id${EndpointConstants.tvSeriesCast}',
+      '${EndpointConstants.tv}$id${EndpointConstants.tvSeriesCast}',
     );
     if (response == null) {
       throw Exception('Failed to load TV series cast');
@@ -27,7 +27,7 @@ class CastRemoteDataSourceImpl implements CastRemoteDataSource {
   @override
   Future<TvCastModel> getMovieCast(int id) async {
     final response = await apiConsumer.get(
-      '${EndpointConstants.movieDetails}$id${EndpointConstants.movieCast}',
+      '${EndpointConstants.movie}$id${EndpointConstants.movieCast}',
     );
     if (response == null) {
       throw Exception('Failed to load Movie cast');

@@ -3,16 +3,13 @@ import 'package:ai_movie_app/core/functions/custom_toast.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:ai_movie_app/feature/home/di/home_di.dart';
-import 'package:ai_movie_app/feature/home/presentation/manager/movies_bloc.dart';
-import 'package:ai_movie_app/feature/home/presentation/manager/movies_event.dart';
-import 'package:ai_movie_app/feature/home/presentation/manager/movies_state.dart';
+import 'package:ai_movie_app/feature/home/presentation/manager/home_media_bloc.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/cards.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/category_tab.dart';
-
+import 'package:ai_movie_app/feature/home/presentation/widgets/home_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -20,98 +17,26 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MoviesBloc(sl())..add(FetchNowPlayingEvent()),
+      create: (context) => HomeMediaBloc(
+        getDetailsUseCase: sl(),
+        getNowPlayingUseCase: sl(),
+        getMixedNowPlayingUseCase: sl(),
+      )..add(GetMixedNowPlayingEvent()),
       child: Scaffold(
         backgroundColor: AppColorsDark.backgroundColor,
         body: SafeArea(
-          child: BlocBuilder<MoviesBloc, MoviesState>(
+          child: BlocBuilder<HomeMediaBloc, HomeMediaState>(
             builder: (context, state) {
-              if (state is MoviesLoading || state is MoviesInitial) {
-                return ListView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 12.h,
-                  ),
-                  children: [
-                    Skeletonizer(
-                      child: Container(
-                        height: 30.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColorsDark.primaryColor.withValues(
-                            alpha: 0.3,
-                          ),
-                          borderRadius: BorderRadius.circular(6.r),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 12.h),
-
-                    Skeletonizer(
-                      child: Container(
-                        height: 220.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColorsDark.primaryColor.withValues(
-                            alpha: 0.3,
-                          ),
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 12.h),
-
-                    Skeletonizer(
-                      child: Container(
-                        height: 35.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColorsDark.primaryColor.withValues(
-                            alpha: .3,
-                          ),
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 12.h),
-
-                    // Small poster grid skeleton
-                    Skeletonizer(
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 6,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: 8.h,
-                          crossAxisSpacing: 8.w,
-                          childAspectRatio: 0.65,
-                        ),
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: AppColorsDark.primaryColor.withValues(
-                                alpha: 0.3,
-                              ),
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                );
+              if (state is HomeMediaLoading || state is HomeMediaInitial) {
+                return buildSkeletonLoading();
               }
 
-              // ------------------------ Error State ------------------------
-              if (state is MoviesError) {
+              if (state is HomeMediaError) {
                 return Center(child: Text(state.message));
               }
 
-              // ------------------------ Loaded State ------------------------
-              if (state is MoviesLoaded && state.movies != null) {
-                final movies = state.movies!;
-
+              if (state is HomeMediaListLoaded) {
+                final movies = state.mediaList; // List<HomeMediaEntity>
                 return ListView(
                   children: [
                     Padding(
@@ -179,6 +104,7 @@ class HomeView extends StatelessWidget {
                           return interactiveBigPoster(
                             movie.posterPath ?? '',
                             movie.id ?? 0,
+                            movie.mediaType,
                           );
                         },
                       ),
@@ -228,6 +154,7 @@ class HomeView extends StatelessWidget {
                               return interactiveSmallPoster(
                                 movie.posterPath ?? '',
                                 movie.id ?? 0,
+                                movie.mediaType,
                               );
                             },
                           );

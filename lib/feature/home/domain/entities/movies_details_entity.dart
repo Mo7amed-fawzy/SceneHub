@@ -1,4 +1,6 @@
-class HomeMoviesDetailsEntity {
+class HomeMediaEntity {
+  final String mediaType;
+
   final int? id;
   final String? title;
   final String? overview;
@@ -8,7 +10,8 @@ class HomeMoviesDetailsEntity {
   final double? voteAverage;
   final int? runtime;
 
-  HomeMoviesDetailsEntity({
+  HomeMediaEntity({
+    required this.mediaType,
     this.id,
     this.title,
     this.overview,

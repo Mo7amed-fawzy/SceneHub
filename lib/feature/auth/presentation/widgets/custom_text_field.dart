@@ -40,7 +40,7 @@ class CustomTextFormField extends StatelessWidget {
         onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
           filled: true,
-          fillColor: AppColorsDark.secondaryColor.withOpacity(0.1),
+          fillColor: AppColorsDark.secondaryColor.withValues(alpha: 0.1),
           labelText: labelText,
           labelStyle: CustomTextStyles.poppins500style14.copyWith(
             color: AppColorsDark.text,

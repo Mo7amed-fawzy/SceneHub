@@ -1,12 +1,11 @@
 class EndpointConstants {
   static const String baseUrl = 'https://api.themoviedb.org/3/';
-  static const String tvSeriesDetails = 'tv/';
-  static const String movieDetails = 'movie/';
+  // static const String tvSeriesDetails = 'tv/';
+  // static const String movieDetails = 'movie/';
   static const String movieCast = '/credits';
   static const String tvSeriesSeason = '/season/';
   static const String tvSeriesEpisode = '/episode/';
   static const String tvSeriesCast = '/aggregate_credits';
-  static const String imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
   // Add your endpoints here
 
   static const String baseUrl1 = 'https://api.example.com/v1';
@@ -22,5 +21,16 @@ class EndpointConstants {
   static const String refreshToken = '$auth/refresh';
 
   // home endpoints
-  static const String nowPlaying = 'now_playing';
+  // Movies
+  static const String movie = 'movie/';
+  static const String nowPlayingMovies = 'movie/now_playing';
+  static const String popularMovies = 'movie/popular';
+
+  // TV Series
+  static const String tv = 'tv/';
+  static const String airingTodayTv = 'tv/airing_today';
+  static const String popularTv = 'tv/popular';
+
+  // Shared
+  static const String imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
 }

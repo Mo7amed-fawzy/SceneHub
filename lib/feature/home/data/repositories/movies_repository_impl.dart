@@ -1,24 +1,30 @@
-import 'package:ai_movie_app/feature/home/data/datasource/movies_remote_datasource.dart';
-import 'package:ai_movie_app/feature/home/data/models/movies_details_model.dart';
+import 'package:ai_movie_app/feature/home/data/datasource/home_media_remote_data_source.dart';
+import 'package:ai_movie_app/feature/home/domain/entities/movies_details_entity.dart';
 import 'package:ai_movie_app/feature/home/domain/repositories/movies_repository.dart';
 
-abstract class HomeHomeMoviesRepository {
-  Future<List<HomeMoviesDetailsModel>> getNowPlayingMovies();
-  Future<HomeMoviesDetailsModel> getMovieDetails(int movieId);
-}
+class HomeMediaRepositoryImpl implements HomeMediaRepository {
+  final HomeMediaRemoteDataSource remoteDataSource;
 
-class HomeMoviesRepositoryImpl implements HomeMoviesRepository {
-  final HomeMoviesRemoteDataSource remoteDataSource;
-
-  HomeMoviesRepositoryImpl({required this.remoteDataSource});
+  HomeMediaRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<HomeMoviesDetailsModel>> getNowPlayingMovies() {
-    return remoteDataSource.getNowPlayingMovies();
+  Future<HomeMediaEntity> getDetails(int id, String mediaType) async {
+    final result = await remoteDataSource.getDetails(
+      id: id,
+      mediaType: mediaType,
+    );
+    return result.toEntity();
   }
 
   @override
-  Future<HomeMoviesDetailsModel> getMovieDetails(int movieId) {
-    return remoteDataSource.getMovieDetails(movieId);
+  Future<List<HomeMediaEntity>> getNowPlaying(String mediaType) async {
+    final result = await remoteDataSource.getNowPlaying(mediaType: mediaType);
+    return result.map((e) => e.toEntity()).toList();
+  }
+
+  @override
+  Future<List<HomeMediaEntity>> getMixedNowPlaying() async {
+    final result = await remoteDataSource.getMixedNowPlaying();
+    return result.map((e) => e.toEntity()).toList();
   }
 }
