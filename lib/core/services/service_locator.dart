@@ -15,16 +15,6 @@ import 'package:ai_movie_app/feature/episodes/domain/repository/episode_repo.dar
 import 'package:ai_movie_app/feature/movies/domain/repository/movies_repo.dart';
 
 
-import 'package:ai_movie_app/feature/splash/data/repositories/supabase_auth_repository.dart'; // For supabase auth
-import 'package:ai_movie_app/feature/splash/domain/use_case/decide_start_destination_usecase.dart';
-
-// OnBoarding Feature
-
-import 'package:ai_movie_app/feature/on_bourding/data/models/local_data_source.dart';
-import 'package:ai_movie_app/feature/on_bourding/data/repo_impl/on_boarding_repo_impl.dart';
-import 'package:ai_movie_app/feature/on_bourding/domain/repository/on_boarding_repository.dart';
-import 'package:ai_movie_app/feature/on_bourding/domain/use_cases/on_boarding_usecases.dart';
-import 'package:ai_movie_app/feature/on_bourding/presentation/cubit/on_boarding_cubit.dart';
 
 
 import '../../feature/episodes/data/datasource/episode_remote_datasource.dart';
@@ -48,7 +38,6 @@ import 'package:ai_movie_app/feature/movies/data/datasource/movies_remote_dataso
 import 'package:ai_movie_app/feature/movies/data/repository/movies_repo_impl.dart';
 import 'package:ai_movie_app/feature/movies/domain/repository/movies_repo.dart';
 import 'package:ai_movie_app/feature/movies/domain/usecases/get_movies_details_usecase.dart';
-
 
 import 'package:ai_movie_app/feature/tv_series/data/datasource/tv_series_remote_datasource.dart';
 import 'package:ai_movie_app/feature/tv_series/data/repository/tv_series_repo_impl.dart';
@@ -75,51 +64,12 @@ Future<void> initSl() async {
   sl.registerLazySingleton<ThemeCubit>(() => ThemeCubit()..loadTheme());
 
   // // ===================== Auth =====================
-  // sl.registerLazySingleton<AuthRemoteDataSource>(
-  //     () => AuthRemoteDataSourceImpl());
-  // sl.registerLazySingleton<AuthLocalDataSource>(
-  //     () => AuthLocalDataSourceImpl(sharedPreferences: sl()));
-  // sl.registerLazySingleton<AuthRepository>(() =>
-  //     AuthRepositoryImpl(
-  //         remoteDataSource: sl(),
-  //         localDataSource: sl()
-  //     ));
-  // sl.registerLazySingleton<ApiConsumer>(() => ApiConsumerImpl());
-
-  // // UseCases
-  // sl.registerLazySingleton(() => SignUpUseCase(sl()));
-  // sl.registerLazySingleton(() => SignInUseCase(sl()));
-  // sl.registerLazySingleton(() => SignOutUseCase(sl()));
-  // sl.registerLazySingleton(() => ResetPasswordUseCase(sl()));
-  // sl.registerLazySingleton(() => GetCurrentUserUseCase(sl()));
-  // sl.registerLazySingleton(() => IsSignedInUseCase(sl()));
-  // sl.registerLazySingleton(() => IsEmailVerifiedUseCase(sl()));
-  // sl.registerLazySingleton(() => SendEmailVerificationUseCase(sl()));
-
-  // // Cubit
-  // sl.registerFactory(() => AuthCubit(
-  //       signUpUseCase: sl(),
-  //       signInUseCase: sl(),
-  //       signOutUseCase: sl(),
-  //       resetPasswordUseCase: sl(),
-  //       getCurrentUserUseCase: sl(),
-  //       isSignedInUseCase: sl(),
-  //       isEmailVerifiedUseCase: sl(),
-  //       sendEmailVerificationUseCase: sl(),
-  //     ));
 
   // ===================== OnBoarding =====================
 
   // ===================== Splash =====================
 
   // ===================== Movies =====================
-  sl.registerLazySingleton<MoviesRemoteDataSource>(
-    () => MoviesRemoteDataSourceImpl(apiConsumer: sl()),
-  );
-  sl.registerLazySingleton<MoviesRepository>(() => MoviesRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetMovieDetailsUseCase>(
-    () => GetMovieDetailsUseCase(sl()),
-  );
 
   // ===================== Tv Series =====================
   sl.registerLazySingleton<TvSeriesRemoteDatasource>(
