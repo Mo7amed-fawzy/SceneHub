@@ -1,5 +1,5 @@
 // ignore: library_prefixes
-import 'package:ai_movie_app/core/routes/app_router.dart' as AppStrings;
+import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/feature/auth/presentation/widgets/custom_forgot_password_form.dart';
 import 'package:ai_movie_app/feature/auth/presentation/widgets/forgot_password_image.dart';
 import 'package:ai_movie_app/feature/auth/presentation/widgets/forgot_password_sub_title.dart';

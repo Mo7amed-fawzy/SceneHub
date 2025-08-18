@@ -8,4 +8,6 @@ abstract class CacheKeys {
   static const String lastCacheTime = 'last_cache_time';
   static const String wishlist = 'wishlist';
   static const String wishlistItems = 'wishlist_items';
+  static const String apiKey = 'api_key';
+  static const String results = 'results';
 }

@@ -37,20 +37,20 @@ class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
           if (state is MoviesDetailsLoading) {
             return MoviesDetailsShow(
               moviesDetails: const MoviesDetailsEntity(
-                backdropPath: 'dsfgfdg',
+                backdropPath: null,
                 id: 0,
-                title: 'sdgsdfsdgsdf',
-                overview:
-                    'sdgsdfskld sdklgsiod h;gsiodgjf sdoipgj; sidgj siodgjsdoi;g ',
+                title: null,
+                overview: null,
                 releaseDate: null,
                 voteAverage: 0.0,
-                runtime: 120,
+                runtime: null,
                 genres: [],
-                posterPath: 'dsfgfdg',
+                posterPath: null,
               ),
               movieId: widget.movieId,
             );
           }
+
           return const Center(child: CircularProgressIndicator());
         },
       ),

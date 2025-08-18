@@ -29,7 +29,7 @@ class SignUpView extends StatelessWidget {
                 text1: AppStrings.alreadyHaveAnAccount,
                 text2: AppStrings.signUp,
                 onTap: () {
-                  customReplacementNavigate(context, signInPage);
+                  customReplacementNavigate(context, RouterPath.signInPage);
                 },
               ),
             ),

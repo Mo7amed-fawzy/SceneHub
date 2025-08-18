@@ -21,9 +21,9 @@ class DecideStartDestinationUseCase {
 
   String _decideNextRoute(bool isVisited, User? user) {
     if (isVisited) {
-      return user != null ? homeNavBar : signInPage;
+      return user != null ? RouterPath.homeNavBar : RouterPath.signInPage;
     } else {
-      return toOnbourding;
+      return RouterPath.toOnbourding;
     }
   }
 }

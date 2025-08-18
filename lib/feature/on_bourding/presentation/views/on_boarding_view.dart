@@ -31,7 +31,7 @@ class OnBourdingView extends StatelessWidget {
               CustomNavBar(
                 onTap: () {
                   context.read<OnBoardingCubit>().completeOnBoarding();
-                  customReplacementNavigate(context, signUpPage);
+                  customReplacementNavigate(context, RouterPath.signUpPage);
                 },
               ),
 

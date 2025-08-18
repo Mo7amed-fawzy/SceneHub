@@ -12,22 +12,22 @@ class AuthPresentationManager {
 
   /// Navigate to sign up page
   void navigateToSignUp(BuildContext context) {
-    customReplacementNavigate(context, signUpPage);
+    customReplacementNavigate(context, RouterPath.signUpPage);
   }
 
   /// Navigate to sign in page
   void navigateToSignIn(BuildContext context) {
-    customReplacementNavigate(context, signInPage);
+    customReplacementNavigate(context, RouterPath.signInPage);
   }
 
   /// Navigate to forgot password page
   void navigateToForgotPassword(BuildContext context) {
-    customReplacementNavigate(context, forgotPassword);
+    customReplacementNavigate(context, RouterPath.forgotPassword);
   }
 
   /// Navigate to home page after successful authentication
   void navigateToHome(BuildContext context) {
-    customReplacementNavigate(context, homeNavBar);
+    customReplacementNavigate(context, RouterPath.homeNavBar);
   }
 
   /// Navigate back to previous page

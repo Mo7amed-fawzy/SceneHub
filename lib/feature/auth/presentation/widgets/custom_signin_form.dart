@@ -23,7 +23,7 @@ class CustomSignInForm extends StatelessWidget {
         if (state is myAuth.SigninSuccessState) {
           // Mock successful signin - navigate to home
           showToast("Sign in successful!");
-          customReplacementNavigate(context, homeNavBar);
+          customReplacementNavigate(context, RouterPath.homeNavBar);
         } else if (state is myAuth.SigninFailureState) {
           showToast(state.errMessage);
         }

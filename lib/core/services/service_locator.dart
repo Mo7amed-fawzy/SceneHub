@@ -1,4 +1,3 @@
-import 'package:ai_movie_app/feature/splash/domain/repositories/splash_auth_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 
@@ -7,16 +6,6 @@ import 'package:ai_movie_app/core/database/cache/app_shared_preferences.dart';
 import 'package:ai_movie_app/core/network/api_consumer.dart';
 import 'package:ai_movie_app/core/network/dio_consumer.dart';
 import 'package:ai_movie_app/core/utils/theme_cubit.dart';
-
-import 'package:ai_movie_app/feature/splash/data/repositories/supabase_auth_repository.dart'; // For supabase auth
-import 'package:ai_movie_app/feature/splash/domain/use_case/decide_start_destination_usecase.dart';
-
-// OnBoarding Feature
-import 'package:ai_movie_app/feature/on_bourding/data/models/local_data_source.dart';
-import 'package:ai_movie_app/feature/on_bourding/data/repo_impl/on_boarding_repo_impl.dart';
-import 'package:ai_movie_app/feature/on_bourding/domain/repository/on_boarding_repository.dart';
-import 'package:ai_movie_app/feature/on_bourding/domain/use_cases/on_boarding_usecases.dart';
-import 'package:ai_movie_app/feature/on_bourding/presentation/cubit/on_boarding_cubit.dart';
 
 // Movies & Tv Series
 import 'package:ai_movie_app/feature/movies/data/datasource/movies_remote_datasource.dart';
@@ -58,6 +47,7 @@ Future<void> initSl() async {
   //         remoteDataSource: sl(),
   //         localDataSource: sl()
   //     ));
+  // sl.registerLazySingleton<ApiConsumer>(() => ApiConsumerImpl());
 
   // // UseCases
   // sl.registerLazySingleton(() => SignUpUseCase(sl()));
@@ -82,26 +72,8 @@ Future<void> initSl() async {
   //     ));
 
   // ===================== OnBoarding =====================
-  sl.registerLazySingleton<OnBoardingLocalDataSource>(
-    () => OnBoardingLocalDataSourceImpl(sl()),
-  );
-  sl.registerLazySingleton<OnBoardingRepository>(
-    () => OnBoardingRepositoryImpl(sl()),
-  );
-  sl.registerLazySingleton(() => GetOnBoardingDataUseCase(sl()));
-  sl.registerLazySingleton(() => SetOnBoardingVisitedUseCase(sl()));
-  sl.registerFactory(() => OnBoardingCubit(sl(), sl()));
 
   // ===================== Splash =====================
-  sl.registerLazySingleton<SplashAuthRepository>(
-    () => SupabaseAuthRepository(),
-  );
-  sl.registerLazySingleton<DecideStartDestinationUseCase>(
-    () => DecideStartDestinationUseCase(
-      appPreferences: sl(),
-      authRepository: sl(),
-    ),
-  );
 
   // ===================== Movies =====================
   sl.registerLazySingleton<MoviesRemoteDataSource>(

@@ -19,43 +19,45 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-const String toOnbourding = "/onBourding";
-const String signUpPage = "/signUp";
-const String signInPage = "/signIn";
-const String homeView = "/HomeView";
-const String forgotPassword = "/ForgotPasswordView";
-const String homeNavBar = "/HomeNavBar";
-const String searchView = "/search";
-const String wishlistView = "/wishlist";
-const String search = "/search";
-const String profile = "/profile";
-const String settings = "/settings";
+abstract class RouterPath {
+  static const String toOnbourding = "/onBourding";
+  static const String signUpPage = "/signUp";
+  static const String signInPage = "/signIn";
+  static const String homeView = "/HomeView";
+  static const String forgotPassword = "/ForgotPasswordView";
+  static const String homeNavBar = "/HomeNavBar";
+  static const String searchView = "/search";
+  static const String wishlistView = "/wishlist";
+  static const String search = "/search";
+  static const String profile = "/profile";
+  static const String settings = "/settings";
+}
 
 final GoRouter goRouter = GoRouter(
   routes: [
+    // GoRoute(
+    //   path: "/",
+    //   builder: (context, state) => BlocProvider.value(
+    //     value: sl<ThemeCubit>(),
+    //     child: static const SplashView(),
+    //   ),
+    // ),
     GoRoute(
-      path: "/",
-      builder: (context, state) => BlocProvider.value(
-        value: sl<ThemeCubit>(),
-        child: const SplashView(),
-      ),
-    ),
-    GoRoute(
-      path: toOnbourding,
+      path: RouterPath.toOnbourding,
       builder: (context, state) => BlocProvider(
         create: (context) => sl<OnBoardingCubit>(),
         child: OnBourdingView(),
       ),
     ),
     GoRoute(
-      path: signUpPage,
+      path: RouterPath.signUpPage,
       builder: (context, state) => BlocProvider(
         create: (context) => sl<AuthCubit>(),
         child: const SignUpView(),
       ),
     ),
     GoRoute(
-      path: signInPage,
+      path: RouterPath.signInPage,
       builder: (context, state) => BlocProvider(
         create: (context) => sl<AuthCubit>(),
         child: const SignInView(),
@@ -63,16 +65,16 @@ final GoRouter goRouter = GoRouter(
     ),
 
     GoRoute(
-      path: forgotPassword,
+      path: RouterPath.forgotPassword,
       builder: (context, state) => BlocProvider(
         create: (context) => sl<AuthCubit>(),
         child: const ForgotPasswordView(),
       ),
     ),
 
-    // GoRoute(path: homeView, builder: (context, state) => const HomeView()),
+    // GoRoute(path: homeView, builder: (context, state) => static const HomeView()),
     GoRoute(
-      path: '$homeView/:id',
+      path: '/movie/:id',
       builder: (context, state) {
         final movieIdStr = state.pathParameters['id'];
         if (movieIdStr == null) return const SizedBox();
@@ -85,32 +87,31 @@ final GoRouter goRouter = GoRouter(
         );
       },
     ),
-    ShellRoute(
-      builder: (context, state, child) {
-        return HomeNavBarShell(child: child);
-      },
-      routes: [
-        GoRoute(path: homeView, builder: (context, state) => const HomeView()),
 
+    // ShellRoute with BottomNavBar
+    ShellRoute(
+      builder: (context, state, child) => HomeNavBarShell(child: child),
+      routes: [
+        GoRoute(path: '/', builder: (context, state) => const HomeView()),
         GoRoute(
-          path: wishlistView,
+          path: RouterPath.wishlistView,
           builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.instance<WishlistCubit>(),
+            create: (context) => sl<WishlistCubit>(),
             child: const WishlistView(userId: 'current-user-id'),
           ),
         ),
         GoRoute(
-          path: search,
+          path: RouterPath.search,
           builder: (context, state) =>
               const AnimatedPlaceholderPage(title: "Search"),
         ),
         GoRoute(
-          path: profile,
+          path: RouterPath.profile,
           builder: (context, state) =>
               const AnimatedPlaceholderPage(title: "Profile"),
         ),
         GoRoute(
-          path: settings,
+          path: RouterPath.settings,
           builder: (context, state) =>
               const AnimatedPlaceholderPage(title: "Settings"),
         ),
