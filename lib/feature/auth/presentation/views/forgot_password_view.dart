@@ -1,7 +1,6 @@
-
+import 'package:ai_movie_app/core/routes/app_router.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/constants/app_style.dart';
-import 'package:ai_movie_app/core/routes/app_router.dart' as AppStrings;
 import 'package:ai_movie_app/feature/auth/presentation/widgets/custom_forgot_password_form.dart';
 import 'package:ai_movie_app/feature/auth/presentation/widgets/forgot_password_image.dart';
 import 'package:ai_movie_app/feature/auth/presentation/widgets/forgot_password_sub_title.dart';
@@ -33,7 +32,7 @@ class ForgotPasswordView extends StatelessWidget {
                       if (GoRouter.of(context).canPop()) {
                         GoRouter.of(context).pop();
                       } else {
-                        GoRouter.of(context).go(AppStrings.signInPage);
+                        GoRouter.of(context).go(RouterPath.signInPage);
                       }
                     },
                     child: Container(
@@ -43,7 +42,7 @@ class ForgotPasswordView extends StatelessWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
+                            color: Colors.black.withValues(alpha: 0.3),
                             blurRadius: 6,
                             offset: const Offset(0, 3),
                           ),
@@ -84,7 +83,7 @@ class ForgotPasswordView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),

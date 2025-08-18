@@ -1,4 +1,6 @@
+import 'package:ai_movie_app/core/constants/cache_keys.dart';
 import 'package:ai_movie_app/core/network/api_consumer.dart';
+import 'package:ai_movie_app/core/utils/api_keys.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/season/tv_season_model.dart';
 import 'package:ai_movie_app/feature/tv_series/data/models/tv_series_model.dart';
 
@@ -17,7 +19,8 @@ class TvSeriesRemoteDatasourceImpl implements TvSeriesRemoteDatasource {
   @override
   Future<TvSeriesDetailsModel> getTvSeriesDetails(int id) async {
     final response = await apiConsumer.get(
-      '${EndpointConstants.tvSeriesDetails}$id',
+      '${EndpointConstants.tv}$id',
+      queryParameters: {CacheKeys.apiKey: EnvConfig.tmdbApiKey},
     );
     if (response == null) {
       throw Exception('Failed to load TV series details');
@@ -32,7 +35,8 @@ class TvSeriesRemoteDatasourceImpl implements TvSeriesRemoteDatasource {
     int seasonNumber,
   ) async {
     final response = await apiConsumer.get(
-      '${EndpointConstants.tvSeriesDetails}$id${EndpointConstants.tvSeriesSeason}$seasonNumber',
+      '${EndpointConstants.tv}$id${EndpointConstants.tvSeriesSeason}$seasonNumber',
+      queryParameters: {CacheKeys.apiKey: EnvConfig.tmdbApiKey},
     );
     if (response == null) {
       throw Exception('Failed to load TV series season');

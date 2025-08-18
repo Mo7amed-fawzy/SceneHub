@@ -17,7 +17,7 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
     try {
       return apiConsumer
           .get(
-            '${EndpointConstants.movieDetails}$movieId',
+            '${EndpointConstants.movie}$movieId',
             queryParameters: {'api_key': EnvConfig.tmdbApiKey},
           )
           .then((response) {

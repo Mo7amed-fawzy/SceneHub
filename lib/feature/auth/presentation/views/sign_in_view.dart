@@ -91,8 +91,8 @@ class _SignInViewState extends State<SignInView> with TickerProviderStateMixin {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Colors.black.withOpacity(0.6),
-                    Colors.black.withOpacity(0.3),
+                    Colors.black.withValues(alpha: 0.6),
+                    Colors.black.withValues(alpha: 0.3),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -166,10 +166,10 @@ class _SignInViewState extends State<SignInView> with TickerProviderStateMixin {
                             filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.1),
+                                color: Colors.white.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: Colors.white.withValues(alpha: 0.2),
                                 ),
                               ),
                               padding: const EdgeInsets.all(24),
@@ -188,7 +188,7 @@ class _SignInViewState extends State<SignInView> with TickerProviderStateMixin {
                         text1: AppStrings.dontHaveAnAccount,
                         text2: AppStrings.signUp,
                         onTap: () {
-                          GoRouter.of(context).go(signUpPage);
+                          GoRouter.of(context).go(RouterPath.signUpPage);
                         },
                         // text1Style: CustomTextStyles.montserrat500style14
                         //     .copyWith(color: Colors.white70),

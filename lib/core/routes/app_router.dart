@@ -4,6 +4,8 @@ import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cub
 import 'package:ai_movie_app/feature/auth/presentation/views/forgot_password_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_in_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_up_view.dart';
+import 'package:ai_movie_app/feature/episodes/data/models/get_episodes_prams.dart';
+import 'package:ai_movie_app/feature/episodes/presentation/bloc/episode_bloc.dart';
 
 import 'package:ai_movie_app/feature/episodes/presentation/screens/episode_view_screen.dart';
 
@@ -17,6 +19,7 @@ import 'package:ai_movie_app/feature/on_bourding/presentation/views/on_boarding_
 import 'package:ai_movie_app/feature/splash/presentation/views/splash_view.dart';
 
 import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
+import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_series_details_screen.dart';
 
 import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/views/wishlist_view.dart';
@@ -39,9 +42,9 @@ abstract class RouterPath {
   static const String search = "/search";
   static const String profile = "/profile";
   static const String settings = "/settings";
+  static const String episodeView = "/episodeView";
+  static const String tvSeriesDetails = "/tvSeriesDetails";
 }
-
-
 
 final GoRouter goRouter = GoRouter(
   routes: [
@@ -101,7 +104,7 @@ final GoRouter goRouter = GoRouter(
 
     // ShellRoute with BottomNavBar
     GoRoute(
-      path: episodeView,
+      path: RouterPath.episodeView,
       builder: (context, state) {
         final params = state.extra as GetEpisodesParams?;
         if (params == null) return const SizedBox(); // In error case
@@ -112,7 +115,7 @@ final GoRouter goRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '$tvSeriesDetails/:tvSeriesId',
+      path: '${RouterPath.tvSeriesDetails}/:tvSeriesId',
       builder: (context, state) {
         final tvSeriesIdStr = state.pathParameters['tvSeriesId'];
         if (tvSeriesIdStr == null) return const SizedBox(); // In error case
@@ -123,7 +126,7 @@ final GoRouter goRouter = GoRouter(
           child: TvSeriesDetailsScreen(tvSeriesId: tvSeriesId),
         );
       },
-
+    ),
     ShellRoute(
       builder: (context, state, child) => HomeNavBarShell(child: child),
       routes: [
@@ -151,7 +154,6 @@ final GoRouter goRouter = GoRouter(
               const AnimatedPlaceholderPage(title: "Settings"),
         ),
       ],
-
     ),
   ],
 );

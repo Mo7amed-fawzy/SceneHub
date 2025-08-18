@@ -94,3 +94,37 @@ It follows the **Clean Architecture** principles and integrates **Cubit/BLoC** f
 </p>
 
 ---
+
+### Fourth Implemented Feature: Home Feature 🏠 (⏳ in progress) 
+
+The Home Feature is the core of the AI Movie App, providing users with a dynamic and interactive dashboard of movies and TV shows.
+It follows Clean Architecture principles and integrates Cubit/BLoC for state management, fetching data from remote APIs, and rendering it efficiently.
+
+Key Highlights of Home Feature:
+
+Dynamic Content Fetching from TMDB API for Now Playing, Upcoming, Top Rated, and Popular Movies & TV Shows.
+
+Separate Cubits/BLoCs for each category to ensure isolated and maintainable state management.
+
+Interactive UI Components including carousels, horizontal lists, and grid views.
+
+Loading & Error Handling using Skeletons/Shimmers for smooth UX.
+
+Clean Separation of Concerns between Presentation, Domain, and Data layers.
+
+Service Locator Integration for dependency injection of repositories and use cases.
+
+Reusability of widgets like MovieCard, TVSeriesCard, and FeatureBoxListView.
+
+Optimized Network Requests with caching where necessary.
+
+
+---
+
+Home Feature Screenshots 📸
+
+<p align="center">
+  <img src="assets/screenshots/home_feature/home.png" alt="Splash Screen Dark" width="300">
+</p>
+
+---

@@ -1,4 +1,3 @@
-import 'package:ai_movie_app/core/constants/endpoint_constants.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_buttons_widget.dart';
@@ -7,16 +6,16 @@ import 'package:ai_movie_app/core/widgets/details_screen_top_bar_nav.dart';
 import 'package:ai_movie_app/feature/movies/domain/entities/movies_details_entity.dart';
 import 'package:ai_movie_app/feature/movies/presentation/bloc/movies_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_description_widget.dart';
+import 'package:ai_movie_app/core/utils/details_screen_rating_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
-import '../../../../core/utils/details_screen_rating_widget.dart';
+import '../../../../core/constants/endpoint_constants.dart';
+import '../../../../core/services/service_locator.dart';
 import '../../../cast/presentation/bloc/cast_bloc.dart';
 import '../../../cast/presentation/screens/cast_and_crew_widget.dart';
-import '../../../../core/services/service_locator.dart';
 
 class MoviesDetailsShow extends StatelessWidget {
   const MoviesDetailsShow({
@@ -24,36 +23,27 @@ class MoviesDetailsShow extends StatelessWidget {
     required this.moviesDetails,
     required this.movieId,
   });
-
   final MoviesDetailsEntity moviesDetails;
   final int movieId;
-
-  String getValidImage(String? path) {
-    if (path != null && path.isNotEmpty) {
-      return '${EndpointConstants.imageBaseUrl}$path';
-    }
-    return 'assets/images/avengers.png';
-  }
-
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<MoviesBloc>().state;
-    final isLoading = state is MoviesDetailsLoading;
-
     return SingleChildScrollView(
       child: Column(
         children: [
           Stack(
             children: [
               Skeletonizer(
-                enabled: isLoading,
+                enabled:
+                    context.watch<MoviesBloc>().state is MoviesDetailsLoading,
                 child: Opacity(
                   opacity: 0.24,
                   child: Container(
                     height: 450.h,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/avengers.png'),
+                        image: CachedNetworkImageProvider(
+                          '${EndpointConstants.imageBaseUrl}${moviesDetails.backdropPath}',
+                        ),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -74,18 +64,15 @@ class MoviesDetailsShow extends StatelessWidget {
                 left: 95.w,
                 top: 80.h,
                 child: Skeletonizer(
-                  enabled: isLoading,
+                  enabled: false,
                   child: Container(
                     width: 190.w,
                     height: 270.h,
                     decoration: ShapeDecoration(
                       image: DecorationImage(
-                        image: moviesDetails.posterPath != null
-                            ? CachedNetworkImageProvider(
-                                getValidImage(moviesDetails.posterPath),
-                              )
-                            : const AssetImage('assets/images/avengers.png')
-                                  as ImageProvider,
+                        image: CachedNetworkImageProvider(
+                          '${EndpointConstants.imageBaseUrl}${moviesDetails.posterPath}',
+                        ),
                         fit: BoxFit.fill,
                       ),
                       shape: RoundedRectangleBorder(
@@ -99,7 +86,7 @@ class MoviesDetailsShow extends StatelessWidget {
                 left: 65.w,
                 bottom: 50.h,
                 child: DetailsScreenInfoNavWidget(
-                  isLoading: isLoading,
+                  isLoading: false,
                   year: moviesDetails.releaseDate?.year.toString(),
                   duration: moviesDetails.runtime != null
                       ? '${moviesDetails.runtime} ${AppStrings.minutes}'
@@ -113,7 +100,7 @@ class MoviesDetailsShow extends StatelessWidget {
                 left: 165.w,
                 bottom: 25.h,
                 child: DetailsScreenRatingWidget(
-                  isLoading: isLoading,
+                  isLoading: false,
                   rating: double.parse(
                     (moviesDetails.voteAverage ?? 0).toStringAsFixed(1),
                   ),
@@ -123,13 +110,9 @@ class MoviesDetailsShow extends StatelessWidget {
                 top: 40.h,
                 left: 20.w,
                 child: DetailsScreenTopBarNav(
-                  title: moviesDetails.title ?? AppStrings.notAvailabl,
-                  isLoading: isLoading,
-// =======
-//                   title: moviesDetails.title ?? AppStrings.notAvailable,
-//                   isLoading:
-//                       context.watch<MoviesBloc>().state is MoviesDetailsLoading,
-// >>>>>>> main
+                  title: moviesDetails.title ?? AppStrings.notAvailable,
+                  isLoading:
+                      context.watch<MoviesBloc>().state is MoviesDetailsLoading,
                 ),
               ),
             ],
@@ -137,7 +120,10 @@ class MoviesDetailsShow extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 10.h,
               children: [
                 DetailsScreenButtonsWidget(
                   buttonColor: AppColorsDark.rating,
@@ -145,12 +131,10 @@ class MoviesDetailsShow extends StatelessWidget {
                 ),
                 4.verticalSpace,
                 TvDescriptionWidget(
-                  description: moviesDetails.overview ?? AppStrings.notAvailabl,
-                  isLoading: isLoading,
-//                   description:
-//                       moviesDetails.overview ?? AppStrings.notAvailable,
-//                   isLoading:
-//                       context.watch<MoviesBloc>().state is MoviesDetailsLoading,
+                  description:
+                      moviesDetails.overview ?? AppStrings.notAvailable,
+                  isLoading:
+                      context.watch<MoviesBloc>().state is MoviesDetailsLoading,
                 ),
                 16.verticalSpace,
                 BlocProvider(

@@ -22,6 +22,10 @@ class EpisodeDetailsShow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String imageUrl = episodeEntity.stillPath.isNotEmpty
+        ? '${EndpointConstants.imageBaseUrl}${episodeEntity.stillPath}'
+        : '';
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -31,14 +35,21 @@ class EpisodeDetailsShow extends StatelessWidget {
                 enabled: context.watch<EpisodeBloc>().state is EpisodeLoading,
                 child: Opacity(
                   opacity: 0.24,
-                  child: Container(
+                  child: SizedBox(
                     height: 450.h,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: CachedNetworkImageProvider(
-                          '${EndpointConstants.imageBaseUrl}${episodeEntity.stillPath}',
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) =>
+                          Container(color: Colors.grey[800], height: 450.h),
+                      errorWidget: (context, url, error) => Container(
+                        color: Colors.grey[800],
+                        height: 450.h,
+                        child: const Icon(
+                          Icons.broken_image,
+                          color: Colors.white,
+                          size: 50,
                         ),
-                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -59,18 +70,25 @@ class EpisodeDetailsShow extends StatelessWidget {
                 top: 150.h,
                 child: Skeletonizer(
                   enabled: false,
-                  child: Container(
+                  child: SizedBox(
                     width: 190.w,
                     height: 170.h,
-                    decoration: ShapeDecoration(
-                      image: DecorationImage(
-                        image: CachedNetworkImageProvider(
-                          '${EndpointConstants.imageBaseUrl}${episodeEntity.stillPath}',
-                        ),
-                        fit: BoxFit.fill,
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) => Container(
+                        color: Colors.grey[800],
+                        width: 190.w,
+                        height: 170.h,
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                      errorWidget: (context, url, error) => Container(
+                        color: Colors.grey[800],
+                        width: 190.w,
+                        height: 170.h,
+                        child: const Icon(
+                          Icons.broken_image,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

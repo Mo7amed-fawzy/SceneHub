@@ -22,7 +22,6 @@ class DetailsScreenTopBarNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           GestureDetector(
             onTap: () {
               Navigator.of(context).pop();
