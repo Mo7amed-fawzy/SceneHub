@@ -39,16 +39,20 @@ class CustomTextFormField extends StatelessWidget {
         onChanged: onChanged,
         onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: AppColorsDark.secondaryColor.withOpacity(0.1),
           labelText: labelText,
-          labelStyle: CustomTextStyles.poppins500style14,
+          labelStyle: CustomTextStyles.poppins500style14.copyWith(
+            color: AppColorsDark.text,
+          ),
           border: getBorderStyle(),
           enabledBorder: getBorderStyle(),
           focusedBorder: getBorderStyle(),
-          // هنا وضعنا الـ suffixIcon داخل InputDecoration
           suffixIcon: isPassword
               ? IconButton(
                   icon: Icon(
                     isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: AppColorsDark.selectedIcon,
                   ),
                   onPressed: onPassowrdPressed,
                 )

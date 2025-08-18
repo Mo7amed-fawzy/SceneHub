@@ -22,10 +22,10 @@ class DetailsScreenTopBarNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Back Arrow
+
           GestureDetector(
             onTap: () {
-              Navigator.pop(context); // هيرجع للشاشة السابقة
+              Navigator.of(context).pop();
             },
             child: Container(
               width: 32.w,

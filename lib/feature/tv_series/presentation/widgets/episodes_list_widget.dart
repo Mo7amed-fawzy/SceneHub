@@ -1,7 +1,10 @@
+import 'package:ai_movie_app/core/functions/navigation.dart';
+import 'package:ai_movie_app/feature/episodes/data/models/get_episodes_prams.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import '../../../../core/routes/app_router.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../domain/entities/season_entities.dart';
 import '../bloc/tv_series_bloc.dart';
@@ -60,17 +63,30 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
                   final episode = tvSeason?.episodes?[index];
                   return Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
-                    child: TvEpisodeDetailsWidget(
-                      episodeDuration: episode?.runtime != null
-                          ? '${episode!.runtime!} ${AppStrings.minutes}'
-                          : AppStrings.notAvailabl,
-                      episodeTitle: episode?.name ?? AppStrings.notAvailabl,
-                      episodeDescription:
-                          episode?.overview ??
-                          AppStrings.noDescriptionAvailable,
-                      episodeImageUrl:
-                          episode?.stillPath ?? 'episode_image.jpg',
-                      episodeNumber: episode?.episodeNumber ?? 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        customNavigate(
+                          context,
+                          episodeView,
+                          extra: GetEpisodesParams(
+                            seriesId: widget.tvSeriesId,
+                            seasonNumber: seasonNumber,
+                            episodeNumber: episode!.episodeNumber!,
+                          ),
+                        );
+                      },
+                      child: TvEpisodeDetailsWidget(
+                        episodeDuration: episode?.runtime != null
+                            ? '${episode!.runtime!} ${AppStrings.minutes}'
+                            : AppStrings.notAvailable,
+                        episodeTitle: episode?.name ?? AppStrings.notAvailable,
+                        episodeDescription:
+                            episode?.overview ??
+                            AppStrings.noDescriptionAvailable,
+                        episodeImageUrl:
+                            episode?.stillPath ?? 'episode_image.jpg',
+                        episodeNumber: episode?.episodeNumber ?? 0,
+                      ),
                     ),
                   );
                 },
