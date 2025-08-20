@@ -1,3 +1,4 @@
+import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:ai_movie_app/feature/cast/presentation/bloc/cast_bloc.dart';
 import 'package:ai_movie_app/feature/cast/presentation/widgets/actor_info_widget.dart';
@@ -87,8 +88,8 @@ class _CastAndCrewWidgetState extends State<CastAndCrewWidget> {
                       padding: EdgeInsets.only(right: 12.0.w),
                       child: ActorInfoWidget(
                         actorImageUrl: state is CastLoaded
-                            ? state.tvCast.cast![index].profilePath ?? ''
-                            : '',
+                            ? state.tvCast.cast![index].profilePath
+                            : AppStyle.images.profileImageNotAvailable,
                         actorName: state is CastLoaded
                             ? state.tvCast.cast![index].name ??
                                   AppStrings.unknownActor
