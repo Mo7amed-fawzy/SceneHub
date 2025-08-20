@@ -28,11 +28,13 @@ class TvDataShow extends StatelessWidget {
     required this.widget,
     required this.seasonNumber,
     required this.tvSeries,
+    required this.onSeasonChanged,
   });
 
   final TvSeriesDetailsScreen widget;
   final int seasonNumber;
   final TvSeriesDetailsEntity tvSeries;
+  final Function(int) onSeasonChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +186,7 @@ class TvDataShow extends StatelessWidget {
                   seasonNumber: seasonNumber,
                   tvSeriesId: widget.tvSeriesId,
                   numberOfSeasons: tvSeries.numberOfSeasons ?? 1,
+                  onSeasonChanged: onSeasonChanged,
                 ),
                 EpisodesListWidget(
                   isLoading:
@@ -191,6 +194,7 @@ class TvDataShow extends StatelessWidget {
                           is TvSeriesSeasonDetailsLoading,
                   tvSeriesId: widget.tvSeriesId,
                   numberOfSeasons: tvSeries.numberOfSeasons ?? 1,
+                  seasonNumber: seasonNumber,
                 ),
               ],
             ),

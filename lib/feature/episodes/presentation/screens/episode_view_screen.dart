@@ -32,6 +32,7 @@ class _EpisodeViewScreenState extends State<EpisodeViewScreen> {
             return EpisodeDetailsShow(
               episodeEntity: state.episode,
               isLoading: false,
+              params: widget.params,
             );
           }
           if (state is EpisodeLoading) {
@@ -47,6 +48,7 @@ class _EpisodeViewScreenState extends State<EpisodeViewScreen> {
                 episodeType: 'episodeType',
               ),
               isLoading: true,
+              params: widget.params,
             );
           }
           if (state is EpisodeError) {

@@ -14,15 +14,18 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/constants/endpoint_constants.dart';
 import '../../../../core/utils/app_text_styles.dart';
+import '../../data/models/get_episodes_prams.dart';
 
 class EpisodeDetailsShow extends StatelessWidget {
   const EpisodeDetailsShow({
     super.key,
     required this.episodeEntity,
     this.isLoading = false,
+    required this.params,
   });
   final EpisodeEntity episodeEntity;
   final bool isLoading;
+  final GetEpisodesParams params;
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +125,23 @@ class EpisodeDetailsShow extends StatelessWidget {
               Positioned(
                 top: 40.h,
                 left: 20.w,
-                child: DetailsScreenTopBarNav(
-                  title: episodeEntity.name,
-                  isLoading: isLoading,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DetailsScreenTopBarNav(
+                      title: episodeEntity.name,
+                      isLoading: isLoading,
+                    ),
+                    if (!isLoading) ...[
+                      8.verticalSpace,
+                      Text(
+                        'Season ${params.seasonNumber} • Episode ${params.episodeNumber}',
+                        style: CustomTextStyles.montserrat400style14.copyWith(
+                          color: Colors.white.withOpacity(0.7),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
             ],
