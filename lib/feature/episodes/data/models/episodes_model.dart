@@ -19,17 +19,17 @@ class EpisodesModel {
   @JsonKey(name: "name")
   final String name;
   @JsonKey(name: "overview")
-  final String overview;
+  final String? overview;
   @JsonKey(name: "id")
   final int id;
   @JsonKey(name: "production_code")
-  final String productionCode;
+  final String? productionCode;
   @JsonKey(name: "runtime")
-  final int runtime;
+  final int? runtime;
   @JsonKey(name: "season_number")
   final int seasonNumber;
   @JsonKey(name: "still_path")
-  final String stillPath;
+  final String? stillPath;
   @JsonKey(name: "vote_average")
   final double voteAverage;
   @JsonKey(name: "vote_count")
@@ -42,12 +42,12 @@ class EpisodesModel {
     required this.episodeType,
     required this.guestStars,
     required this.name,
-    required this.overview,
+    this.overview,
     required this.id,
-    required this.productionCode,
-    required this.runtime,
+    this.productionCode,
+    this.runtime,
     required this.seasonNumber,
-    required this.stillPath,
+    this.stillPath,
     required this.voteAverage,
     required this.voteCount,
   });
@@ -63,9 +63,9 @@ class EpisodesModel {
       crew: crew.map((crewMember) => crewMember.toEntity()).toList(),
       episodeType: episodeType,
       name: name,
-      overview: overview,
-      runtime: runtime,
-      stillPath: stillPath,
+      overview: overview ?? '', // Provide empty string if null
+      runtime: runtime ?? 0, // Provide 0 if null
+      stillPath: stillPath ?? '', // Provide empty string if null
       voteAverage: voteAverage,
     );
   }

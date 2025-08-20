@@ -71,7 +71,7 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
                           extra: GetEpisodesParams(
                             seriesId: widget.tvSeriesId,
                             seasonNumber: seasonNumber,
-                            episodeNumber: episode!.episodeNumber!,
+                            episodeNumber: episode.episodeNumber!,
                           ),
                         );
                       },
@@ -80,12 +80,11 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
                             ? '${episode!.runtime!} ${AppStrings.minutes}'
                             : AppStrings.notAvailable,
                         episodeTitle: episode?.name ?? AppStrings.notAvailable,
-                        episodeDescription:
-                            episode?.overview ??
-                            AppStrings.noDescriptionAvailable,
-                        episodeImageUrl:
-                            episode?.stillPath ?? 'episode_image.jpg',
-                        episodeNumber: episode?.episodeNumber ?? 0,
+                        episodeDescription: episode!.overview == ''
+                            ? AppStrings.noDescriptionAvailable
+                            : episode.overview!,
+                        episodeImageUrl: episode.stillPath,
+                        episodeNumber: episode.episodeNumber ?? 0,
                       ),
                     ),
                   );

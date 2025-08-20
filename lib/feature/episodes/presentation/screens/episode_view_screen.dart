@@ -29,7 +29,10 @@ class _EpisodeViewScreenState extends State<EpisodeViewScreen> {
       body: BlocBuilder<EpisodeBloc, EpisodeState>(
         builder: (context, state) {
           if (state is EpisodeLoaded) {
-            return EpisodeDetailsShow(episodeEntity: state.episode);
+            return EpisodeDetailsShow(
+              episodeEntity: state.episode,
+              isLoading: false,
+            );
           }
           if (state is EpisodeLoading) {
             return EpisodeDetailsShow(
@@ -42,6 +45,15 @@ class _EpisodeViewScreenState extends State<EpisodeViewScreen> {
                 stillPath: '',
                 crew: [],
                 episodeType: 'episodeType',
+              ),
+              isLoading: true,
+            );
+          }
+          if (state is EpisodeError) {
+            return Center(
+              child: Text(
+                'Error: ${state.message}',
+                style: const TextStyle(color: Colors.white),
               ),
             );
           }

@@ -22,7 +22,8 @@ class _Images {
   String get menu => 'assets/images/spider3.png';
   String get onBoarding => 'assets/images/spider4.png';
   String get authBackground => 'assets/images/auth_background.jpg';
-
+  String get imageNotAvailable =>
+      'https://res.cloudinary.com/dizexseir/image/upload/v1693489844/Common/ImageNotAvailable_hym9j2.png';
 }
 
 class _Icons {

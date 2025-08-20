@@ -37,18 +37,22 @@ class TvDescriptionWidget extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                  text: description,
+                  text: description == ''
+                      ? AppStrings.noDescriptionAvailable
+                      : description,
                   style: CustomTextStyles.montserrat400style14.copyWith(
                     color: AppColorsDark.dialogText,
                   ),
                 ),
-                TextSpan(
-                  text: AppStrings.more,
-                  style: CustomTextStyles.montserrat600style14.copyWith(
-                    color: AppColorsDark.trailerButton,
-                    letterSpacing: 0.12.w,
-                  ),
-                ),
+                description == ''
+                    ? const TextSpan()
+                    : TextSpan(
+                        text: AppStrings.more,
+                        style: CustomTextStyles.montserrat600style14.copyWith(
+                          color: AppColorsDark.trailerButton,
+                          letterSpacing: 0.12.w,
+                        ),
+                      ),
               ],
             ),
           ),

@@ -4,8 +4,6 @@ import 'package:ai_movie_app/core/utils/api_keys.dart';
 import 'package:ai_movie_app/feature/auth/di/auth_injection.dart';
 import 'package:ai_movie_app/feature/home/di/home_di.dart';
 import 'package:ai_movie_app/feature/movies/di/movies_di.dart';
-import 'package:ai_movie_app/feature/on_bourding/di/on_bourding_di.dart';
-import 'package:ai_movie_app/feature/splash/di/splash_di.dart';
 import 'package:ai_movie_app/feature/wishlist/di/wishlist_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
