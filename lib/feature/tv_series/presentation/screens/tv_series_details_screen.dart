@@ -17,10 +17,17 @@ class TvSeriesDetailsScreen extends StatefulWidget {
 class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
   TvSeriesDetailsEntity? tvSeries;
   int seasonNumber = 1; // Default season number, can be changed dynamically
+
   @override
   void initState() {
     context.read<TvSeriesBloc>().add(FetchTvSeriesDetails(widget.tvSeriesId));
     super.initState();
+  }
+
+  void updateSeasonNumber(int newSeasonNumber) {
+    setState(() {
+      seasonNumber = newSeasonNumber;
+    });
   }
 
   @override
@@ -40,6 +47,7 @@ class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
               widget: widget,
               seasonNumber: seasonNumber,
               tvSeries: tvSeries,
+              onSeasonChanged: updateSeasonNumber,
             );
           }
           return TvDataShow(
@@ -59,6 +67,7 @@ class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
                   'This is a sample description for the TV series ajshldol aoi;sfhaosi; aiosfaio;sdh aoi;sdjhfgais;jd iao;gfoiap;d.',
               voteAverage: 8.5,
             ),
+            onSeasonChanged: updateSeasonNumber,
           );
         },
       ),
