@@ -6,6 +6,7 @@ class UserModel extends UserEntity {
     required super.email,
     super.firstName,
     super.lastName,
+    super.phoneNumber,
     super.isEmailVerified,
     super.createdAt,
   });
@@ -16,8 +17,9 @@ class UserModel extends UserEntity {
       email: json['email'] as String,
       firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
+      phoneNumber: json['phoneNumber'] as String?,
       isEmailVerified: json['isEmailVerified'] as bool? ?? false,
-      createdAt: json['createdAt'] != null 
+      createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
           : null,
     );
@@ -29,6 +31,7 @@ class UserModel extends UserEntity {
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
+      'phoneNumber': phoneNumber,
       'isEmailVerified': isEmailVerified,
       'createdAt': createdAt?.toIso8601String(),
     };
@@ -40,8 +43,29 @@ class UserModel extends UserEntity {
       email: entity.email,
       firstName: entity.firstName,
       lastName: entity.lastName,
+      phoneNumber: entity.phoneNumber,
       isEmailVerified: entity.isEmailVerified,
       createdAt: entity.createdAt,
+    );
+  }
+
+  UserModel copyWith({
+    String? id,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+    bool? isEmailVerified,
+    DateTime? createdAt,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      isEmailVerified: isEmailVerified ?? this.isEmailVerified,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }
