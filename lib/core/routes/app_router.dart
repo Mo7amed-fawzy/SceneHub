@@ -1,33 +1,26 @@
 import 'package:ai_movie_app/core/services/service_locator.dart';
-import 'package:ai_movie_app/core/utils/theme_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/forgot_password_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_in_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_up_view.dart';
 import 'package:ai_movie_app/feature/episodes/data/models/get_episodes_prams.dart';
 import 'package:ai_movie_app/feature/episodes/presentation/bloc/episode_bloc.dart';
-
 import 'package:ai_movie_app/feature/episodes/presentation/screens/episode_view_screen.dart';
-
 import 'package:ai_movie_app/feature/home/presentation/views/bottom_nav_bar.dart';
+import 'package:ai_movie_app/feature/home/presentation/views/home_view.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/animated_placeholder_page.dart';
-
 import 'package:ai_movie_app/feature/movies/presentation/bloc/movies_bloc.dart';
 import 'package:ai_movie_app/feature/movies/presentation/screens/movies_details_screen.dart';
-import 'package:ai_movie_app/feature/home/presentation/views/home_view.dart';
+import 'package:ai_movie_app/feature/on_bourding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:ai_movie_app/feature/on_bourding/presentation/views/on_boarding_view.dart';
-import 'package:ai_movie_app/feature/splash/presentation/views/splash_view.dart';
-
+import 'package:ai_movie_app/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:ai_movie_app/feature/profile/presentation/screen/profile_view.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_series_details_screen.dart';
-
 import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/views/wishlist_view.dart';
-import 'package:ai_movie_app/feature/on_bourding/presentation/cubit/on_boarding_cubit.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class RouterPath {
@@ -145,8 +138,10 @@ final GoRouter goRouter = GoRouter(
         ),
         GoRoute(
           path: RouterPath.profile,
-          builder: (context, state) =>
-              const AnimatedPlaceholderPage(title: "Profile"),
+          builder: (context, state) => BlocProvider(
+            create: (context) => sl<ProfileBloc>(),
+            child: const ProfilePage(),
+          ),
         ),
         GoRoute(
           path: RouterPath.settings,

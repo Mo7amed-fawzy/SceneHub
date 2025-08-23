@@ -11,6 +11,16 @@ class UserModel extends UserEntity {
     super.createdAt,
   });
 
+  factory UserModel.empty() => const UserModel(
+    id: "local_temp",
+    email: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    isEmailVerified: false,
+    createdAt: null,
+  );
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'] as String,

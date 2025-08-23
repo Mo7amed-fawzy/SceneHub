@@ -33,28 +33,25 @@ class ProfileLocalDataSourceImplementation implements ProfileLocalDataSource {
 
   @override
   Future<ProfileModel> getCachedUser() async {
-    try {
-      final UserModel? user = sharedPreferences.getModel(
-        CacheKeys.user,
-        (json) => UserModel.fromJson(json),
-      );
+    final UserModel? user = sharedPreferences.getModel(
+      CacheKeys.user,
+      (json) => UserModel.fromJson(json),
+    );
 
-      if (user == null) {
-        throw Exception("No cached user found");
-      }
-
-      final fullName = [
-        user.firstName ?? "",
-        user.lastName ?? "",
-      ].where((part) => part.isNotEmpty).join(" ");
-
-      return ProfileModel(
-        name: fullName, // getter inside UserModel (see below)
-        email: user.email ?? "",
-      );
-    } catch (e) {
-      throw Exception('Failed to retrieve Profile Cached Data: $e');
+    if (user == null) {
+      return const ProfileModel.empty();
     }
+
+    final fullName = [
+      user.firstName ?? "",
+      user.lastName ?? "",
+    ].where((part) => part.isNotEmpty).join(" ");
+
+    return ProfileModel(
+      name: fullName, // getter inside UserModel (see below)
+      email: user.email ?? "",
+      phoneNumber: user.phoneNumber ?? "0123456789",
+    );
   }
 
   @override
@@ -66,11 +63,12 @@ class ProfileLocalDataSourceImplementation implements ProfileLocalDataSource {
         (json) => UserModel.fromJson(json),
       );
 
-      if (user == null) {
-        throw Exception("No cached user found to update email");
-      }
+      // if (user == null) {
+      //   throw const CacheException("No cached user found to update email");
+      // }
 
-      final updatedUser = user.copyWith(email: email);
+      final updatedUser = (user ?? UserModel.empty()).copyWith(email: email);
+
       await sharedPreferences.saveModel(
         CacheKeys.user,
         updatedUser,
@@ -89,16 +87,16 @@ class ProfileLocalDataSourceImplementation implements ProfileLocalDataSource {
         (json) => UserModel.fromJson(json),
       );
 
-      if (user == null) {
-        throw Exception("No cached user found to update name");
-      }
+      // if (user == null) {
+      //   throw const CacheException("No cached user found to update name");
+      // }
 
       // Split name into first/last safely
       final parts = name.trim().split(" ");
       final firstName = parts.isNotEmpty ? parts.first : "";
       final lastName = parts.length > 1 ? parts.sublist(1).join(" ") : "";
 
-      final updatedUser = user.copyWith(
+      final updatedUser = (user ?? UserModel.empty()).copyWith(
         firstName: firstName,
         lastName: lastName,
       );
@@ -122,11 +120,15 @@ class ProfileLocalDataSourceImplementation implements ProfileLocalDataSource {
         (json) => UserModel.fromJson(json),
       );
 
-      if (user == null) {
-        throw Exception("No cached user found to update Phone Number");
-      }
+      // if (user == null) {
+      //   throw const CacheException(
+      //     "No cached user found to update Phone Number",
+      //   );
+      // }
 
-      final updatedUser = user.copyWith(phoneNumber: phoneNumber);
+      final updatedUser = (user ?? UserModel.empty()).copyWith(
+        phoneNumber: phoneNumber,
+      );
       await sharedPreferences.saveModel(
         CacheKeys.user,
         updatedUser,

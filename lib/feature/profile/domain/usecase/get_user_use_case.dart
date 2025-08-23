@@ -1,4 +1,5 @@
 import 'package:ai_movie_app/core/usecases/usecase.dart';
+import 'package:ai_movie_app/feature/profile/domain/entities/profile.dart';
 
 import '../../../../core/constants/app_data_types.dart';
 import '../repository/profile_repository.dart';
@@ -10,5 +11,6 @@ class GetUserUseCase extends NoParamsUseCase<void> {
     : _profileRepository = profileRepository;
 
   @override
-  AsyncVoidResponse call() async => await _profileRepository.getUser();
+  AsyncSingleDataResponse<Profile> call() async =>
+      await _profileRepository.getUser();
 }

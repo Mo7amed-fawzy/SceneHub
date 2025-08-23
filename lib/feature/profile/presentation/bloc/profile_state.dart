@@ -50,6 +50,10 @@ class SetPhoneNumberProfileError extends ProfileState {
 
 class ClearCacheProfileLoading extends ProfileState {}
 
-class ClearCacheProfileSuccess extends ProfileState{}
+class ClearCacheProfileSuccess extends ProfileState {}
 
-class ClearCacheProfileError extends
+class ClearCacheProfileError extends ProfileState {
+  final String message;
+
+  ClearCacheProfileError({required this.message});
+}

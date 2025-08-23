@@ -11,7 +11,11 @@ class ProfileModel extends Profile {
   });
 
   const ProfileModel.empty()
-    : this(name: "name", email: 'email', phoneNumber: "phoneNumber");
+    : this(
+        name: "John Doe",
+        email: 'John_Doe@email.com',
+        phoneNumber: "12345679890",
+      );
 
   factory ProfileModel.fromJson(String source) =>
       ProfileModel.fromMap(jsonDecode(source) as DataMap);
