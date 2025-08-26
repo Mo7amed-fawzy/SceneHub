@@ -37,9 +37,14 @@ class DioConsumer implements ApiConsumer {
   Future<dynamic> get(
     String path, {
     Map<String, dynamic>? queryParameters,
+    Map<String, String>? headers,
   }) async {
     try {
-      final response = await client.get(path, queryParameters: queryParameters);
+      final response = await client.get(
+        path,
+        queryParameters: queryParameters,
+        options: Options(headers: headers),
+      );
       return response.data;
     } on DioException catch (error) {
       _handleDioError(error);
@@ -47,9 +52,17 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future<dynamic> post(String path, {Map<String, dynamic>? body}) async {
+  Future<dynamic> post(
+    String path, {
+    Map<String, dynamic>? body,
+    Map<String, String>? headers,
+  }) async {
     try {
-      final response = await client.post(path, data: body);
+      final response = await client.post(
+        path,
+        data: body,
+        options: Options(headers: headers),
+      );
       return response.data;
     } on DioException catch (error) {
       _handleDioError(error);
@@ -57,9 +70,17 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future<dynamic> put(String path, {Map<String, dynamic>? body}) async {
+  Future<dynamic> put(
+    String path, {
+    Map<String, dynamic>? body,
+    Map<String, String>? headers,
+  }) async {
     try {
-      final response = await client.put(path, data: body);
+      final response = await client.put(
+        path,
+        data: body,
+        options: Options(headers: headers),
+      );
       return response.data;
     } on DioException catch (error) {
       _handleDioError(error);
@@ -67,9 +88,12 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future<dynamic> delete(String path) async {
+  Future<dynamic> delete(String path, {Map<String, String>? headers}) async {
     try {
-      final response = await client.delete(path);
+      final response = await client.delete(
+        path,
+        options: Options(headers: headers),
+      );
       return response.data;
     } on DioException catch (error) {
       _handleDioError(error);
