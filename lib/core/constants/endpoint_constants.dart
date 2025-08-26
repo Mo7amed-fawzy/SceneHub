@@ -33,4 +33,7 @@ class EndpointConstants {
 
   // Shared
   static const String imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
+
+  // AI
+  static const String geminiBaseUrl = 'https://api.gemini.ai/v1/query';
 }

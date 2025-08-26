@@ -1,3 +1,5 @@
+// scenebot_remote_data_source.dart
+import 'package:ai_movie_app/core/constants/endpoint_constants.dart';
 import 'package:ai_movie_app/core/network/api_consumer.dart';
 import 'package:ai_movie_app/core/utils/api_keys.dart';
 
@@ -12,12 +14,9 @@ class ScenebotRemoteDataSourceImpl implements ScenebotRemoteDataSource {
 
   @override
   Future<String> getAIResponse(String prompt) async {
-    // تمرير المفتاح كـ query parameter
-    final url =
-        "https://api.gemini.ai/v1/query?key=${EnvConfig.googleCloudApiKey}";
-
     final response = await apiConsumer.post(
-      url,
+      EndpointConstants.geminiBaseUrl,
+      headers: {"Authorization": "Bearer ${EnvConfig.googleCloudApiKey}"},
       body: {"prompt": prompt, "max_tokens": 200},
     );
 
