@@ -136,7 +136,7 @@ final GoRouter goRouter = GoRouter(
         GoRoute(
           path: RouterPath.search,
           builder: (context, state) =>
-              const AnimatedPlaceholderPage(title: "Search"),
+              const AnimatedPlaceholderPage(title: "Scene Search"),
         ),
         GoRoute(
           path: RouterPath.profile,

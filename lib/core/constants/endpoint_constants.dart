@@ -7,7 +7,7 @@ class EndpointConstants {
   static const String tvSeriesEpisode = '/episode/';
   static const String tvSeriesCast = '/aggregate_credits';
   // Add your endpoints here
-
+  // static const aiApiKey = 'AIzaSyDoEizg2Iw2_hJCJ_7RSTSnzMi8LAhUDUc';
   static const String baseUrl1 = 'https://api.example.com/v1';
 
   // Authentication endpoints
