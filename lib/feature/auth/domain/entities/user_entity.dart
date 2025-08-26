@@ -3,6 +3,7 @@ class UserEntity {
   final String email;
   final String? firstName;
   final String? lastName;
+  final String? phoneNumber;
   final bool isEmailVerified;
   final DateTime? createdAt;
 
@@ -11,6 +12,7 @@ class UserEntity {
     required this.email,
     this.firstName,
     this.lastName,
+    this.phoneNumber,
     this.isEmailVerified = false,
     this.createdAt,
   });
