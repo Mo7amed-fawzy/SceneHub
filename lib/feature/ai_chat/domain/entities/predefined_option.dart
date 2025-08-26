@@ -1,5 +1,4 @@
-// predefined_option.dart
-import 'package:ai_movie_app/feature/ai_chat/domain/entities/message.dart';
+import 'package:ai_movie_app/feature/ai_chat/domain/entities/communication.dart';
 
 class PredefinedOption {
   final String text;

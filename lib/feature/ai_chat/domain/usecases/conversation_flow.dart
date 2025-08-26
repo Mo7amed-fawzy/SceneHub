@@ -1,6 +1,5 @@
-// conversation_flow.dart
 import 'package:ai_movie_app/feature/ai_chat/domain/entities/conversation_step.dart';
-import 'package:ai_movie_app/feature/ai_chat/domain/entities/message.dart';
+import 'package:ai_movie_app/feature/ai_chat/domain/entities/communication.dart';
 import 'package:ai_movie_app/feature/ai_chat/domain/entities/predefined_option.dart';
 
 class ConversationFlow {

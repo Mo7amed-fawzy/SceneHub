@@ -1,6 +1,6 @@
 import 'package:ai_movie_app/feature/ai_chat/Presentation/manager/scene_bot_state.dart';
 import 'package:ai_movie_app/feature/ai_chat/data/datasource/scenebot_remote_data_source.dart';
-import 'package:ai_movie_app/feature/ai_chat/domain/entities/message.dart';
+import 'package:ai_movie_app/feature/ai_chat/domain/entities/communication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ScenebotCubit extends Cubit<ScenebotState> {
