@@ -1,4 +1,4 @@
-import 'package:ai_movie_app/feature/ai_chat/domain/entities/communication.dart';
+import 'package:ai_movie_app/feature/ai_chat/data/model/ai_response.dart';
 
 abstract class ScenebotState {}
 
@@ -6,12 +6,12 @@ class ScenebotInitial extends ScenebotState {}
 
 class ScenebotLoading extends ScenebotState {}
 
-class ScenebotSuccess extends ScenebotState {
-  final List<Message> messages;
-  ScenebotSuccess(this.messages);
+class ScenebotLoaded extends ScenebotState {
+  final AIResponse response;
+  ScenebotLoaded(this.response);
 }
 
-class ScenebotFailure extends ScenebotState {
-  final String error;
-  ScenebotFailure(this.error);
+class ScenebotError extends ScenebotState {
+  final String message;
+  ScenebotError(this.message);
 }
