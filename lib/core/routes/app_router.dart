@@ -151,7 +151,7 @@ final GoRouter goRouter = GoRouter(
           path: RouterPath.search,
           builder: (context, state) => BlocProvider(
             create: (_) => skk<ScenebotCubit>(),
-            child: MovieSuggestionScreen(),
+            child: const MovieSuggestionScreen(),
           ),
         ),
 

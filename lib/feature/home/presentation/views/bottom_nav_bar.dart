@@ -51,6 +51,9 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
     AppStrings.settings,
   ];
 
+  bool get isTablet => ScreenUtil().screenWidth > 600;
+  bool get isDesktop => ScreenUtil().screenWidth > 1024;
+
   @override
   Widget build(BuildContext context) {
     final routerIndex = tabs.indexWhere(
@@ -60,6 +63,18 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
     if (routerIndex != -1 && routerIndex != _currentIndex) {
       _currentIndex = routerIndex;
     }
+
+    double navBarHeight = isDesktop
+        ? 90.h
+        : isTablet
+        ? 80.h
+        : 65.h;
+
+    double iconSize = isDesktop
+        ? 30.sp
+        : isTablet
+        ? 28.sp
+        : 24.sp;
 
     return Scaffold(
       backgroundColor: AppColorsDark.backgroundColor,
@@ -72,7 +87,7 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
             child: Container(
-              height: 70.h,
+              height: navBarHeight,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -94,6 +109,20 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
                 unselectedItemColor: AppColorsDark.hashedText,
                 type: BottomNavigationBarType.fixed,
                 currentIndex: _currentIndex,
+                selectedLabelStyle: TextStyle(
+                  fontSize: isDesktop
+                      ? 16.sp
+                      : isTablet
+                      ? 14.sp
+                      : 12.sp,
+                ),
+                unselectedLabelStyle: TextStyle(
+                  fontSize: isDesktop
+                      ? 15.sp
+                      : isTablet
+                      ? 13.sp
+                      : 11.sp,
+                ),
                 onTap: (index) {
                   HapticFeedback.lightImpact();
                   setState(() {
@@ -126,7 +155,7 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
                         },
                         child: Icon(
                           isSelected ? activeIcons[index] : icons[index],
-                          size: 26.sp,
+                          size: iconSize,
                         ),
                       ),
                     ),
