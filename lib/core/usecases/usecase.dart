@@ -11,3 +11,21 @@ abstract class UseCase<T, P> {
 abstract class NoParamsUseCase<T> {
   Future<Either<Failure, T>> call();
 }
+
+class ResultBot<T, E> {
+  final T? data;
+  final E? error;
+  final bool isSuccess;
+
+  ResultBot._({this.data, this.error, required this.isSuccess});
+
+  factory ResultBot.success(T data) => ResultBot._(data: data, isSuccess: true);
+  factory ResultBot.failure(E error) =>
+      ResultBot._(error: error, isSuccess: false);
+}
+
+// abstract class UseCaseBot<Type, Params> {
+//   Future<Type> call(Params params);
+// }
+
+// class NoParams {}

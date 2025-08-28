@@ -1,4 +1,8 @@
 import 'package:ai_movie_app/core/services/service_locator.dart';
+
+import 'package:ai_movie_app/feature/ai_chat/Presentation/manager/scenebot_cubit.dart';
+import 'package:ai_movie_app/feature/ai_chat/Presentation/scene_bot_chat_page.dart';
+import 'package:ai_movie_app/feature/ai_chat/di/ai_di.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/forgot_password_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_in_view.dart';
@@ -6,6 +10,7 @@ import 'package:ai_movie_app/feature/auth/presentation/views/sign_up_view.dart';
 import 'package:ai_movie_app/feature/episodes/data/models/get_episodes_prams.dart';
 import 'package:ai_movie_app/feature/episodes/presentation/bloc/episode_bloc.dart';
 import 'package:ai_movie_app/feature/episodes/presentation/screens/episode_view_screen.dart';
+import 'package:ai_movie_app/feature/home/presentation/manager/home_media_bloc.dart';
 import 'package:ai_movie_app/feature/home/presentation/views/bottom_nav_bar.dart';
 import 'package:ai_movie_app/feature/home/presentation/views/home_view.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/animated_placeholder_page.dart';
@@ -123,7 +128,16 @@ final GoRouter goRouter = GoRouter(
       },
     ),
     ShellRoute(
-      builder: (context, state, child) => HomeNavBarShell(child: child),
+      builder: (context, state, child) {
+        return BlocProvider(
+          create: (context) => HomeMediaBloc(
+            getDetailsUseCase: sl(),
+            getNowPlayingUseCase: sl(),
+            getMixedNowPlayingUseCase: sl(),
+          )..add(GetMixedNowPlayingEvent()),
+          child: HomeNavBarShell(child: child),
+        );
+      },
       routes: [
         GoRoute(path: '/', builder: (context, state) => const HomeView()),
         GoRoute(
@@ -135,9 +149,12 @@ final GoRouter goRouter = GoRouter(
         ),
         GoRoute(
           path: RouterPath.search,
-          builder: (context, state) =>
-              const AnimatedPlaceholderPage(title: "Search"),
+          builder: (context, state) => BlocProvider(
+            create: (_) => skk<ScenebotCubit>(),
+            child: MovieSuggestionScreen(),
+          ),
         ),
+
         GoRoute(
           path: RouterPath.profile,
           builder: (context, state) => BlocProvider(

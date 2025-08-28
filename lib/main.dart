@@ -1,9 +1,9 @@
 import 'package:ai_movie_app/app/my_app.dart';
 import 'package:ai_movie_app/core/services/service_locator.dart';
 import 'package:ai_movie_app/core/utils/api_keys.dart';
+import 'package:ai_movie_app/feature/ai_chat/di/ai_di.dart';
 import 'package:ai_movie_app/feature/auth/di/auth_injection.dart';
 import 'package:ai_movie_app/feature/home/di/home_di.dart';
-
 
 import 'package:ai_movie_app/feature/movies/di/movies_di.dart';
 import 'package:ai_movie_app/feature/wishlist/di/wishlist_injection.dart';
@@ -26,8 +26,9 @@ void main() async {
   );
 
   // Initialize service locator
-
+  // skk.reset(); // يمسح كل اللي اتسجل قبل كده
   await initSl();
+  initFeatureServiceLocator();
   // await initSplashDependencies();
 
   // await initOnBoardingDependencies();

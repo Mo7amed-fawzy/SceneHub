@@ -35,6 +35,13 @@ lib/feature/on_bourding/presentation/views/widgets/stateful_on_boarding_body.dar
 .pub/
 /build/
 
+# Flutter iOS generated
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
+macos/Flutter/ephemeral/
+
 # Symbolication related
 app.*.symbols
 

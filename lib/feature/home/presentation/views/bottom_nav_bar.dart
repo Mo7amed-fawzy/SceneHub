@@ -29,7 +29,7 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
 
   final List<IconData> icons = [
     Icons.home_outlined,
-    Icons.search_outlined,
+    Icons.auto_awesome_outlined,
     Icons.bookmark_outline,
     Icons.person_outline,
     Icons.settings_outlined,
@@ -37,7 +37,7 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
 
   final List<IconData> activeIcons = [
     Icons.home,
-    Icons.search,
+    Icons.auto_awesome,
     Icons.bookmark,
     Icons.person,
     Icons.settings,
@@ -45,7 +45,7 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
 
   final List<String> labels = [
     AppStrings.home,
-    AppStrings.search,
+    AppStrings.sceneBot,
     AppStrings.watchlist,
     AppStrings.profile,
     AppStrings.settings,
