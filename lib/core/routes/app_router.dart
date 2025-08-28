@@ -95,8 +95,13 @@ final GoRouter goRouter = GoRouter(
         final movieId = int.tryParse(movieIdStr);
         if (movieId == null) return const SizedBox();
 
-        return BlocProvider(
-          create: (context) => MoviesBloc(sl()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => MoviesBloc(sl())),
+            BlocProvider(
+              create: (context) => sl<WishlistCubit>()..fetchWishlist(),
+            ),
+          ],
           child: MoviesDetailsScreen(movieId: movieId),
         );
       },
@@ -129,12 +134,20 @@ final GoRouter goRouter = GoRouter(
     ),
     ShellRoute(
       builder: (context, state, child) {
-        return BlocProvider(
-          create: (context) => HomeMediaBloc(
-            getDetailsUseCase: sl(),
-            getNowPlayingUseCase: sl(),
-            getMixedNowPlayingUseCase: sl(),
-          )..add(GetMixedNowPlayingEvent()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => HomeMediaBloc(
+                getDetailsUseCase: sl(),
+                getNowPlayingUseCase: sl(),
+                getMixedNowPlayingUseCase: sl(),
+              )..add(GetMixedNowPlayingEvent()),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  sl<WishlistCubit>()..fetchWishlist(userId: '123'),
+            ),
+          ],
           child: HomeNavBarShell(child: child),
         );
       },
@@ -143,10 +156,14 @@ final GoRouter goRouter = GoRouter(
         GoRoute(
           path: RouterPath.wishlistView,
           builder: (context, state) => BlocProvider(
-            create: (context) => sl<WishlistCubit>(),
-            child: const WishlistView(userId: 'current-user-id'),
+            create: (context) =>
+                sl<WishlistCubit>()
+                  ..getWishlistItemsUseCase(), // أو أي method تبدأ التحميل
+            child:
+                const WishlistView(), // مش محتاج تمرر wishlistItems أو onRemove
           ),
         ),
+
         GoRoute(
           path: RouterPath.search,
           builder: (context, state) => BlocProvider(

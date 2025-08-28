@@ -1,7 +1,11 @@
 import 'package:ai_movie_app/core/constants/app_style.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
+import 'package:ai_movie_app/feature/wishlist/domain/entities/wishlist_entity.dart';
+import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_cubit.dart';
+import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -11,9 +15,14 @@ class DetailsScreenTopBarNav extends StatelessWidget {
     super.key,
     required this.title,
     required this.isLoading,
+    this.movieId,
+    required this.posterPath,
   });
+
   final String title;
   final bool isLoading;
+  final int? movieId;
+  final ImageProvider<Object>? posterPath;
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +31,9 @@ class DetailsScreenTopBarNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Back button
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
+            onTap: () => Navigator.of(context).pop(),
             child: Container(
               width: 32.w,
               height: 32.h,
@@ -43,6 +51,7 @@ class DetailsScreenTopBarNav extends StatelessWidget {
               ),
             ),
           ),
+
           SizedBox(
             width: 270.w,
             child: Text(
@@ -56,24 +65,71 @@ class DetailsScreenTopBarNav extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            width: 32.w,
-            height: 32.h,
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              color: AppColorsDark.dialogBackground,
+
+          // Heart button
+          if (movieId != null)
+            Builder(
+              builder: (context) {
+                final cubit = context.read<WishlistCubit>();
+                final isFav = cubit.isMovieInState(movieId!);
+
+                return GestureDetector(
+                  onTap: () {
+                    final movieEntity = WishlistEntity(
+                      id: movieId!.toString(),
+                      name: title,
+                      posterPath: AppStyle.images.avengers,
+                      addedAt: DateTime.now(),
+                    );
+
+                    if (isFav) {
+                      cubit.removeFromWishlist(movieId!);
+                    } else {
+                      cubit.addToWishlist(movieEntity);
+                    }
+                  },
+                  child: Container(
+                    width: 32.w,
+                    height: 32.h,
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      color: AppColorsDark.dialogBackground,
+                    ),
+                    child: Center(
+                      child: BlocBuilder<WishlistCubit, WishlistState>(
+                        builder: (context, state) {
+                          final isFavNow = cubit.isMovieInState(movieId!);
+                          return SvgPicture.asset(
+                            AppStyle.icons.heart,
+                            width: 20.w,
+                            height: 20.h,
+                            fit: BoxFit.cover,
+                            color: isFavNow
+                                ? AppColorsDark.rating
+                                : Colors.white,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-            child: SvgPicture.asset(
-              AppStyle.icons.heart,
-              width: 16.w,
-              height: 16.h,
-              fit: BoxFit.cover,
-            ),
-          ),
         ],
       ),
     );
+  }
+}
+
+// امتداد Cubit للتحقق من وجود الفيلم في الWishlist
+extension WishlistCubitHelper on WishlistCubit {
+  bool isMovieInState(int movieId) {
+    if (state is WishlistLoaded) {
+      final items = (state as WishlistLoaded).items;
+      return items.any((item) => item.id == movieId.toString());
+    }
+    return false;
   }
 }

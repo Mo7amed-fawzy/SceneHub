@@ -13,7 +13,8 @@
 migrate_working_dir/
 env/.env
 lib/feature/on_bourding/presentation/views/widgets/stateful_on_boarding_body.dart
-/lib/core/utils/theme_helper.dart
+lib/core/utils/theme_helper.dart
+lib/feature/wishlist/examples
 # IntelliJ related
 *.iml
 *.ipr

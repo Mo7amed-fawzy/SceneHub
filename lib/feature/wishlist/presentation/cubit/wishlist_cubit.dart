@@ -1,175 +1,90 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ai_movie_app/core/functions/print_statement.dart';
+import 'package:ai_movie_app/feature/wishlist/domain/entities/wishlist_entity.dart';
 import 'package:ai_movie_app/feature/wishlist/domain/usecases/add_to_wishlist_usecase.dart';
 import 'package:ai_movie_app/feature/wishlist/domain/usecases/clear_wishlist_usecase.dart';
 import 'package:ai_movie_app/feature/wishlist/domain/usecases/get_wishlist_count_usecase.dart';
 import 'package:ai_movie_app/feature/wishlist/domain/usecases/get_wishlist_items_usecase.dart';
 import 'package:ai_movie_app/feature/wishlist/domain/usecases/is_in_wishlist_usecase.dart';
 import 'package:ai_movie_app/feature/wishlist/domain/usecases/remove_from_wishlist_usecase.dart';
-import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_event.dart';
-import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_state.dart';
+import 'package:bloc/bloc.dart';
 
-class WishlistCubit extends Bloc<WishlistEvent, WishlistState> {
-  final GetWishlistItemsUseCase getWishlistItemsUseCase;
-  final AddToWishlistUseCase addToWishlistUseCase;
-  final RemoveFromWishlistUseCase removeFromWishlistUseCase;
-  final ClearWishlistUseCase clearWishlistUseCase;
-  final IsInWishlistUseCase isInWishlistUseCase;
-  final GetWishlistCountUseCase getWishlistCountUseCase;
+import 'wishlist_state.dart';
+
+class WishlistCubit extends Cubit<WishlistState> {
+  final GetWishlistItems getWishlistItemsUseCase;
+  final AddToWishlist addToWishlistUseCase;
+  final RemoveFromWishlist removeFromWishlistUseCase;
+  final IsInWishlist isInWishlistUseCase;
+  final ClearWishlist clearWishlistUseCase;
+  final GetWishlistCount getWishlistCountUseCase;
 
   WishlistCubit({
     required this.getWishlistItemsUseCase,
     required this.addToWishlistUseCase,
     required this.removeFromWishlistUseCase,
-    required this.clearWishlistUseCase,
     required this.isInWishlistUseCase,
+    required this.clearWishlistUseCase,
     required this.getWishlistCountUseCase,
-  }) : super(WishlistInitial()) {
-    on<LoadWishlist>(_onLoadWishlist);
-    on<AddToWishlist>(_onAddToWishlist);
-    on<RemoveFromWishlist>(_onRemoveFromWishlist);
-    on<ClearWishlist>(_onClearWishlist);
-    on<CheckWishlistStatus>(_onCheckWishlistStatus);
-    on<RefreshWishlist>(_onRefreshWishlist);
-  }
+  }) : super(WishlistInitial());
 
-  Future<void> _onLoadWishlist(
-    LoadWishlist event,
-    Emitter<WishlistState> emit,
-  ) async {
+  // Fetch all items
+  Future<void> fetchWishlist({String userId = ''}) async {
+    emit(WishlistLoading());
     try {
-      emit(WishlistLoading());
-
-      final result = await getWishlistItemsUseCase(event.userId);
-
-      result.fold(
-        (failure) {
-          emit(WishlistError(message: failure.message));
-        },
-        (wishlistItems) {
-          if (wishlistItems.isEmpty) {
-            emit(WishlistEmpty());
-          } else {
-            emit(
-              WishlistLoaded(
-                wishlistItems: wishlistItems,
-                count: wishlistItems.length,
-              ),
-            );
-          }
-        },
-      );
+      final items = await getWishlistItemsUseCase.call(userId: userId);
+      emit(WishlistLoaded(items));
     } catch (e) {
-      printHere('Error loading wishlist: $e');
-      emit(WishlistError(message: e.toString()));
+      emit(WishlistError('Failed to load wishlist: $e'));
     }
   }
 
-  Future<void> _onAddToWishlist(
-    AddToWishlist event,
-    Emitter<WishlistState> emit,
-  ) async {
+  // Add item
+  Future<void> addToWishlist(WishlistEntity movie, {String userId = ''}) async {
     try {
-      emit(AddToWishlistLoading());
-
-      final result = await addToWishlistUseCase(event.movie, event.userId);
-
-      result.fold(
-        (failure) {
-          emit(AddToWishlistError(message: failure.message));
-        },
-        (wishlistItem) {
-          emit(AddToWishlistSuccess(wishlistItem: wishlistItem));
-          // Refresh the wishlist after adding
-          add(LoadWishlist(userId: event.userId));
-        },
-      );
+      await addToWishlistUseCase.call(movie, userId: userId);
+      await fetchWishlist(userId: userId); // Update the list
+      emit(WishlistOperationSuccess('Added to wishlist'));
     } catch (e) {
-      printHere('Error adding to wishlist: $e');
-      emit(AddToWishlistError(message: e.toString()));
+      emit(WishlistOperationFailure('Failed to add: $e'));
     }
   }
 
-  Future<void> _onRemoveFromWishlist(
-    RemoveFromWishlist event,
-    Emitter<WishlistState> emit,
-  ) async {
+  // Remove item
+  Future<void> removeFromWishlist(int movieId, {String userId = ''}) async {
     try {
-      emit(RemoveFromWishlistLoading());
-
-      final result = await removeFromWishlistUseCase(
-        event.movieId,
-        event.userId,
-      );
-
-      result.fold(
-        (failure) {
-          emit(RemoveFromWishlistError(message: failure.message));
-        },
-        (_) {
-          emit(RemoveFromWishlistSuccess(movieId: event.movieId));
-          // Refresh the wishlist after removing
-          add(LoadWishlist(userId: event.userId));
-        },
-      );
+      await removeFromWishlistUseCase.call(movieId, userId: userId);
+      await fetchWishlist(userId: userId); // Update the list
+      emit(WishlistOperationSuccess('Removed from wishlist'));
     } catch (e) {
-      printHere('Error removing from wishlist: $e');
-      emit(RemoveFromWishlistError(message: e.toString()));
+      emit(WishlistOperationFailure('Failed to remove: $e'));
     }
   }
 
-  Future<void> _onClearWishlist(
-    ClearWishlist event,
-    Emitter<WishlistState> emit,
-  ) async {
+  // Check if item is in wishlist
+  Future<bool> isInWishlist(int movieId, {String userId = ''}) async {
     try {
-      emit(ClearWishlistLoading());
-
-      final result = await clearWishlistUseCase(event.userId);
-
-      result.fold(
-        (failure) {
-          emit(ClearWishlistError(message: failure.message));
-        },
-        (_) {
-          emit(ClearWishlistSuccess());
-          // Refresh the wishlist after clearing
-          add(LoadWishlist(userId: event.userId));
-        },
-      );
-    } catch (e) {
-      printHere('Error clearing wishlist: $e');
-      emit(ClearWishlistError(message: e.toString()));
+      return await isInWishlistUseCase.call(movieId, userId: userId);
+    } catch (_) {
+      return false;
     }
   }
 
-  Future<void> _onCheckWishlistStatus(
-    CheckWishlistStatus event,
-    Emitter<WishlistState> emit,
-  ) async {
+  // Clear wishlist
+  Future<void> clearWishlist({String userId = ''}) async {
     try {
-      emit(CheckWishlistStatusLoading());
-
-      final result = await isInWishlistUseCase(event.movieId, event.userId);
-
-      result.fold(
-        (failure) {
-          emit(CheckWishlistStatusError(message: failure.message));
-        },
-        (isInWishlist) {
-          emit(CheckWishlistStatusSuccess(isInWishlist: isInWishlist));
-        },
-      );
+      await clearWishlistUseCase.call(userId: userId);
+      emit(WishlistLoaded([])); // Empty list after clear
+      emit(WishlistOperationSuccess('Wishlist cleared'));
     } catch (e) {
-      printHere('Error checking wishlist status: $e');
-      emit(CheckWishlistStatusError(message: e.toString()));
+      emit(WishlistOperationFailure('Failed to clear wishlist: $e'));
     }
   }
 
-  Future<void> _onRefreshWishlist(
-    RefreshWishlist event,
-    Emitter<WishlistState> emit,
-  ) async {
-    add(LoadWishlist(userId: event.userId));
+  // Get wishlist count
+  Future<int> getWishlistCount({String userId = ''}) async {
+    try {
+      return await getWishlistCountUseCase.call(userId: userId);
+    } catch (_) {
+      return 0;
+    }
   }
 }

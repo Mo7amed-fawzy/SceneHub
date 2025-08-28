@@ -1,17 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
-import 'package:ai_movie_app/core/functions/custom_toast.dart' as toast;
+import 'package:ai_movie_app/feature/wishlist/domain/entities/wishlist_entity.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_cubit.dart';
-import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_event.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_state.dart';
-import 'package:ai_movie_app/feature/wishlist/presentation/widgets/wishlist_item_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WishlistView extends StatefulWidget {
-  final String userId;
-
-  const WishlistView({Key? key, required this.userId}) : super(key: key);
+  const WishlistView({Key? key}) : super(key: key);
 
   @override
   State<WishlistView> createState() => _WishlistViewState();
@@ -21,265 +18,180 @@ class _WishlistViewState extends State<WishlistView> {
   @override
   void initState() {
     super.initState();
-    context.read<WishlistCubit>().add(LoadWishlist(userId: widget.userId));
+    // Fetch wishlist on init
+    context.read<WishlistCubit>().fetchWishlist();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorsDark.primaryColor,
+      backgroundColor: AppColorsDark.backgroundColor,
       appBar: AppBar(
         backgroundColor: AppColorsDark.primaryColor,
         elevation: 0,
         title: Text(
-          'My Wishlist',
-          style: CustomTextStyles.montserrat600style16.copyWith(
-            color: AppColorsDark.text,
-          ),
+          "My Wishlist",
+          style: CustomTextStyles.montserrat600style24,
         ),
+        centerTitle: true,
         actions: [
-          BlocBuilder<WishlistCubit, WishlistState>(
-            builder: (context, state) {
-              if (state is WishlistLoaded && state.wishlistItems.isNotEmpty) {
-                return IconButton(
-                  onPressed: () => _showClearWishlistDialog(context),
-                  icon: const Icon(Icons.delete_sweep, color: Colors.white),
-                  tooltip: 'Clear wishlist',
-                );
-              }
-              return const SizedBox.shrink();
-            },
+          IconButton(
+            icon: Icon(Icons.delete_forever, color: Colors.redAccent),
+            onPressed: () => context.read<WishlistCubit>().clearWishlist(),
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          context.read<WishlistCubit>().add(
-            RefreshWishlist(userId: widget.userId),
-          );
+      body: BlocConsumer<WishlistCubit, WishlistState>(
+        listener: (context, state) {
+          if (state is WishlistOperationSuccess) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          } else if (state is WishlistOperationFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.redAccent,
+              ),
+            );
+          }
         },
-        child: BlocConsumer<WishlistCubit, WishlistState>(
-          listener: (context, state) {
-            if (state is AddToWishlistSuccess) {
-              toast.showToast('Added to wishlist!', Colors.green);
-            } else if (state is AddToWishlistError) {
-              toast.showToast(state.message, Colors.red);
-            } else if (state is RemoveFromWishlistSuccess) {
-              toast.showToast('Removed from wishlist', Colors.orange);
-            } else if (state is RemoveFromWishlistError) {
-              toast.showToast(state.message, Colors.red);
-            } else if (state is ClearWishlistSuccess) {
-              toast.showToast('Wishlist cleared', Colors.blue);
-            } else if (state is ClearWishlistError) {
-              toast.showToast(state.message, Colors.red);
-            }
-          },
-          builder: (context, state) {
-            if (state is WishlistLoading) {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.white),
-              );
-            } else if (state is WishlistError) {
-              return _buildErrorWidget(state.message);
-            } else if (state is WishlistEmpty) {
-              return _buildEmptyWidget();
-            } else if (state is WishlistLoaded) {
-              return _buildWishlistContent(state);
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
+        builder: (context, state) {
+          if (state is WishlistLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is WishlistLoaded) {
+            final items = state.items;
+            if (items.isEmpty) return _emptyState();
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12.h,
+                  crossAxisSpacing: 12.w,
+                  childAspectRatio: 0.65,
+                ),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return _wishlistCard(
+                    item,
+                    () => context.read<WishlistCubit>().removeFromWishlist(
+                      int.parse(item.id),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else if (state is WishlistError) {
+            return Center(child: Text(state.message));
+          } else {
+            return const SizedBox();
+          }
+        },
       ),
     );
   }
 
-  Widget _buildWishlistContent(WishlistLoaded state) {
-    return Column(
+  Widget _wishlistCard(WishlistEntity item, VoidCallback onRemove) {
+    return Stack(
       children: [
-        // Header with count
         Container(
-          padding: const EdgeInsets.all(16),
-          child: Row(
+          decoration: BoxDecoration(
+            color: AppColorsDark.secondaryColor,
+            borderRadius: BorderRadius.circular(16.r),
+            gradient: LinearGradient(
+              colors: AppColorsDark.gradientColors,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.favorite, color: AppColorsDark.selectedIcon, size: 24),
-              const SizedBox(width: 8),
-              Text(
-                '${state.count} ${state.count == 1 ? 'movie' : 'movies'} in your wishlist',
-                style: CustomTextStyles.poppins500style14.copyWith(
-                  color: AppColorsDark.text,
+              ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+                child: Image.network(
+                  item.posterPath,
+                  height: 180.h,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 180.h,
+                      color: AppColorsDark.disabled,
+                      child: Icon(
+                        Icons.broken_image,
+                        color: AppColorsDark.text,
+                        size: 50.sp,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name,
+                      style: CustomTextStyles.montserrat600style16,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      "Added: ${item.addedAt.day}/${item.addedAt.month}/${item.addedAt.year}",
+                      style: CustomTextStyles.montserrat500style10,
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
-
-        // Wishlist items
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.only(bottom: 16),
-            itemCount: state.wishlistItems.length,
-            itemBuilder: (context, index) {
-              final wishlistItem = state.wishlistItems[index];
-              return WishlistItemWidget(
-                wishlistItem: wishlistItem,
-                onRemove: () => _removeFromWishlist(wishlistItem.movie.id),
-                onTap: () => _onMovieTap(wishlistItem.movie),
-              );
-            },
+        Positioned(
+          top: 8.h,
+          right: 8.w,
+          child: GestureDetector(
+            onTap: onRemove,
+            child: Container(
+              padding: EdgeInsets.all(6.sp),
+              decoration: BoxDecoration(
+                color: Colors.redAccent,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.close, size: 18.sp, color: Colors.white),
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildEmptyWidget() {
+  Widget _emptyState() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             Icons.favorite_border,
-            size: 80,
-            color: AppColorsDark.tertiaryColor,
+            size: 80.sp,
+            color: AppColorsDark.hashedText,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Text(
-            'Your wishlist is empty',
-            style: CustomTextStyles.montserrat600style16.copyWith(
-              color: AppColorsDark.text,
-            ),
+            "Your wishlist is empty",
+            style: CustomTextStyles.montserrat500style20,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Text(
-            'Start adding movies to your wishlist\nto see them here',
-            style: CustomTextStyles.poppins400style14.copyWith(
-              color: AppColorsDark.tertiaryColor,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () {
-              // Navigate to movies list
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.movie),
-            label: const Text('Browse Movies'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColorsDark.selectedIcon,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
+            "Add your favorite movies to see them here",
+            style: CustomTextStyles.montserrat500style14,
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildErrorWidget(String message) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.error_outline, size: 80, color: Colors.red[300]),
-          const SizedBox(height: 16),
-          Text(
-            'Something went wrong',
-            style: CustomTextStyles.montserrat600style16.copyWith(
-              color: AppColorsDark.text,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            message,
-            style: CustomTextStyles.poppins400style14.copyWith(
-              color: AppColorsDark.tertiaryColor,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () {
-              context.read<WishlistCubit>().add(
-                RefreshWishlist(userId: widget.userId),
-              );
-            },
-            icon: const Icon(Icons.refresh),
-            label: const Text('Try Again'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColorsDark.selectedIcon,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _removeFromWishlist(String movieId) {
-    context.read<WishlistCubit>().add(
-      RemoveFromWishlist(movieId: movieId, userId: widget.userId),
-    );
-  }
-
-  void _onMovieTap(dynamic movie) {
-    // Navigate to movie details
-    // This would be implemented based on your navigation structure
-    toast.showToast('Movie details coming soon!', Colors.blue);
-  }
-
-  void _showClearWishlistDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: AppColorsDark.secondaryColor,
-          title: Text(
-            'Clear Wishlist',
-            style: CustomTextStyles.montserrat600style16.copyWith(
-              color: AppColorsDark.text,
-            ),
-          ),
-          content: Text(
-            'Are you sure you want to remove all movies from your wishlist? This action cannot be undone.',
-            style: CustomTextStyles.poppins400style14.copyWith(
-              color: AppColorsDark.text,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(
-                'Cancel',
-                style: CustomTextStyles.poppins400style14.copyWith(
-                  color: AppColorsDark.tertiaryColor,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                context.read<WishlistCubit>().add(
-                  ClearWishlist(userId: widget.userId),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-              ),
-              child: const Text('Clear'),
-            ),
-          ],
-        );
-      },
     );
   }
 }
