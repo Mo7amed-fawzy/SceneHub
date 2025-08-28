@@ -2,7 +2,6 @@ import 'package:ai_movie_app/core/functions/calculate_grid_count.dart';
 import 'package:ai_movie_app/core/functions/custom_toast.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
-import 'package:ai_movie_app/feature/home/di/home_di.dart';
 import 'package:ai_movie_app/feature/home/presentation/manager/home_media_bloc.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/cards.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/category_tab.dart';

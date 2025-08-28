@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:ai_movie_app/core/functions/responsive_bottom_nav_bar.dart';
 import 'package:ai_movie_app/core/routes/app_router.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -51,9 +52,6 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
     AppStrings.settings,
   ];
 
-  bool get isTablet => ScreenUtil().screenWidth > 600;
-  bool get isDesktop => ScreenUtil().screenWidth > 1024;
-
   @override
   Widget build(BuildContext context) {
     final routerIndex = tabs.indexWhere(
@@ -64,109 +62,95 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
       _currentIndex = routerIndex;
     }
 
-    double navBarHeight = isDesktop
-        ? 90.h
-        : isTablet
-        ? 80.h
-        : 65.h;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final config = responsiveBottomNavBar(constraints);
 
-    double iconSize = isDesktop
-        ? 30.sp
-        : isTablet
-        ? 28.sp
-        : 24.sp;
-
-    return Scaffold(
-      backgroundColor: AppColorsDark.backgroundColor,
-      body: SafeArea(child: widget.child),
-      extendBody: true,
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(12.w),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(25.r),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: Container(
-              height: navBarHeight,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColorsDark.primaryColor.withValues(alpha: 0.08),
-                    AppColorsDark.primaryColor.withValues(alpha: 0.02),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                border: Border.all(
-                  color: AppColorsDark.primaryColor.withValues(alpha: 0.1),
-                  width: 1,
-                ),
-              ),
-              child: BottomNavigationBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                selectedItemColor: AppColorsDark.selectedIcon,
-                unselectedItemColor: AppColorsDark.hashedText,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: _currentIndex,
-                selectedLabelStyle: TextStyle(
-                  fontSize: isDesktop
-                      ? 16.sp
-                      : isTablet
-                      ? 14.sp
-                      : 12.sp,
-                ),
-                unselectedLabelStyle: TextStyle(
-                  fontSize: isDesktop
-                      ? 15.sp
-                      : isTablet
-                      ? 13.sp
-                      : 11.sp,
-                ),
-                onTap: (index) {
-                  HapticFeedback.lightImpact();
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                  context.go(tabs[index]);
-                },
-                items: List.generate(tabs.length, (index) {
-                  final isSelected = index == _currentIndex;
-
-                  return BottomNavigationBarItem(
-                    icon: AnimatedScale(
-                      scale: isSelected ? 1.2 : 1.0,
-                      duration: const Duration(milliseconds: 250),
-                      child: ShaderMask(
-                        shaderCallback: (bounds) {
-                          return isSelected
-                              ? LinearGradient(
-                                  colors: [
-                                    AppColorsDark.selectedIcon,
-                                    AppColorsDark.trailerButton,
-                                  ],
-                                ).createShader(bounds)
-                              : LinearGradient(
-                                  colors: [
-                                    AppColorsDark.hashedText,
-                                    AppColorsDark.hashedText,
-                                  ],
-                                ).createShader(bounds);
-                        },
-                        child: Icon(
-                          isSelected ? activeIcons[index] : icons[index],
-                          size: iconSize,
-                        ),
-                      ),
+        return Scaffold(
+          backgroundColor: AppColorsDark.backgroundColor,
+          body: SafeArea(child: widget.child),
+          extendBody: true,
+          bottomNavigationBar: Padding(
+            padding: EdgeInsets.all(12.w),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25.r),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                child: Container(
+                  height: config["height"],
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColorsDark.primaryColor.withValues(alpha: 0.08),
+                        AppColorsDark.primaryColor.withValues(alpha: 0.02),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    label: labels[index],
-                  );
-                }),
+                    border: Border.all(
+                      color: AppColorsDark.primaryColor.withValues(alpha: 0.1),
+                      width: 1,
+                    ),
+                  ),
+                  child: BottomNavigationBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    selectedItemColor: AppColorsDark.selectedIcon,
+                    unselectedItemColor: AppColorsDark.hashedText,
+                    type: BottomNavigationBarType.fixed,
+                    currentIndex: _currentIndex,
+                    selectedLabelStyle: TextStyle(
+                      fontSize: config["selectedFontSize"],
+                    ),
+                    unselectedLabelStyle: TextStyle(
+                      fontSize: config["unselectedFontSize"],
+                    ),
+                    onTap: (index) {
+                      HapticFeedback.lightImpact();
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                      context.go(tabs[index]);
+                    },
+                    items: List.generate(tabs.length, (index) {
+                      final isSelected = index == _currentIndex;
+
+                      return BottomNavigationBarItem(
+                        icon: AnimatedScale(
+                          scale: isSelected ? 1.2 : 1.0,
+                          duration: const Duration(milliseconds: 250),
+                          child: ShaderMask(
+                            shaderCallback: (bounds) {
+                              return isSelected
+                                  ? LinearGradient(
+                                      colors: [
+                                        AppColorsDark.selectedIcon,
+                                        AppColorsDark.trailerButton,
+                                      ],
+                                    ).createShader(bounds)
+                                  : LinearGradient(
+                                      colors: [
+                                        AppColorsDark.hashedText,
+                                        AppColorsDark.hashedText,
+                                      ],
+                                    ).createShader(bounds);
+                            },
+                            child: Icon(
+                              isSelected ? activeIcons[index] : icons[index],
+                              size: config["iconSize"],
+                            ),
+                          ),
+                        ),
+                        label: labels[index],
+                      );
+                    }),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
