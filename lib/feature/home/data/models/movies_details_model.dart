@@ -1,4 +1,5 @@
 import 'package:ai_movie_app/feature/home/domain/entities/movies_details_entity.dart';
+// ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
 part 'movies_details_model.g.dart';
@@ -43,7 +44,7 @@ class HomeMoviesDetailsModel extends HomeMediaEntity {
     );
   }
 
-  Map<String, dynamic> toJson() => _$MoviesDetailsModelToJson(this);
+  Map<String, dynamic> toJson() => _$HomeMoviesDetailsModelToJson(this);
 
   factory HomeMoviesDetailsModel.fromEntity(HomeMediaEntity entity) {
     return HomeMoviesDetailsModel(

@@ -21,13 +21,13 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
   final String episodeDuration;
   final String episodeTitle;
   final String episodeDescription;
-  final String episodeImageUrl;
+  final String? episodeImageUrl;
   final int episodeNumber;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 212.h,
+      // height: 212.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: ShapeDecoration(
         color: AppColorsDark.dialogBackground,
@@ -51,7 +51,10 @@ class TvEpisodeDetailsWidget extends StatelessWidget {
                       opacity: 0.5,
                       child: CachedNetworkImage(
                         imageUrl:
-                            '${EndpointConstants.imageBaseUrl}$episodeImageUrl',
+                            episodeImageUrl != null &&
+                                episodeImageUrl!.isNotEmpty
+                            ? '${EndpointConstants.imageBaseUrl}$episodeImageUrl'
+                            : AppStyle.images.imageNotAvailable,
                         width: 121.w,
                         height: 83.h,
                         fit: BoxFit.cover,

@@ -16,26 +16,43 @@ class EpisodesListWidget extends StatefulWidget {
     required this.tvSeriesId,
     required this.numberOfSeasons,
     required this.isLoading,
+    required this.seasonNumber,
   });
   final int tvSeriesId;
   final int numberOfSeasons;
   final bool isLoading;
+  final int seasonNumber;
   @override
   State<EpisodesListWidget> createState() => _EpisodesListWidgetState();
 }
 
 class _EpisodesListWidgetState extends State<EpisodesListWidget> {
-  int seasonNumber = 1;
   TvSeasonEntity? tvSeason;
+  int? currentSeasonNumber;
+
   @override
   void initState() {
+    super.initState();
+    currentSeasonNumber = widget.seasonNumber;
+    _fetchSeasonDetails();
+  }
+
+  @override
+  void didUpdateWidget(EpisodesListWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.seasonNumber != widget.seasonNumber) {
+      currentSeasonNumber = widget.seasonNumber;
+      _fetchSeasonDetails();
+    }
+  }
+
+  void _fetchSeasonDetails() {
     context.read<TvSeriesBloc>().add(
       FetchTvSeriesSeasonDetails(
         id: widget.tvSeriesId,
-        seasonNumber: seasonNumber,
+        seasonNumber: currentSeasonNumber!,
       ),
     );
-    super.initState();
   }
 
   @override
@@ -70,8 +87,8 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
                           RouterPath.episodeView,
                           extra: GetEpisodesParams(
                             seriesId: widget.tvSeriesId,
-                            seasonNumber: seasonNumber,
-                            episodeNumber: episode!.episodeNumber!,
+                            seasonNumber: currentSeasonNumber!,
+                            episodeNumber: episode.episodeNumber!,
                           ),
                         );
                       },
@@ -80,12 +97,11 @@ class _EpisodesListWidgetState extends State<EpisodesListWidget> {
                             ? '${episode!.runtime!} ${AppStrings.minutes}'
                             : AppStrings.notAvailable,
                         episodeTitle: episode?.name ?? AppStrings.notAvailable,
-                        episodeDescription:
-                            episode?.overview ??
-                            AppStrings.noDescriptionAvailable,
-                        episodeImageUrl:
-                            episode?.stillPath ?? 'episode_image.jpg',
-                        episodeNumber: episode?.episodeNumber ?? 0,
+                        episodeDescription: episode!.overview == ''
+                            ? AppStrings.noDescriptionAvailable
+                            : episode.overview!,
+                        episodeImageUrl: episode.stillPath,
+                        episodeNumber: episode.episodeNumber ?? 0,
                       ),
                     ),
                   );

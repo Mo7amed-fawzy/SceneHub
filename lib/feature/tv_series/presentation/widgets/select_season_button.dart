@@ -16,11 +16,13 @@ class SelectSeasonButton extends StatefulWidget {
     required this.seasonNumber,
     required this.tvSeriesId,
     required this.numberOfSeasons,
+    required this.onSeasonChanged,
   });
 
   int seasonNumber;
   final int tvSeriesId;
   final int numberOfSeasons;
+  final Function(int) onSeasonChanged;
 
   @override
   State<SelectSeasonButton> createState() => _SelectSeasonButtonState();
@@ -100,6 +102,8 @@ class _SelectSeasonButtonState extends State<SelectSeasonButton> {
               setState(() {
                 currentSeasonNumber = result;
               });
+              // Call the callback to update parent widget
+              widget.onSeasonChanged(currentSeasonNumber);
               tvSeriesBloc.add(
                 FetchTvSeriesSeasonDetails(
                   id: widget.tvSeriesId,

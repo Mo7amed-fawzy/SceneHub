@@ -14,8 +14,10 @@ import 'package:ai_movie_app/feature/movies/presentation/bloc/movies_bloc.dart';
 import 'package:ai_movie_app/feature/movies/presentation/screens/movies_details_screen.dart';
 import 'package:ai_movie_app/feature/on_bourding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:ai_movie_app/feature/on_bourding/presentation/views/on_boarding_view.dart';
+
 import 'package:ai_movie_app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:ai_movie_app/feature/profile/presentation/screen/profile_view.dart';
+
 import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_series_details_screen.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_cubit.dart';

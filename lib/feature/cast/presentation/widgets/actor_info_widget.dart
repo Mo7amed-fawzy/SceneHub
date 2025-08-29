@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/constants/app_style.dart';
 import '../../../../core/utils/app_text_styles.dart';
 
 class ActorInfoWidget extends StatelessWidget {
@@ -12,7 +13,7 @@ class ActorInfoWidget extends StatelessWidget {
     required this.actorName,
     required this.characterName,
   });
-  final String actorImageUrl;
+  final String? actorImageUrl;
   final String actorName;
   final String characterName;
 
@@ -23,7 +24,9 @@ class ActorInfoWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(20.r),
           child: CachedNetworkImage(
-            imageUrl: '${EndpointConstants.imageBaseUrl}$actorImageUrl',
+            imageUrl: actorImageUrl != null
+                ? '${EndpointConstants.imageBaseUrl}$actorImageUrl'
+                : AppStyle.images.profileImageNotAvailable,
             width: 40.w,
             height: 40.h,
             fit: BoxFit.cover,

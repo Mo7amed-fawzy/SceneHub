@@ -47,6 +47,8 @@ class DetailsScreenTopBarNav extends StatelessWidget {
             width: 270.w,
             child: Text(
               title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: CustomTextStyles.montserrat600style16.copyWith(
                 color: Colors.white,
