@@ -1,4 +1,5 @@
 import 'package:ai_movie_app/core/services/service_locator.dart';
+import 'package:ai_movie_app/core/utils/theme_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/forgot_password_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_in_view.dart';
@@ -23,6 +24,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../feature/profile/presentation/screen/settings_view.dart';
+
 abstract class RouterPath {
   static const String toOnbourding = "/onBourding";
   static const String signUpPage = "/signUp";
@@ -41,16 +44,8 @@ abstract class RouterPath {
 
 final GoRouter goRouter = GoRouter(
   routes: [
-    // GoRoute(
-    //   path: "/",
-    //   builder: (context, state) => BlocProvider.value(
-    //     value: sl<ThemeCubit>(),
-    //     child: static const SplashView(),
-    //   ),
-    // ),
     GoRoute(
       path: RouterPath.toOnbourding,
-
       builder: (context, state) => BlocProvider(
         create: (context) => sl<OnBoardingCubit>(),
         child: OnBourdingView(),
@@ -70,7 +65,6 @@ final GoRouter goRouter = GoRouter(
         child: const SignInView(),
       ),
     ),
-
     GoRoute(
       path: RouterPath.forgotPassword,
       builder: (context, state) => BlocProvider(
@@ -78,8 +72,6 @@ final GoRouter goRouter = GoRouter(
         child: const ForgotPasswordView(),
       ),
     ),
-
-    // GoRoute(path: homeView, builder: (context, state) => static const HomeView()),
     GoRoute(
       path: '/movie/:id',
       builder: (context, state) {
@@ -94,8 +86,6 @@ final GoRouter goRouter = GoRouter(
         );
       },
     ),
-
-    // ShellRoute with BottomNavBar
     GoRoute(
       path: RouterPath.episodeView,
       builder: (context, state) {
@@ -121,7 +111,10 @@ final GoRouter goRouter = GoRouter(
       },
     ),
     ShellRoute(
-      builder: (context, state, child) => HomeNavBarShell(child: child),
+      builder: (context, state, child) => BlocProvider(
+        create: (context) => sl<ProfileBloc>()..add(GetProfileEvent()),
+        child: HomeNavBarShell(child: child),
+      ),
       routes: [
         GoRoute(path: '/', builder: (context, state) => const HomeView()),
         GoRoute(
@@ -139,14 +132,13 @@ final GoRouter goRouter = GoRouter(
         GoRoute(
           path: RouterPath.profile,
           builder: (context, state) => BlocProvider(
-            create: (context) => sl<ProfileBloc>(),
+            create: (context) => sl<ThemeCubit>(),
             child: const ProfilePage(),
           ),
         ),
         GoRoute(
           path: RouterPath.settings,
-          builder: (context, state) =>
-              const AnimatedPlaceholderPage(title: "Settings"),
+          builder: (context, state) => const SettingsView(),
         ),
       ],
     ),

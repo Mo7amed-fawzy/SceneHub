@@ -36,7 +36,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       result.fold((failure) {
         if (failure.message.toLowerCase().contains("no cached user found")) {
           // Show empty editable profile
-          emit(ProfileLoaded(profile: Profile.empty()));
+          emit(ProfileLoaded(profile: const Profile.empty()));
         } else {
           emit(ProfileError(message: failure.message));
         }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/service_locator.dart';
+import '../../../../core/utils/theme_cubit.dart';
 import '../../domain/entities/profile.dart';
 import '../bloc/profile_bloc.dart';
 import 'about_us_view.dart';
@@ -14,77 +14,72 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: sl<ProfileBloc>()..add(GetProfileEvent()),
-      child: Scaffold(
-        backgroundColor: const Color(0xFF181727), // Dark background
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF181727),
-          title: const Text("Profile", style: TextStyle(color: Colors.white)),
-          centerTitle: true,
-          elevation: 0,
-        ),
-        body: BlocConsumer<ProfileBloc, ProfileState>(
-          listenWhen: (prev, curr) =>
-              curr is SetNameProfileSuccess ||
-              curr is SetEmailProfileSuccess ||
-              curr is SetPhoneNumberProfileSuccess ||
-              curr is ClearCacheProfileSuccess ||
-              curr is ProfileError ||
-              curr is SetNameProfileError ||
-              curr is SetEmailProfileError ||
-              curr is SetPhoneNumberProfileError ||
-              curr is ClearCacheProfileError,
-          listener: (context, state) {
-            if (state is SetNameProfileSuccess) {
-              _showSnack(context, "Name updated successfully");
-            }
-            if (state is SetEmailProfileSuccess) {
-              _showSnack(context, "Email updated successfully");
-            }
-            if (state is SetPhoneNumberProfileSuccess) {
-              _showSnack(context, "Phone updated successfully");
-            }
-            if (state is ClearCacheProfileSuccess) {
-              _showSnack(context, "Cache cleared successfully");
-            }
+    return Scaffold(
+      backgroundColor: const Color(0xFF181727), // Dark background
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF181727),
+        title: const Text("Profile", style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: BlocConsumer<ProfileBloc, ProfileState>(
+        listenWhen: (prev, curr) =>
+            curr is SetNameProfileSuccess ||
+            curr is SetEmailProfileSuccess ||
+            curr is SetPhoneNumberProfileSuccess ||
+            curr is ClearCacheProfileSuccess ||
+            curr is ProfileError ||
+            curr is SetNameProfileError ||
+            curr is SetEmailProfileError ||
+            curr is SetPhoneNumberProfileError ||
+            curr is ClearCacheProfileError,
+        listener: (context, state) {
+          if (state is SetNameProfileSuccess) {
+            _showSnack(context, "Name updated successfully");
+          }
+          if (state is SetEmailProfileSuccess) {
+            _showSnack(context, "Email updated successfully");
+          }
+          if (state is SetPhoneNumberProfileSuccess) {
+            _showSnack(context, "Phone updated successfully");
+          }
+          if (state is ClearCacheProfileSuccess) {
+            _showSnack(context, "Cache cleared successfully");
+          }
 
-            if (state is ProfileError) _showSnack(context, state.message);
-            if (state is SetNameProfileError)
-              _showSnack(context, state.message);
-            if (state is SetEmailProfileError)
-              _showSnack(context, state.message);
-            if (state is SetPhoneNumberProfileError)
-              _showSnack(context, state.message);
-            if (state is ClearCacheProfileError)
-              _showSnack(context, state.message);
-          },
-          buildWhen: (prev, curr) =>
-              curr is ProfileInitial ||
-              curr is ProfileLoading ||
-              curr is ProfileLoaded,
-          builder: (context, state) {
-            if (state is ProfileLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is ProfileLoaded) {
-              return _buildProfileContent(context, state.profile);
-            } else if (state is ProfileInitial) {
-              return const Center(
-                child: Text(
-                  "Loading profile...",
-                  style: TextStyle(color: Colors.white),
-                ),
-              );
-            } else {
-              return const Center(
-                child: Text(
-                  "Something went wrong",
-                  style: TextStyle(color: Colors.white),
-                ),
-              );
-            }
-          },
-        ),
+          if (state is ProfileError) _showSnack(context, state.message);
+          if (state is SetNameProfileError) _showSnack(context, state.message);
+          if (state is SetEmailProfileError) _showSnack(context, state.message);
+          if (state is SetPhoneNumberProfileError)
+            _showSnack(context, state.message);
+          if (state is ClearCacheProfileError)
+            _showSnack(context, state.message);
+        },
+        buildWhen: (prev, curr) =>
+            curr is ProfileInitial ||
+            curr is ProfileLoading ||
+            curr is ProfileLoaded,
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ProfileLoaded) {
+            return _buildProfileContent(context, state.profile);
+          } else if (state is ProfileInitial) {
+            return const Center(
+              child: Text(
+                "Loading profile...",
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text(
+                "Something went wrong",
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          }
+        },
       ),
     );
   }
@@ -171,34 +166,6 @@ class ProfilePage extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // General Section
-          _sectionHeader("General"),
-          _sectionCard([
-            _listTile(
-              icon: Icons.notifications_none,
-              label: "Notification",
-              onTap: () {},
-            ),
-            _divider(),
-            _listTile(icon: Icons.language, label: "Language", onTap: () {}),
-            _divider(),
-            _listTile(
-              icon: Icons.flag_outlined,
-              label: "Country",
-              onTap: () {},
-            ),
-            _divider(),
-            _listTile(
-              icon: Icons.delete_outline,
-              label: "Clear Cache",
-              onTap: () {
-                context.read<ProfileBloc>().add(ClearCacheProfileEvent());
-              },
-            ),
-          ]),
-
-          const SizedBox(height: 24),
-
           // More Section
           _sectionHeader("More"),
           _sectionCard([
@@ -231,6 +198,37 @@ class ProfilePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const AboutUsPage()),
+                );
+              },
+            ),
+            _divider(),
+            // THEME TOGGLE BUTTON
+            BlocBuilder<ThemeCubit, bool>(
+              builder: (context, isDarkTheme) {
+                return ListTile(
+                  leading: const Icon(
+                    Icons.dark_mode,
+                    color: Colors.white,
+                    size: 26,
+                  ),
+                  title: const Text(
+                    "Dark Mode",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  trailing: Switch(
+                    value: isDarkTheme,
+                    onChanged: (val) {
+                      context.read<ThemeCubit>().toggleTheme();
+                    },
+                    activeColor: const Color(0xFF1EC6B6),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 2,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                 );
               },
             ),
