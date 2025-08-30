@@ -134,14 +134,13 @@ class TvDataShow extends StatelessWidget {
                 top: 40.h,
                 left: 20.w,
                 child: DetailsScreenTopBarNav(
-                  title: tvSeries.name!,
+                  title: tvSeries.name ?? AppStrings.notAvailable,
                   isLoading:
                       context.watch<TvSeriesBloc>().state
                           is TvSeriesDetailsLoading,
-                  movieId: tvSeries.numberOfEpisodes,
-                  posterPath: CachedNetworkImageProvider(
-                    '${EndpointConstants.imageBaseUrl}${tvSeries.backdropPath}',
-                  ),
+                  movieId: tvSeries.id, // خليها الـ ID مش عدد الحلقات
+                  posterPath:
+                      '${EndpointConstants.imageBaseUrl}${tvSeries.backdropPath}', // ✅ String
                 ),
               ),
             ],

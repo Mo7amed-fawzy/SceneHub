@@ -1,3 +1,5 @@
+enum WishlistItemType { movie, tvSeries }
+
 class WishlistEntity {
   final String id;
   final String name;

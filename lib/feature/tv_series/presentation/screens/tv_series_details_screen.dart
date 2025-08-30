@@ -65,6 +65,7 @@ class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
               overview:
                   'This is a sample description for the TV series ajshldol aoi;sfhaosi; aiosfaio;sdh aoi;sdjhfgais;jd iao;gfoiap;d.',
               voteAverage: 8.5,
+              id: 0,
             ),
             onSeasonChanged: updateSeasonNumber,
           );

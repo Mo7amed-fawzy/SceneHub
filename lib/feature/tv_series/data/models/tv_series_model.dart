@@ -116,6 +116,7 @@ class TvSeriesDetailsModel extends TvSeriesDetailsEntity {
     this.voteAverage,
     this.voteCount,
   }) : super(
+         id: id ?? 0, // ✅ تمرير id للـ Entity
          backdropPath: backdropPath,
          episodeRunTime: episodeRunTime,
          firstAirDate: firstAirDate,

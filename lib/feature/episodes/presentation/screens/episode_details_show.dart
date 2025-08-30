@@ -134,10 +134,12 @@ class EpisodeDetailsShow extends StatelessWidget {
                     DetailsScreenTopBarNav(
                       title: episodeEntity.name,
                       isLoading: isLoading,
-                      posterPath: CachedNetworkImageProvider(
-                        '${EndpointConstants.imageBaseUrl}${moviesDetails?.backdropPath}',
-                      ),
+                      movieId:
+                          moviesDetails?.id ?? 0, // لو معاك id للفيلم/المسلسل
+                      posterPath:
+                          '${EndpointConstants.imageBaseUrl}${moviesDetails?.backdropPath}', // ✅ String
                     ),
+
                     if (!isLoading) ...[
                       8.verticalSpace,
                       Text(
