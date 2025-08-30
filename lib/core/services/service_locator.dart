@@ -24,6 +24,10 @@ import '../../feature/cast/domain/usecases/get_tv_series_cast_usecase.dart';
 import '../../feature/episodes/data/datasource/episode_remote_datasource.dart';
 import '../../feature/episodes/data/repository/episodes_repo_impl.dart';
 import '../../feature/episodes/domain/usecases/get_episode_details_usecases.dart';
+import '../../feature/search/data/datasource/searching_datasource.dart';
+import '../../feature/search/data/repository/search_repo_impl.dart';
+import '../../feature/search/domain/repository/search_repo.dart';
+import '../../feature/search/domain/usecases/search_usecase.dart';
 import '../../feature/tv_series/data/datasource/tv_series_remote_datasource.dart';
 import '../../feature/tv_series/data/repository/tv_series_repo_impl.dart';
 import '../../feature/tv_series/domain/repository/tv_series_repo.dart';
@@ -116,4 +120,11 @@ Future<void> initSl() async {
   sl.registerLazySingleton<GetEpisodeDetailsUseCase>(
     () => GetEpisodeDetailsUseCase(sl()),
   );
+
+  // ===================== Search =====================
+  sl.registerLazySingleton<SearchingDataSource>(
+    () => SearchingDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<SearchRepo>(() => SearchRepoImpl(sl()));
+  sl.registerLazySingleton<SearchUseCase>(() => SearchUseCase(sl()));
 }

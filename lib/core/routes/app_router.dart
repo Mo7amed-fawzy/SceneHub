@@ -122,14 +122,12 @@ final GoRouter goRouter = GoRouter(
       },
     ),
     ShellRoute(
-
-      builder: (context, state, child) => BlocProvider(
-        create: (context) => sl<ProfileBloc>()..add(GetProfileEvent()),
-        child: HomeNavBarShell(child: child),
-      ),
       builder: (context, state, child) {
         return MultiBlocProvider(
           providers: [
+            BlocProvider(
+              create: (context) => sl<ProfileBloc>()..add(GetProfileEvent()),
+            ),
             BlocProvider(
               create: (context) => HomeMediaBloc(
                 getDetailsUseCase: sl(),
