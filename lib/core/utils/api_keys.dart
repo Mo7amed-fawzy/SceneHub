@@ -18,4 +18,7 @@ class EnvConfig {
       dotenv.env['MOVIE_API_KEY'] ?? ''; // v3 API key
   static final String movieApiReadAccessToken =
       dotenv.env['MOVIE_API_READ_ACCESS_TOKEN'] ?? ''; // v4 access token
+
+  static final String googleApiKey = dotenv.env['GOOGLE_API_KEY'] ?? '';
+  static final String googleCloudApiKey = dotenv.env['GOOGLE_API_KEY'] ?? '';
 }

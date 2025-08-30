@@ -5,6 +5,7 @@ import 'package:ai_movie_app/core/widgets/details_screen_buttons_widget.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_info_nav.dart';
 import 'package:ai_movie_app/core/widgets/details_screen_top_bar_nav.dart';
 import 'package:ai_movie_app/feature/episodes/domain/entities/episode_entities.dart';
+import 'package:ai_movie_app/feature/movies/domain/entities/movies_details_entity.dart';
 import 'package:ai_movie_app/feature/tv_series/presentation/widgets/tv_description_widget.dart';
 import 'package:ai_movie_app/core/utils/details_screen_rating_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -22,10 +23,12 @@ class EpisodeDetailsShow extends StatelessWidget {
     required this.episodeEntity,
     this.isLoading = false,
     required this.params,
+    this.moviesDetails,
   });
   final EpisodeEntity episodeEntity;
   final bool isLoading;
   final GetEpisodesParams params;
+  final MoviesDetailsEntity? moviesDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +134,9 @@ class EpisodeDetailsShow extends StatelessWidget {
                     DetailsScreenTopBarNav(
                       title: episodeEntity.name,
                       isLoading: isLoading,
+                      posterPath: CachedNetworkImageProvider(
+                        '${EndpointConstants.imageBaseUrl}${moviesDetails?.backdropPath}',
+                      ),
                     ),
                     if (!isLoading) ...[
                       8.verticalSpace,

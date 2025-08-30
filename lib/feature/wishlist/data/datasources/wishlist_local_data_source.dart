@@ -1,121 +1,93 @@
-import 'dart:convert';
-import 'package:ai_movie_app/core/constants/cache_keys.dart';
-import 'package:ai_movie_app/core/database/cache/app_shared_preferences.dart';
-import 'package:ai_movie_app/core/models/movie_model.dart';
-import 'package:ai_movie_app/feature/wishlist/data/models/wishlist_item_model.dart';
+import 'package:hive/hive.dart';
+import '../../domain/entities/wishlist_entity.dart';
+import '../models/wishlist_model.dart';
 
 abstract class WishlistLocalDataSource {
-  Future<List<WishlistItemModel>> getWishlistItems(String userId);
-  Future<WishlistItemModel> addToWishlist(MovieModel movie, String userId);
-  Future<void> removeFromWishlist(String movieId, String userId);
-  Future<bool> isInWishlist(String movieId, String userId);
+  Future<List<WishlistEntity>> getWishlistItems(String userId);
+  Future<WishlistEntity> addToWishlist(WishlistEntity movie, String userId);
+  Future<void> removeFromWishlist(int movieId, String userId);
+  Future<bool> isInWishlist(int movieId, String userId);
   Future<void> clearWishlist(String userId);
   Future<int> getWishlistCount(String userId);
 }
 
 class WishlistLocalDataSourceImpl implements WishlistLocalDataSource {
-  final AppPreferences sharedPreferences;
+  final Box<WishlistModel> wishlistBox;
+  static const guestUserId = 'guest';
 
-  WishlistLocalDataSourceImpl({required this.sharedPreferences});
+  WishlistLocalDataSourceImpl({required this.wishlistBox});
 
-  String _getWishlistKey(String userId) => '${CacheKeys.wishlist}_$userId';
+  String _getKey(String userId, String movieId) => '${userId}_$movieId';
 
   @override
-  Future<List<WishlistItemModel>> getWishlistItems(String userId) async {
+  Future<List<WishlistEntity>> getWishlistItems(String userId) async {
     try {
-      final wishlistJson = sharedPreferences.getData(_getWishlistKey(userId));
-      if (wishlistJson == null || wishlistJson.isEmpty) {
-        return [];
-      }
-
-      final List<dynamic> wishlistData = json.decode(wishlistJson);
-      return wishlistData
-          .map((item) => WishlistItemModel.fromJson(item))
+      final actualUserId = userId.isEmpty ? guestUserId : userId;
+      return wishlistBox.values
+          .where((item) => item.userId == actualUserId)
+          .map((model) => model.toEntity())
           .toList();
     } catch (e) {
-      return [];
+      throw Exception('Failed to fetch wishlist locally: $e');
     }
   }
 
   @override
-  Future<WishlistItemModel> addToWishlist(
-    MovieModel movie,
+  Future<WishlistEntity> addToWishlist(
+    WishlistEntity movie,
     String userId,
   ) async {
     try {
-      final wishlistItems = await getWishlistItems(userId);
+      final actualUserId = userId.isEmpty ? guestUserId : userId;
+      final key = _getKey(actualUserId, movie.id);
 
-      // Check if movie already exists
-      final existingIndex = wishlistItems.indexWhere(
-        (item) => item.movie.id == movie.id,
-      );
-      if (existingIndex != -1) {
-        return wishlistItems[existingIndex];
+      if (wishlistBox.containsKey(key)) {
+        return wishlistBox.get(key)!.toEntity();
       }
 
-      final wishlistItem = WishlistItemModel(
-        id: '${userId}_${movie.id}',
-        movie: movie,
-        addedAt: DateTime.now(),
-        userId: userId,
+      final wishlistModel = WishlistModel.fromEntity(
+        movie,
+        userId: actualUserId,
       );
-
-      wishlistItems.add(wishlistItem);
-      await _saveWishlistItems(wishlistItems, userId);
-
-      return wishlistItem;
+      await wishlistBox.put(key, wishlistModel);
+      return wishlistModel.toEntity();
     } catch (e) {
-      throw Exception('Failed to add movie to wishlist: $e');
+      throw Exception('Failed to add to local wishlist: $e');
     }
   }
 
   @override
-  Future<void> removeFromWishlist(String movieId, String userId) async {
+  Future<void> removeFromWishlist(int movieId, String userId) async {
     try {
-      final wishlistItems = await getWishlistItems(userId);
-      wishlistItems.removeWhere((item) => item.movie.id == movieId);
-      await _saveWishlistItems(wishlistItems, userId);
+      final actualUserId = userId.isEmpty ? guestUserId : userId;
+      final key = _getKey(actualUserId, movieId.toString());
+      await wishlistBox.delete(key);
     } catch (e) {
-      throw Exception('Failed to remove movie from wishlist: $e');
+      throw Exception('Failed to remove from local wishlist: $e');
     }
   }
 
   @override
-  Future<bool> isInWishlist(String movieId, String userId) async {
-    try {
-      final wishlistItems = await getWishlistItems(userId);
-      return wishlistItems.any((item) => item.movie.id == movieId);
-    } catch (e) {
-      return false;
-    }
+  Future<bool> isInWishlist(int movieId, String userId) async {
+    final actualUserId = userId.isEmpty ? guestUserId : userId;
+    final key = _getKey(actualUserId, movieId.toString());
+    return wishlistBox.containsKey(key);
   }
 
   @override
   Future<void> clearWishlist(String userId) async {
-    try {
-      await sharedPreferences.setData(_getWishlistKey(userId), json.encode([]));
-    } catch (e) {
-      throw Exception('Failed to clear wishlist: $e');
-    }
+    final actualUserId = userId.isEmpty ? guestUserId : userId;
+    final keysToRemove = wishlistBox.keys
+        .where((key) => key.toString().startsWith('${actualUserId}_'))
+        .toList();
+    await wishlistBox.deleteAll(keysToRemove);
   }
 
   @override
   Future<int> getWishlistCount(String userId) async {
-    try {
-      final wishlistItems = await getWishlistItems(userId);
-      return wishlistItems.length;
-    } catch (e) {
-      return 0;
-    }
-  }
-
-  Future<void> _saveWishlistItems(
-    List<WishlistItemModel> items,
-    String userId,
-  ) async {
-    final wishlistJson = json.encode(
-      items.map((item) => item.toJson()).toList(),
-    );
-    await sharedPreferences.setData(_getWishlistKey(userId), wishlistJson);
+    final actualUserId = userId.isEmpty ? guestUserId : userId;
+    return wishlistBox.values
+        .where((item) => item.userId == actualUserId)
+        .length;
   }
 }

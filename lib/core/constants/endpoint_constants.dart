@@ -8,7 +8,8 @@ class EndpointConstants {
   static const String tvSeriesCast = '/aggregate_credits';
   // Add your endpoints here
 
-  static const String baseUrl1 = 'https://api.example.com/v1';
+  // static const String baseUrl1 = 'https://api.example.com/v1';
+
 
   // Authentication endpoints
   static const String auth = '/auth';
@@ -33,4 +34,7 @@ class EndpointConstants {
 
   // Shared
   static const String imageBaseUrl = 'https://image.tmdb.org/t/p/w500/';
+
+  // AI
+  static const String geminiBaseUrl = 'https://api.gemini.ai/v1/query';
 }

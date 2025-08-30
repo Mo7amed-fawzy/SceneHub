@@ -1,12 +1,11 @@
-import 'package:ai_movie_app/core/constants/app_data_types.dart';
-import 'package:ai_movie_app/feature/wishlist/domain/repositories/wishlist_repository.dart';
+import '../repositories/wishlist_repository.dart';
 
-class GetWishlistCountUseCase {
+class GetWishlistCount {
   final WishlistRepository repository;
 
-  GetWishlistCountUseCase(this.repository);
+  GetWishlistCount(this.repository);
 
-  AsyncSingleDataResponse<int> call(String userId) {
+  Future<int> call({String userId = ''}) async {
     return repository.getWishlistCount(userId);
   }
 }

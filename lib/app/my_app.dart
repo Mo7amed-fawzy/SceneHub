@@ -10,7 +10,7 @@ class SceneHub extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    sl<ThemeCubit>().loadTheme();
+    // sl<ThemeCubit>().loadTheme();
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,

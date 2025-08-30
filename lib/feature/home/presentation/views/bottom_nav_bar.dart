@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:ai_movie_app/core/functions/responsive_bottom_nav_bar.dart';
 import 'package:ai_movie_app/core/routes/app_router.dart';
 import 'package:ai_movie_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
 
   final List<IconData> icons = [
     Icons.home_outlined,
-    Icons.search_outlined,
+    Icons.auto_awesome_outlined,
     Icons.bookmark_outline,
     Icons.person_outline,
     Icons.settings_outlined,
@@ -37,7 +38,7 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
 
   final List<IconData> activeIcons = [
     Icons.home,
-    Icons.search,
+    Icons.auto_awesome,
     Icons.bookmark,
     Icons.person,
     Icons.settings,
@@ -45,7 +46,7 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
 
   final List<String> labels = [
     AppStrings.home,
-    AppStrings.search,
+    AppStrings.sceneBot,
     AppStrings.watchlist,
     AppStrings.profile,
     AppStrings.settings,
@@ -61,83 +62,95 @@ class _HomeNavBarShellState extends State<HomeNavBarShell>
       _currentIndex = routerIndex;
     }
 
-    return Scaffold(
-      backgroundColor: AppColorsDark.backgroundColor,
-      body: SafeArea(child: widget.child),
-      extendBody: true,
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(12.w),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(25.r),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: Container(
-              height: 70.h,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColorsDark.primaryColor.withValues(alpha: 0.08),
-                    AppColorsDark.primaryColor.withValues(alpha: 0.02),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                border: Border.all(
-                  color: AppColorsDark.primaryColor.withValues(alpha: 0.1),
-                  width: 1,
-                ),
-              ),
-              child: BottomNavigationBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                selectedItemColor: AppColorsDark.selectedIcon,
-                unselectedItemColor: AppColorsDark.hashedText,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: _currentIndex,
-                onTap: (index) {
-                  HapticFeedback.lightImpact();
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                  context.go(tabs[index]);
-                },
-                items: List.generate(tabs.length, (index) {
-                  final isSelected = index == _currentIndex;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final config = responsiveBottomNavBar(constraints);
 
-                  return BottomNavigationBarItem(
-                    icon: AnimatedScale(
-                      scale: isSelected ? 1.2 : 1.0,
-                      duration: const Duration(milliseconds: 250),
-                      child: ShaderMask(
-                        shaderCallback: (bounds) {
-                          return isSelected
-                              ? LinearGradient(
-                                  colors: [
-                                    AppColorsDark.selectedIcon,
-                                    AppColorsDark.trailerButton,
-                                  ],
-                                ).createShader(bounds)
-                              : LinearGradient(
-                                  colors: [
-                                    AppColorsDark.hashedText,
-                                    AppColorsDark.hashedText,
-                                  ],
-                                ).createShader(bounds);
-                        },
-                        child: Icon(
-                          isSelected ? activeIcons[index] : icons[index],
-                          size: 26.sp,
-                        ),
-                      ),
+        return Scaffold(
+          backgroundColor: AppColorsDark.backgroundColor,
+          body: SafeArea(child: widget.child),
+          extendBody: true,
+          bottomNavigationBar: Padding(
+            padding: EdgeInsets.all(12.w),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25.r),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                child: Container(
+                  height: config["height"],
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColorsDark.primaryColor.withValues(alpha: 0.08),
+                        AppColorsDark.primaryColor.withValues(alpha: 0.02),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    label: labels[index],
-                  );
-                }),
+                    border: Border.all(
+                      color: AppColorsDark.primaryColor.withValues(alpha: 0.1),
+                      width: 1,
+                    ),
+                  ),
+                  child: BottomNavigationBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    selectedItemColor: AppColorsDark.selectedIcon,
+                    unselectedItemColor: AppColorsDark.hashedText,
+                    type: BottomNavigationBarType.fixed,
+                    currentIndex: _currentIndex,
+                    selectedLabelStyle: TextStyle(
+                      fontSize: config["selectedFontSize"],
+                    ),
+                    unselectedLabelStyle: TextStyle(
+                      fontSize: config["unselectedFontSize"],
+                    ),
+                    onTap: (index) {
+                      HapticFeedback.lightImpact();
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                      context.go(tabs[index]);
+                    },
+                    items: List.generate(tabs.length, (index) {
+                      final isSelected = index == _currentIndex;
+
+                      return BottomNavigationBarItem(
+                        icon: AnimatedScale(
+                          scale: isSelected ? 1.2 : 1.0,
+                          duration: const Duration(milliseconds: 250),
+                          child: ShaderMask(
+                            shaderCallback: (bounds) {
+                              return isSelected
+                                  ? LinearGradient(
+                                      colors: [
+                                        AppColorsDark.selectedIcon,
+                                        AppColorsDark.trailerButton,
+                                      ],
+                                    ).createShader(bounds)
+                                  : LinearGradient(
+                                      colors: [
+                                        AppColorsDark.hashedText,
+                                        AppColorsDark.hashedText,
+                                      ],
+                                    ).createShader(bounds);
+                            },
+                            child: Icon(
+                              isSelected ? activeIcons[index] : icons[index],
+                              size: config["iconSize"],
+                            ),
+                          ),
+                        ),
+                        label: labels[index],
+                      );
+                    }),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
