@@ -9,6 +9,7 @@ import 'package:ai_movie_app/feature/auth/presentation/views/sign_up_view.dart';
 import 'package:ai_movie_app/feature/episodes/data/models/get_episodes_prams.dart';
 import 'package:ai_movie_app/feature/episodes/presentation/bloc/episode_bloc.dart';
 import 'package:ai_movie_app/feature/episodes/presentation/screens/episode_view_screen.dart';
+import 'package:ai_movie_app/feature/home/presentation/manager/home_media_bloc.dart';
 import 'package:ai_movie_app/feature/home/presentation/views/bottom_nav_bar.dart';
 import 'package:ai_movie_app/feature/home/presentation/views/home_view.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/animated_placeholder_page.dart';
@@ -93,8 +94,13 @@ final GoRouter goRouter = GoRouter(
         final movieId = int.tryParse(movieIdStr);
         if (movieId == null) return const SizedBox();
 
-        return BlocProvider(
-          create: (context) => MoviesBloc(sl()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => MoviesBloc(sl())),
+            BlocProvider(
+              create: (context) => sl<WishlistCubit>()..fetchWishlist(),
+            ),
+          ],
           child: MoviesDetailsScreen(movieId: movieId),
         );
       },
@@ -126,21 +132,42 @@ final GoRouter goRouter = GoRouter(
       },
     ),
     ShellRoute(
-      builder: (context, state, child) => HomeNavBarShell(child: child),
+      builder: (context, state, child) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => HomeMediaBloc(
+                getDetailsUseCase: sl(),
+                getNowPlayingUseCase: sl(),
+                getMixedNowPlayingUseCase: sl(),
+              )..add(GetMixedNowPlayingEvent()),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  sl<WishlistCubit>()..fetchWishlist(userId: '123'),
+            ),
+          ],
+          child: HomeNavBarShell(child: child),
+        );
+      },
       routes: [
         GoRoute(path: '/', builder: (context, state) => const HomeView()),
         GoRoute(
           path: RouterPath.wishlistView,
           builder: (context, state) => BlocProvider(
-            create: (context) => sl<WishlistCubit>(),
-            child: const WishlistView(userId: 'current-user-id'),
+            create: (context) =>
+                sl<WishlistCubit>()
+                  ..getWishlistItemsUseCase(), // أو أي method تبدأ التحميل
+            child:
+                const WishlistView(), // مش محتاج تمرر wishlistItems أو onRemove
           ),
         ),
+
         GoRoute(
           path: RouterPath.search,
           builder: (context, state) => BlocProvider(
             create: (_) => skk<ScenebotCubit>(),
-            child: MovieSuggestionScreen(),
+            child: const MovieSuggestionScreen(),
           ),
         ),
 

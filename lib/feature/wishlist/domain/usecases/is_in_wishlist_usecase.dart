@@ -1,12 +1,11 @@
-import 'package:ai_movie_app/core/constants/app_data_types.dart';
-import 'package:ai_movie_app/feature/wishlist/domain/repositories/wishlist_repository.dart';
+import '../repositories/wishlist_repository.dart';
 
-class IsInWishlistUseCase {
+class IsInWishlist {
   final WishlistRepository repository;
 
-  IsInWishlistUseCase(this.repository);
+  IsInWishlist(this.repository);
 
-  AsyncBooleanResponse call(String movieId, String userId) {
+  Future<bool> call(int movieId, {String userId = ''}) async {
     return repository.isInWishlist(movieId, userId);
   }
 }

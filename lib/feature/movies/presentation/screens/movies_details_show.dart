@@ -113,6 +113,10 @@ class MoviesDetailsShow extends StatelessWidget {
                   title: moviesDetails.title ?? AppStrings.notAvailable,
                   isLoading:
                       context.watch<MoviesBloc>().state is MoviesDetailsLoading,
+                  movieId: movieId,
+                  posterPath: CachedNetworkImageProvider(
+                    '${EndpointConstants.imageBaseUrl}${moviesDetails.backdropPath}',
+                  ),
                 ),
               ),
             ],

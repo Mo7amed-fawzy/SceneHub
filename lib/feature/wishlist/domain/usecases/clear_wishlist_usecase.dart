@@ -1,12 +1,11 @@
-import 'package:ai_movie_app/core/constants/app_data_types.dart';
-import 'package:ai_movie_app/feature/wishlist/domain/repositories/wishlist_repository.dart';
+import '../repositories/wishlist_repository.dart';
 
-class ClearWishlistUseCase {
+class ClearWishlist {
   final WishlistRepository repository;
 
-  ClearWishlistUseCase(this.repository);
+  ClearWishlist(this.repository);
 
-  AsyncVoidResponse call(String userId) {
+  Future<void> call({String userId = ''}) async {
     return repository.clearWishlist(userId);
   }
 }

@@ -138,6 +138,10 @@ class TvDataShow extends StatelessWidget {
                   isLoading:
                       context.watch<TvSeriesBloc>().state
                           is TvSeriesDetailsLoading,
+                  movieId: tvSeries.numberOfEpisodes,
+                  posterPath: CachedNetworkImageProvider(
+                    '${EndpointConstants.imageBaseUrl}${tvSeries.backdropPath}',
+                  ),
                 ),
               ),
             ],
