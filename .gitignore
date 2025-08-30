@@ -11,7 +11,7 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
-env/.env/.env
+env/.env
 lib/feature/on_bourding/presentation/views/widgets/stateful_on_boarding_body.dart
 /lib/core/utils/theme_helper.dart
 # IntelliJ related
@@ -34,6 +34,12 @@ lib/feature/on_bourding/presentation/views/widgets/stateful_on_boarding_body.dar
 .pub-cache/
 .pub/
 /build/
+
+# Flutter iOS generated
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
 
 # Symbolication related
 app.*.symbols

@@ -1,4 +1,7 @@
 import 'package:ai_movie_app/core/services/service_locator.dart';
+import 'package:ai_movie_app/feature/ai_chat/Presentation/manager/scenebot_cubit.dart';
+import 'package:ai_movie_app/feature/ai_chat/Presentation/scene_bot_chat_page.dart';
+import 'package:ai_movie_app/feature/ai_chat/di/ai_di.dart';
 import 'package:ai_movie_app/feature/auth/presentation/auth_cubit/cubit/auth_cubit.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/forgot_password_view.dart';
 import 'package:ai_movie_app/feature/auth/presentation/views/sign_in_view.dart';
@@ -135,9 +138,12 @@ final GoRouter goRouter = GoRouter(
         ),
         GoRoute(
           path: RouterPath.search,
-          builder: (context, state) =>
-              const AnimatedPlaceholderPage(title: "Search"),
+          builder: (context, state) => BlocProvider(
+            create: (_) => skk<ScenebotCubit>(),
+            child: MovieSuggestionScreen(),
+          ),
         ),
+
         GoRoute(
           path: RouterPath.profile,
           builder: (context, state) => BlocProvider(

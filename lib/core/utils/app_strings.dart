@@ -9,7 +9,7 @@ abstract class AppStrings {
   //!Home Strings
   home = "Home", watchlist = "Watch list", recommendations = "Recommendations", about = "About", whatdoyouwanttowatch = "What do you want to watch?",
   //!Search Strings
-  search = "Search", nowplaying = "Now playing", upcoming = "Upcoming", toprated = "Top rated", popular = "Popular",
+  search = "Search", smartSearch = "Scene Search", sceneBot = "Scenebot", nowplaying = "Now playing", upcoming = "Upcoming", toprated = "Top rated", popular = "Popular",
   //!Profile Strings
   profile = "Profile", account = "Account", editProfile = "Edit Profile", notification = "Notification", general = "General", settings = "Settings", security = "Security", privacyPolicy = "Privacy Policy", logOut = "Log Out",
   //!Bazar
