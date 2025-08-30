@@ -3,6 +3,7 @@ import 'package:ai_movie_app/feature/search/presentation/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/constants/endpoint_constants.dart';
@@ -71,7 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         focusNode: _searchFocusNode,
                         autofocus: true,
                         style: TextStyle(
-                          color: AppColorsDark.text,
+                          color: AppColorsDark.backgroundColor,
                           fontSize: 16.sp,
                         ),
                         decoration: InputDecoration(
@@ -360,9 +361,23 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       child: InkWell(
         onTap: () {
-          if (result.id != null && mediaType != 'person') {
-            // Navigate to details screen
-            // You can implement navigation here based on your routing system
+          if (result.id != null) {
+            if (mediaType == 'person') {
+              // Show a message for person results (you can implement person details later)
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Person details coming soon!'),
+                  backgroundColor: AppColorsDark.selectedIcon,
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            } else {
+              // Navigate to details screen based on media type
+              final route = mediaType == 'movie'
+                  ? '/movie/${result.id}'
+                  : '/tvSeriesDetails/${result.id}';
+              context.push(route);
+            }
           }
         },
         borderRadius: BorderRadius.circular(12.r),
@@ -449,21 +464,37 @@ class _SearchScreenState extends State<SearchScreen> {
                   ],
                 ),
               ),
-              // Media type indicator
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: _getMediaTypeColor(mediaType).withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(4.r),
-                ),
-                child: Text(
-                  _getMediaTypeLabel(mediaType),
-                  style: TextStyle(
-                    color: _getMediaTypeColor(mediaType),
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w600,
+              // Media type indicator and navigation arrow
+              Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _getMediaTypeColor(mediaType).withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                    child: Text(
+                      _getMediaTypeLabel(mediaType),
+                      style: TextStyle(
+                        color: _getMediaTypeColor(mediaType),
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                ),
+                  if (mediaType != 'person')
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColorsDark.hashedText.withOpacity(0.6),
+                        size: 16.sp,
+                      ),
+                    ),
+                ],
               ),
             ],
           ),
