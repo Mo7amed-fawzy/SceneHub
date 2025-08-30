@@ -20,17 +20,13 @@ KnownFor _$KnownForFromJson(Map<String, dynamic> json) => KnownFor(
           ?.map((e) => (e as num).toInt())
           .toList(),
       popularity: (json['popularity'] as num?)?.toDouble(),
-      releaseDate: json['release_date'] == null
-          ? null
-          : DateTime.parse(json['release_date'] as String),
+      releaseDate: json['release_date'] as String?,
       video: json['video'] as bool?,
       voteAverage: (json['vote_average'] as num?)?.toDouble(),
       voteCount: (json['vote_count'] as num?)?.toInt(),
       name: json['name'] as String?,
       originalName: json['original_name'] as String?,
-      firstAirDate: json['first_air_date'] == null
-          ? null
-          : DateTime.parse(json['first_air_date'] as String),
+      firstAirDate: json['first_air_date'] as String?,
       originCountry: (json['origin_country'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -48,12 +44,12 @@ Map<String, dynamic> _$KnownForToJson(KnownFor instance) => <String, dynamic>{
       'original_language': instance.originalLanguage,
       'genre_ids': instance.genreIds,
       'popularity': instance.popularity,
-      'release_date': instance.releaseDate?.toIso8601String(),
+      'release_date': instance.releaseDate,
       'video': instance.video,
       'vote_average': instance.voteAverage,
       'vote_count': instance.voteCount,
       'name': instance.name,
       'original_name': instance.originalName,
-      'first_air_date': instance.firstAirDate?.toIso8601String(),
+      'first_air_date': instance.firstAirDate,
       'origin_country': instance.originCountry,
     };

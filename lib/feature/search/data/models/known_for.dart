@@ -28,7 +28,7 @@ class KnownFor {
   @JsonKey(name: "popularity")
   final double? popularity;
   @JsonKey(name: "release_date")
-  final DateTime? releaseDate;
+  final String? releaseDate;
   @JsonKey(name: "video")
   final bool? video;
   @JsonKey(name: "vote_average")
@@ -40,7 +40,7 @@ class KnownFor {
   @JsonKey(name: "original_name")
   final String? originalName;
   @JsonKey(name: "first_air_date")
-  final DateTime? firstAirDate;
+  final String? firstAirDate;
   @JsonKey(name: "origin_country")
   final List<String>? originCountry;
 
@@ -78,13 +78,13 @@ class KnownFor {
     String? originalLanguage,
     List<int>? genreIds,
     double? popularity,
-    DateTime? releaseDate,
+    String? releaseDate,
     bool? video,
     double? voteAverage,
     int? voteCount,
     String? name,
     String? originalName,
-    DateTime? firstAirDate,
+    String? firstAirDate,
     List<String>? originCountry,
   }) => KnownFor(
     adult: adult ?? this.adult,
