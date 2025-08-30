@@ -1,4 +1,3 @@
-import 'package:ai_movie_app/feature/search/data/models/search_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'known_for.g.dart';
