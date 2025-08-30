@@ -1,5 +1,4 @@
 import 'package:ai_movie_app/core/services/service_locator.dart';
-
 import 'package:ai_movie_app/feature/ai_chat/Presentation/manager/scenebot_cubit.dart';
 import 'package:ai_movie_app/feature/ai_chat/Presentation/scene_bot_chat_page.dart';
 import 'package:ai_movie_app/feature/ai_chat/di/ai_di.dart';
