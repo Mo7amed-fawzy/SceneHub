@@ -22,7 +22,7 @@ class DetailsScreenTopBarNav extends StatelessWidget {
   final String title;
   final bool isLoading;
   final int? movieId;
-  final ImageProvider<Object>? posterPath;
+  final String? posterPath;
 
   @override
   Widget build(BuildContext context) {
@@ -71,22 +71,17 @@ class DetailsScreenTopBarNav extends StatelessWidget {
             Builder(
               builder: (context) {
                 final cubit = context.read<WishlistCubit>();
-                final isFav = cubit.isMovieInState(movieId!);
 
                 return GestureDetector(
                   onTap: () {
                     final movieEntity = WishlistEntity(
                       id: movieId!.toString(),
                       name: title,
-                      posterPath: AppStyle.images.avengers,
+                      posterPath: posterPath ?? AppStyle.images.avengers,
                       addedAt: DateTime.now(),
                     );
 
-                    if (isFav) {
-                      cubit.removeFromWishlist(movieId!);
-                    } else {
-                      cubit.addToWishlist(movieEntity);
-                    }
+                    cubit.toggleWishlist(movieEntity); // استخدم الطريقة الموحدة
                   },
                   child: Container(
                     width: 32.w,
@@ -100,7 +95,12 @@ class DetailsScreenTopBarNav extends StatelessWidget {
                     child: Center(
                       child: BlocBuilder<WishlistCubit, WishlistState>(
                         builder: (context, state) {
-                          final isFavNow = cubit.isMovieInState(movieId!);
+                          final isFavNow = state is WishlistLoaded
+                              ? state.items.any(
+                                  (item) => item.id == movieId!.toString(),
+                                )
+                              : false;
+
                           return SvgPicture.asset(
                             AppStyle.icons.heart,
                             width: 20.w,
@@ -120,16 +120,5 @@ class DetailsScreenTopBarNav extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-// امتداد Cubit للتحقق من وجود الفيلم في الWishlist
-extension WishlistCubitHelper on WishlistCubit {
-  bool isMovieInState(int movieId) {
-    if (state is WishlistLoaded) {
-      final items = (state as WishlistLoaded).items;
-      return items.any((item) => item.id == movieId.toString());
-    }
-    return false;
   }
 }

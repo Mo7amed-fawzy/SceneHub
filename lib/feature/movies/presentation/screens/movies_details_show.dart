@@ -25,6 +25,7 @@ class MoviesDetailsShow extends StatelessWidget {
   });
   final MoviesDetailsEntity moviesDetails;
   final int movieId;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -114,9 +115,8 @@ class MoviesDetailsShow extends StatelessWidget {
                   isLoading:
                       context.watch<MoviesBloc>().state is MoviesDetailsLoading,
                   movieId: movieId,
-                  posterPath: CachedNetworkImageProvider(
-                    '${EndpointConstants.imageBaseUrl}${moviesDetails.backdropPath}',
-                  ),
+                  posterPath:
+                      '${EndpointConstants.imageBaseUrl}${moviesDetails.backdropPath}',
                 ),
               ),
             ],

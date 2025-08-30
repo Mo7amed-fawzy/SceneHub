@@ -1,6 +1,7 @@
 import 'package:ai_movie_app/feature/tv_series/domain/entities/genre_entity.dart';
 
 class TvSeriesDetailsEntity {
+  final int? id;
   final String? backdropPath;
   final List<int>? episodeRunTime;
   final DateTime? firstAirDate;
@@ -13,6 +14,7 @@ class TvSeriesDetailsEntity {
   final double? voteAverage;
 
   const TvSeriesDetailsEntity({
+    required this.id,
     this.backdropPath,
     this.episodeRunTime,
     this.firstAirDate,

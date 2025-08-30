@@ -31,20 +31,40 @@ class WishlistCubit extends Cubit<WishlistState> {
     emit(WishlistLoading());
     try {
       final items = await getWishlistItemsUseCase.call(userId: userId);
-      emit(WishlistLoaded(items));
+      emit(WishlistLoaded(List.from(items))); // clone للقائمة
     } catch (e) {
       emit(WishlistError('Failed to load wishlist: $e'));
     }
   }
 
-  // Add item
-  Future<void> addToWishlist(WishlistEntity movie, {String userId = ''}) async {
-    try {
-      await addToWishlistUseCase.call(movie, userId: userId);
-      await fetchWishlist(userId: userId); // Update the list
-      emit(WishlistOperationSuccess('Added to wishlist'));
-    } catch (e) {
-      emit(WishlistOperationFailure('Failed to add: $e'));
+  // Toggle item in wishlist (زرار ينور فورًا)
+  Future<void> toggleWishlist(
+    WishlistEntity movie, {
+    String userId = '',
+  }) async {
+    if (state is WishlistLoaded) {
+      final currentItems = List<WishlistEntity>.from(
+        (state as WishlistLoaded).items,
+      );
+
+      final exists = currentItems.any((element) => element.id == movie.id);
+
+      if (exists) {
+        // حذف من Hive + القائمة المحلية
+        await removeFromWishlistUseCase.call(
+          int.parse(movie.id),
+          userId: userId,
+        );
+        currentItems.removeWhere((element) => element.id == movie.id);
+      } else {
+        // إضافة إلى Hive + القائمة المحلية
+        await addToWishlistUseCase.call(movie, userId: userId);
+        currentItems.add(movie);
+      }
+
+      emit(WishlistLoaded([...currentItems])); // تحديث UI فورًا
+    } else {
+      await fetchWishlist(userId: userId);
     }
   }
 
@@ -52,8 +72,8 @@ class WishlistCubit extends Cubit<WishlistState> {
   Future<void> removeFromWishlist(int movieId, {String userId = ''}) async {
     try {
       await removeFromWishlistUseCase.call(movieId, userId: userId);
-      await fetchWishlist(userId: userId); // Update the list
-      emit(WishlistOperationSuccess('Removed from wishlist'));
+      final items = await getWishlistItemsUseCase.call(userId: userId);
+      emit(WishlistLoaded([...items]));
     } catch (e) {
       emit(WishlistOperationFailure('Failed to remove: $e'));
     }
