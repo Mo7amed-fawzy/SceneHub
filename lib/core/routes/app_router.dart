@@ -26,6 +26,7 @@ import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.
 import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_series_details_screen.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/views/wishlist_view.dart';
+import 'package:ai_movie_app/feature/wishlist/di/wishlist_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -90,7 +91,7 @@ final GoRouter goRouter = GoRouter(
           providers: [
             BlocProvider(create: (context) => MoviesBloc(sl())),
             BlocProvider(
-              create: (context) => sl<WishlistCubit>()..fetchWishlist(),
+              create: (context) => wishlist<WishlistCubit>()..fetchWishlist(),
             ),
           ],
           child: MoviesDetailsScreen(movieId: movieId),
@@ -102,8 +103,13 @@ final GoRouter goRouter = GoRouter(
       builder: (context, state) {
         final params = state.extra as GetEpisodesParams?;
         if (params == null) return const SizedBox(); // In error case
-        return BlocProvider(
-          create: (context) => EpisodeBloc(sl()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => EpisodeBloc(sl())),
+            BlocProvider(
+              create: (context) => wishlist<WishlistCubit>()..fetchWishlist(),
+            ),
+          ],
           child: EpisodeViewScreen(params: params),
         );
       },
@@ -115,8 +121,13 @@ final GoRouter goRouter = GoRouter(
         if (tvSeriesIdStr == null) return const SizedBox(); // In error case
         final tvSeriesId = int.tryParse(tvSeriesIdStr);
         if (tvSeriesId == null) return const SizedBox(); // In error case
-        return BlocProvider(
-          create: (context) => TvSeriesBloc(sl(), sl()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => TvSeriesBloc(sl(), sl())),
+            BlocProvider(
+              create: (context) => wishlist<WishlistCubit>()..fetchWishlist(),
+            ),
+          ],
           child: TvSeriesDetailsScreen(tvSeriesId: tvSeriesId),
         );
       },
@@ -137,7 +148,7 @@ final GoRouter goRouter = GoRouter(
             ),
             BlocProvider(
               create: (context) =>
-                  sl<WishlistCubit>()..fetchWishlist(userId: '123'),
+                  wishlist<WishlistCubit>()..fetchWishlist(userId: '123'),
             ),
           ],
           child: HomeNavBarShell(child: child),
@@ -150,7 +161,7 @@ final GoRouter goRouter = GoRouter(
           path: RouterPath.wishlistView,
           builder: (context, state) => BlocProvider(
             create: (context) =>
-                sl<WishlistCubit>()
+                wishlist<WishlistCubit>()
                   ..getWishlistItemsUseCase(), // أو أي method تبدأ التحميل
             child:
                 const WishlistView(), // مش محتاج تمرر wishlistItems أو onRemove
