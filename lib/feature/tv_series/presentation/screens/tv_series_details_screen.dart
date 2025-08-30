@@ -54,9 +54,8 @@ class _TvSeriesDetailsScreenState extends State<TvSeriesDetailsScreen> {
             widget: widget,
             seasonNumber: seasonNumber,
             tvSeries: TvSeriesDetailsEntity(
-              backdropPath:
-                  'https://image.tmdb.org/t/p/w500/sample_backdrop.jpg',
-              posterPath: 'https://image.tmdb.org/t/p/w500/sample_poster.jpg',
+              backdropPath: 'sample_backdrop.jpg',
+              posterPath: 'sample_poster.jpg',
               name: 'Sample TV Series',
               firstAirDate: DateTime(2023),
               episodeRunTime: [60],

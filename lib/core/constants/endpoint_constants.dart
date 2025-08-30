@@ -10,7 +10,6 @@ class EndpointConstants {
 
   // static const String baseUrl1 = 'https://api.example.com/v1';
 
-
   // Authentication endpoints
   static const String auth = '/auth';
   static const String signUp = '$auth/signup';
@@ -37,4 +36,7 @@ class EndpointConstants {
 
   // AI
   static const String geminiBaseUrl = 'https://api.gemini.ai/v1/query';
+
+  //search
+  static const String search = '/search/multi';
 }

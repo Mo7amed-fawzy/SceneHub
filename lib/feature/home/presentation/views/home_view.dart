@@ -1,14 +1,23 @@
 import 'package:ai_movie_app/core/functions/calculate_grid_count.dart';
 import 'package:ai_movie_app/core/functions/custom_toast.dart';
+import 'package:ai_movie_app/core/network/dio_consumer.dart';
 import 'package:ai_movie_app/core/utils/app_colors.dart';
 import 'package:ai_movie_app/core/utils/app_text_styles.dart';
 import 'package:ai_movie_app/feature/home/presentation/manager/home_media_bloc.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/cards.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/category_tab.dart';
 import 'package:ai_movie_app/feature/home/presentation/widgets/home_skeleton.dart';
+import 'package:ai_movie_app/feature/search/data/datasource/searching_datasource.dart';
+import 'package:ai_movie_app/feature/search/data/repository/search_repo_impl.dart';
+import 'package:ai_movie_app/feature/search/domain/usecases/search_usecase.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/services/service_locator.dart';
+import '../../../search/presentation/bloc/search_bloc.dart';
+import '../../../search/presentation/screen/search_screen.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -49,7 +58,15 @@ class HomeView extends StatelessWidget {
                         ),
                         SizedBox(height: 12.h),
                         GestureDetector(
-                          onTap: () => showToast("Search feature coming soon!"),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) => SearchBloc(sl()),
+                                child: const SearchScreen(),
+                              ),
+                            ),
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: AppColorsDark.secondaryColor,

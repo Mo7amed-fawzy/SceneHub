@@ -23,6 +23,7 @@ import 'package:ai_movie_app/feature/tv_series/presentation/bloc/tv_series_bloc.
 import 'package:ai_movie_app/feature/tv_series/presentation/screens/tv_series_details_screen.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:ai_movie_app/feature/wishlist/presentation/views/wishlist_view.dart';
+import 'package:ai_movie_app/feature/wishlist/di/wishlist_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -74,106 +75,110 @@ final GoRouter goRouter = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/movie/:id',
-      builder: (context, state) {
-        final movieIdStr = state.pathParameters['id'];
-        if (movieIdStr == null) return const SizedBox();
-        final movieId = int.tryParse(movieIdStr);
-        if (movieId == null) return const SizedBox();
+  path: '/movie/:id',
+  builder: (context, state) {
+    final movieIdStr = state.pathParameters['id'];
+    if (movieIdStr == null) return const SizedBox();
+    final movieId = int.tryParse(movieIdStr);
+    if (movieId == null) return const SizedBox();
 
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => MoviesBloc(sl())),
-            BlocProvider(
-              create: (context) => sl<WishlistCubit>()..fetchWishlist(),
-            ),
-          ],
-          child: MoviesDetailsScreen(movieId: movieId),
-        );
-      },
-    ),
-    GoRoute(
-      path: RouterPath.episodeView,
-      builder: (context, state) {
-        final params = state.extra as GetEpisodesParams?;
-        if (params == null) return const SizedBox();
-        return BlocProvider(
-          create: (context) => EpisodeBloc(sl()),
-          child: EpisodeViewScreen(params: params),
-        );
-      },
-    ),
-    GoRoute(
-      path: '${RouterPath.tvSeriesDetails}/:tvSeriesId',
-      builder: (context, state) {
-        final tvSeriesIdStr = state.pathParameters['tvSeriesId'];
-        if (tvSeriesIdStr == null) return const SizedBox();
-        final tvSeriesId = int.tryParse(tvSeriesIdStr);
-        if (tvSeriesId == null) return const SizedBox();
-
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => TvSeriesBloc(sl(), sl())),
-            BlocProvider(
-              create: (context) =>
-                  sl<WishlistCubit>()..fetchWishlist(userId: '123'),
-            ),
-          ],
-          child: TvSeriesDetailsScreen(tvSeriesId: tvSeriesId),
-        );
-      },
-    ),
-
-    ShellRoute(
-      builder: (context, state, child) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => HomeMediaBloc(
-                getDetailsUseCase: sl(),
-                getNowPlayingUseCase: sl(),
-                getMixedNowPlayingUseCase: sl(),
-              )..add(GetMixedNowPlayingEvent()),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  sl<WishlistCubit>()..fetchWishlist(userId: '123'),
-            ),
-            BlocProvider(
-              create: (context) => sl<ProfileBloc>()..add(GetProfileEvent()),
-            ),
-          ],
-          child: HomeNavBarShell(child: child),
-        );
-      },
-      routes: [
-        GoRoute(path: '/', builder: (context, state) => const HomeView()),
-        GoRoute(
-          path: RouterPath.wishlistView,
-          builder: (context, state) => BlocProvider(
-            create: (context) => sl<WishlistCubit>()..getWishlistItemsUseCase(),
-            child: const WishlistView(),
-          ),
-        ),
-        GoRoute(
-          path: RouterPath.search,
-          builder: (context, state) => BlocProvider(
-            create: (_) => sl<ScenebotCubit>(),
-            child: const MovieSuggestionScreen(),
-          ),
-        ),
-        GoRoute(
-          path: RouterPath.profile,
-          builder: (context, state) => BlocProvider(
-            create: (context) => sl<ThemeCubit>(),
-            child: const ProfilePage(),
-          ),
-        ),
-        GoRoute(
-          path: RouterPath.settings,
-          builder: (context, state) => const SettingsView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => MoviesBloc(sl())),
+        BlocProvider(
+          create: (context) => sl<WishlistCubit>()..fetchWishlist(userId: '123'), // fetch existing wishlist
         ),
       ],
+      child: MoviesDetailsScreen(movieId: movieId),
+    );
+  },
+),
+GoRoute(
+  path: RouterPath.episodeView,
+  builder: (context, state) {
+    final params = state.extra as GetEpisodesParams?;
+    if (params == null) return const SizedBox();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => EpisodeBloc(sl())),
+        BlocProvider(
+          create: (context) => sl<WishlistCubit>()..fetchWishlist(userId: '123'),
+        ),
+      ],
+      child: EpisodeViewScreen(params: params),
+    );
+  },
+),
+GoRoute(
+  path: '${RouterPath.tvSeriesDetails}/:tvSeriesId',
+  builder: (context, state) {
+    final tvSeriesIdStr = state.pathParameters['tvSeriesId'];
+    if (tvSeriesIdStr == null) return const SizedBox();
+    final tvSeriesId = int.tryParse(tvSeriesIdStr);
+    if (tvSeriesId == null) return const SizedBox();
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => TvSeriesBloc(sl(), sl())),
+        BlocProvider(
+          create: (context) => sl<WishlistCubit>()..fetchWishlist(userId: '123'),
+        ),
+      ],
+      child: TvSeriesDetailsScreen(tvSeriesId: tvSeriesId),
+    );
+  },
+),
+ShellRoute(
+  builder: (context, state, child) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<ProfileBloc>()..add(GetProfileEvent()),
+        ),
+        BlocProvider(
+          create: (context) => HomeMediaBloc(
+            getDetailsUseCase: sl(),
+            getNowPlayingUseCase: sl(),
+            getMixedNowPlayingUseCase: sl(),
+          )..add(GetMixedNowPlayingEvent()),
+        ),
+        BlocProvider(
+          create: (context) => sl<WishlistCubit>()..fetchWishlist(userId: '123'),
+        ),
+        BlocProvider(
+          create: (context) => sl<ProfileBloc>()..add(GetProfileEvent()),
+        ),
+      ],
+      child: HomeNavBarShell(child: child),
+    );
+  },
+  routes: [
+    GoRoute(path: '/', builder: (context, state) => const HomeView()),
+    GoRoute(
+      path: RouterPath.wishlistView,
+      builder: (context, state) => BlocProvider(
+        create: (context) => sl<WishlistCubit>()..fetchWishlist(userId: '123'),
+        child: const WishlistView(),
+      ),
+    ),
+    GoRoute(
+      path: RouterPath.search,
+      builder: (context, state) => BlocProvider(
+        create: (_) => sl<ScenebotCubit>(),
+        child: const MovieSuggestionScreen(),
+      ),
+    ),
+    GoRoute(
+      path: RouterPath.profile,
+      builder: (context, state) => BlocProvider(
+        create: (context) => sl<ThemeCubit>(),
+        child: const ProfilePage(),
+      ),
+    ),
+    GoRoute(
+      path: RouterPath.settings,
+      builder: (context, state) => const SettingsView(),
     ),
   ],
-);
+),
+
